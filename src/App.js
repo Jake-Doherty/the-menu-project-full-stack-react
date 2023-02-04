@@ -5,7 +5,6 @@ import Nav from "./components/Layout/Nav/Nav.js";
 function App() {
     return (
         <div className="App">
-            <h1>App</h1>
             <Nav />
             <Main />
         </div>
