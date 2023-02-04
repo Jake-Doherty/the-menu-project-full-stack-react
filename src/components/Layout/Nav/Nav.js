@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu/";
@@ -8,12 +8,15 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-// import PersonAdd from "@mui/icons-material/PersonAdd.js";
-// import Settings from "@mui/icons-material/Settings";
-// import Logout from "@mui/icons-material/Logout.js";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import AddIcon from "@mui/icons-material/Add";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout.js";
 
 export default function Nav() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -28,6 +31,7 @@ export default function Nav() {
                     display: "flex",
                     alignItems: "center",
                     textAlign: "center",
+                    justifyContent: "flex-end",
                 }}
             >
                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
@@ -80,28 +84,46 @@ export default function Nav() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem title="Profile" onClick={handleClose}>
                     <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem title="My Account" onClick={handleClose}>
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem title="Add A Recipe" onClick={handleClose}>
                     <ListItemIcon>
-                        {/* <PersonAdd fontSize="small" /> */}
+                        <AddIcon fontSize="small" />
                     </ListItemIcon>
-                    Add another account
+                    Add A Recipe
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem title="Menu Plan" onClick={handleClose}>
                     <ListItemIcon>
-                        {/* <Settings fontSize="small" /> */}
+                        <MenuBookIcon fontSize="small" />
+                    </ListItemIcon>
+                    Recipe Book
+                </MenuItem>
+                <MenuItem title="Explore" onClick={handleClose}>
+                    <ListItemIcon>
+                        <RestaurantMenuIcon fontSize="small" />
+                    </ListItemIcon>
+                    Explore
+                </MenuItem>
+                <MenuItem title="Menu Plan" onClick={handleClose}>
+                    <ListItemIcon>
+                        <CalendarMonthIcon fontSize="small" />
+                    </ListItemIcon>
+                    Menu Plan
+                </MenuItem>
+                <MenuItem title="Settings" onClick={handleClose}>
+                    <ListItemIcon>
+                        <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem title="Logout" onClick={handleClose}>
                     <ListItemIcon>
-                        {/* <Logout fontSize="small" /> */}
+                        <Logout fontSize="small" />
                     </ListItemIcon>
                     Logout
                 </MenuItem>
