@@ -43,84 +43,105 @@ export default function Auth() {
 
     return (
         <>
-            <div className="panel-tabs">
-                <NavLink
-                    className="is-size-6 has-text-weight-bold"
-                    to="/auth/sign-in"
-                    style={({ isActive }) => ({
-                        display: !isActive ? "" : "none",
-                    })}
-                >
-                    Have an account? Sign In here.
-                </NavLink>
-                <NavLink
-                    className="is-size-6 has-text-weight-bold"
-                    to="/auth/sign-up"
-                    style={({ isActive }) => ({
-                        display: !isActive ? "" : "none",
-                    })}
-                >
-                    {`Don't have an account? Sign Up here.`}
-                </NavLink>
-            </div>
-            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                <div>
-                    <FormControl
-                        sx={{ m: 1, width: "25ch" }}
-                        variant="outlined"
+            <Box
+                sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    flexDirection: "column",
+                    width: "300px",
+                    height: "330px",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                    border: "1px solid black",
+                    borderRadius: "10px",
+                    boxShadow: "5px 5px 15px 0.5px rgb(0 0 0 / 20%)",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                        boxShadow: "5px 5px 15px 1px rgb(0 0 0 / 30%)",
+                        transition: "all 0.3s ease-in-out",
+                        backgroundColor: "rgba(0, 0, 0, 0.07)",
+                    },
+                }}
+            >
+                <div className="panel-tabs">
+                    <NavLink
+                        className="is-size-6 has-text-weight-bold"
+                        to="/auth/sign-in"
+                        style={({ isActive }) => ({
+                            display: !isActive ? "" : "none",
+                        })}
                     >
-                        <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                        <OutlinedInput
-                            id="outlined-email"
-                            type="email"
-                            label="email"
-                            defaultValue={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </FormControl>
-                    <FormControl
-                        sx={{ m: 1, width: "25ch" }}
-                        variant="outlined"
+                        Have an account? Sign In here.
+                    </NavLink>
+                    <NavLink
+                        className="is-size-6 has-text-weight-bold"
+                        to="/auth/sign-up"
+                        style={({ isActive }) => ({
+                            display: !isActive ? "" : "none",
+                        })}
                     >
-                        <InputLabel htmlFor="outlined-adornment-password">
-                            Password
-                        </InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPassword ? "text" : "password"}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
-                            defaultValue={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </FormControl>
+                        {`Don't have an account? Sign Up here.`}
+                    </NavLink>
                 </div>
-                <div className="control">
-                    <Stack>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={submitAuth}
-                        >
-                            Submit
-                        </Button>
-                    </Stack>
-                </div>
+
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-email">Email</InputLabel>
+                    <OutlinedInput
+                        id="outlined-email"
+                        type="email"
+                        label="email"
+                        defaultValue={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                        Password
+                    </InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? "text" : "password"}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff />
+                                    ) : (
+                                        <Visibility />
+                                    )}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        label="Password"
+                        defaultValue={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </FormControl>
+
+                <Button
+                    sx={{
+                        m: 1,
+                        width: "25ch",
+                        "&:hover": {
+                            boxShadow: "5px 5px 10px 1px rgb(0 0 0 / 20%)",
+                            transition: "all 0.3s ease-in-out",
+                        },
+                    }}
+                    color="primary"
+                    variant="contained"
+                    onClick={submitAuth}
+                >
+                    Submit
+                </Button>
             </Box>
         </>
     );

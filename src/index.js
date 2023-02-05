@@ -5,14 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
+import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <UserProvider>
-                <App />
-            </UserProvider>
+            <CssVarsProvider>
+                <UserProvider>
+                    <App />
+                </UserProvider>
+            </CssVarsProvider>
         </BrowserRouter>
     </React.StrictMode>
 );

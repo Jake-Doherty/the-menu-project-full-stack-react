@@ -22,13 +22,17 @@ import { useNavigate } from "react-router-dom";
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
+
+    console.log("user", user.email[0]);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
     const navigate = useNavigate();
+
+    if (!user) return;
 
     const handleClose = (e) => {
         e.target.id === "add-recipe" && navigate("/recipe-editor");
@@ -56,8 +60,9 @@ export default function Nav() {
                     justifyContent: "flex-end",
                 }}
             >
-                <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+                <Typography
+                    sx={{ minWidth: 100 }}
+                >{`Welcome Back ${user.email}`}</Typography>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -67,7 +72,9 @@ export default function Nav() {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                        <Avatar sx={{ width: 32, height: 32 }}>
+                            {user.email[0]}
+                        </Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
