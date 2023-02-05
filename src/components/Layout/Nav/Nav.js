@@ -14,16 +14,40 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AddIcon from "@mui/icons-material/Add";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout.js";
+import HomeIcon from "@mui/icons-material/Home";
+import { signOut } from "../../../services/auth.js";
+import { useUser } from "../../../context/UserContext.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const { user, setUser } = useUser();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+
+    const navigate = useNavigate();
+
+    if (!user) return;
+
+    const handleClose = (e) => {
+        e.target.id === "add-recipe" && navigate("/recipe-editor");
+        // e.target.id === "my-recipes" && navigate("/my-recipes");
+        // e.target.id === "find-recipes" && navigate("/find-recipes");
+        // e.target.id === "my-calendar" && navigate("/my-calendar");
+        // e.target.id === "settings" && navigate("/settings");
+
         setAnchorEl(null);
     };
+
+    const handleLogout = () => {
+        setAnchorEl(null);
+        signOut();
+        setUser(null);
+    };
+
     return (
         <>
             <Box
@@ -34,8 +58,9 @@ export default function Nav() {
                     justifyContent: "flex-end",
                 }}
             >
-                <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+                <Typography
+                    sx={{ minWidth: 100 }}
+                >{`Welcome Back ${user.email}`}</Typography>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -45,7 +70,9 @@ export default function Nav() {
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                        <Avatar sx={{ width: 32, height: 32 }}>
+                            {user.email[0]}
+                        </Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -84,6 +111,9 @@ export default function Nav() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+                <MenuItem title="Home" onClick={handleClose}>
+                    <HomeIcon /> Home
+                </MenuItem>
                 <MenuItem title="Profile" onClick={handleClose}>
                     <Avatar /> Profile
                 </MenuItem>
@@ -91,7 +121,11 @@ export default function Nav() {
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
-                <MenuItem title="Add A Recipe" onClick={handleClose}>
+                <MenuItem
+                    id="add-recipe"
+                    title="Add A Recipe"
+                    onClick={handleClose}
+                >
                     <ListItemIcon>
                         <AddIcon fontSize="small" />
                     </ListItemIcon>
@@ -121,7 +155,12 @@ export default function Nav() {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem title="Logout" onClick={handleClose}>
+                <MenuItem
+                    name="logout"
+                    id="logout"
+                    title="Logout"
+                    onClick={handleLogout}
+                >
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
