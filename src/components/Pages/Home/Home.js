@@ -9,5 +9,14 @@ export default function Home() {
         return <Navigate to="/auth/sign-in" />;
     }
 
-    return <div>Home</div>;
+    return (
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+            }}
+        >
+            <h1>Temp Welcome Message</h1>
+        </div>
+    );
 }
