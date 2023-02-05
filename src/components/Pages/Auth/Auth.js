@@ -3,7 +3,6 @@ import { NavLink, Navigate, useParams } from "react-router-dom";
 import { useUser } from "../../../context/UserContext.js";
 import { authUser } from "../../../services/auth.js";
 
-import "./Auth.css";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
