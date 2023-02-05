@@ -122,6 +122,11 @@ export default function Auth() {
                         }
                         label="Password"
                         defaultValue={password}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                submitAuth();
+                            }
+                        }}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </FormControl>
