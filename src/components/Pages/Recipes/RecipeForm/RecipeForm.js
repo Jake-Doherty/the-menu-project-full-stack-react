@@ -12,9 +12,10 @@ export default function RecipeForm() {
         return <Navigate to="/auth/sign-in" />;
     }
 
-    const handleAddIngredient = () => {
-        console.log("Add Ingredient");
-    };
+    // Pausing on this for now until theme has been set up.
+    // const handleAddIngredient = () => {
+    //     console.log("Add Ingredient");
+    // };
 
     return (
         <Box
