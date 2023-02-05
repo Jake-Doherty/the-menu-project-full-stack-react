@@ -24,8 +24,6 @@ export default function Nav() {
     const open = Boolean(anchorEl);
     const { user, setUser } = useUser();
 
-    console.log("user", user.email[0]);
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
