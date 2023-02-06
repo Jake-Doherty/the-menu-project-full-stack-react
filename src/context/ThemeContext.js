@@ -113,6 +113,7 @@ const ThemeContext = createContext();
 const ThemeContextProvider = ({ children }) => {
     // const { user } = useUser();
 
+    // use these to toggle between light and dark themes until user can save theme preference.
     // const [userTheme, setUserTheme] = useState(lightTheme);
     const [userTheme, setUserTheme] = useState(darkTheme);
 
