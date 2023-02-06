@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useUser } from "../../../context/UserContext.js";
 import Auth from "../../Pages/Auth/Auth.js";
 import Home from "../../Pages/Home/Home.js";
+import Profile from "../../Pages/Profile/Profile.js";
 import RecipeForm from "../../Pages/Recipes/RecipeForm/RecipeForm.js";
 
 export default function Main() {
@@ -19,6 +20,7 @@ export default function Main() {
                 <Route path="/auth/:type" element={<Auth />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/recipe-editor" element={<RecipeForm />} />
+                <Route path="/user-profile" element={<Profile />} />
                 <Route
                     path="/"
                     element={user ? <Home /> : <Navigate to="/auth/sign-in" />}
