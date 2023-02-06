@@ -44,7 +44,8 @@ export default function Nav() {
     const handleClose = (e) => {
         e.target.id === "home" && navigate("/home");
         e.target.id === "add-recipe" && navigate("/recipe-editor");
-        // e.target.id === "my-recipes" && navigate("/my-recipes");
+        e.target.id === "user-profile" && navigate("/user-profile");
+        // e.target.id === "recipe-book" && navigate("/recipe-book");
         // e.target.id === "find-recipes" && navigate("/find-recipes");
         // e.target.id === "my-calendar" && navigate("/my-calendar");
         e.target.id === "settings" && navigate("/settings");
@@ -127,7 +128,11 @@ export default function Nav() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <MenuItem title="Profile" onClick={handleClose}>
+                <MenuItem
+                    id="user-profile"
+                    title="Profile"
+                    onClick={handleClose}
+                >
                     <Avatar /> Profile
                 </MenuItem>
                 <MenuItem title="My Account" onClick={handleClose}>
@@ -150,19 +155,27 @@ export default function Nav() {
                     </ListItemIcon>
                     Add A Recipe
                 </MenuItem>
-                <MenuItem title="Menu Plan" onClick={handleClose}>
+                <MenuItem
+                    id="recipe-book"
+                    title="Recipe Book"
+                    onClick={handleClose}
+                >
                     <ListItemIcon>
                         <MenuBookIcon fontSize="small" />
                     </ListItemIcon>
                     Recipe Book
                 </MenuItem>
-                <MenuItem title="Explore" onClick={handleClose}>
+                <MenuItem id="explore" title="Explore" onClick={handleClose}>
                     <ListItemIcon>
                         <RestaurantMenuIcon fontSize="small" />
                     </ListItemIcon>
                     Explore
                 </MenuItem>
-                <MenuItem title="Menu Plan" onClick={handleClose}>
+                <MenuItem
+                    id="menu-plan"
+                    title="Menu Plan"
+                    onClick={handleClose}
+                >
                     <ListItemIcon>
                         <CalendarMonthIcon fontSize="small" />
                     </ListItemIcon>
