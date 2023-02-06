@@ -8,6 +8,9 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -18,7 +21,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import { signOut } from "../../../services/auth.js";
 import { useUser } from "../../../context/UserContext.js";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@emotion/react";
+import { useTheme as useMuiTheme } from "@emotion/react";
+import { useTheme } from "../../../context/ThemeContext.js";
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -29,7 +33,9 @@ export default function Nav() {
         setAnchorEl(event.currentTarget);
     };
 
-    const theme = useTheme();
+    const { toggleTheme } = useTheme();
+
+    const theme = useMuiTheme();
 
     const navigate = useNavigate();
 
@@ -88,7 +94,7 @@ export default function Nav() {
                 id="account-menu"
                 open={open}
                 onClose={handleClose}
-                onClick={handleClose}
+                // onClick={handleClose}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -167,6 +173,24 @@ export default function Nav() {
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
+                </MenuItem>
+                <MenuItem id="light-dark-modes" title="Settings">
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={
+                                        theme.palette.mode === "dark"
+                                            ? true
+                                            : false
+                                    }
+                                    onChange={toggleTheme}
+                                    inputProps={{ "aria-label": "controlled" }}
+                                />
+                            }
+                            label="Dark Mode"
+                        />
+                    </FormGroup>
                 </MenuItem>
                 <MenuItem
                     name="logout"
