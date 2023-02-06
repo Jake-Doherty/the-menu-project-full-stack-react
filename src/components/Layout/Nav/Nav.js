@@ -8,6 +8,9 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -18,6 +21,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import { signOut } from "../../../services/auth.js";
 import { useUser } from "../../../context/UserContext.js";
 import { useNavigate } from "react-router-dom";
+import { useTheme as useMuiTheme } from "@emotion/react";
+import { useTheme } from "../../../context/ThemeContext.js";
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -28,16 +33,21 @@ export default function Nav() {
         setAnchorEl(event.currentTarget);
     };
 
+    const { toggleTheme } = useTheme();
+
+    const theme = useMuiTheme();
+
     const navigate = useNavigate();
 
     if (!user) return;
 
     const handleClose = (e) => {
+        e.target.id === "home" && navigate("/home");
         e.target.id === "add-recipe" && navigate("/recipe-editor");
         // e.target.id === "my-recipes" && navigate("/my-recipes");
         // e.target.id === "find-recipes" && navigate("/find-recipes");
         // e.target.id === "my-calendar" && navigate("/my-calendar");
-        // e.target.id === "settings" && navigate("/settings");
+        e.target.id === "settings" && navigate("/settings");
 
         setAnchorEl(null);
     };
@@ -59,7 +69,10 @@ export default function Nav() {
                 }}
             >
                 <Typography
-                    sx={{ minWidth: 100 }}
+                    sx={{
+                        minWidth: 100,
+                        color: theme.palette.primary.contrastText,
+                    }}
                 >{`Welcome Back ${user.email}`}</Typography>
                 <Tooltip title="Account settings">
                     <IconButton
@@ -81,7 +94,7 @@ export default function Nav() {
                 id="account-menu"
                 open={open}
                 onClose={handleClose}
-                onClick={handleClose}
+                // onClick={handleClose}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -102,18 +115,18 @@ export default function Nav() {
                             right: 14,
                             width: 10,
                             height: 10,
-                            bgcolor: "background.paper",
+                            bgcolor: theme.palette.background.paper,
                             transform: "translateY(-50%) rotate(45deg)",
                             zIndex: 0,
+                        },
+                        "& *": {
+                            color: theme.palette.primary.contrastText,
                         },
                     },
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <MenuItem title="Home" onClick={handleClose}>
-                    <HomeIcon /> Home
-                </MenuItem>
                 <MenuItem title="Profile" onClick={handleClose}>
                     <Avatar /> Profile
                 </MenuItem>
@@ -121,6 +134,12 @@ export default function Nav() {
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
+                <MenuItem id="home" title="Home" onClick={handleClose}>
+                    <ListItemIcon>
+                        <HomeIcon fontSize="small" />
+                    </ListItemIcon>
+                    Home
+                </MenuItem>
                 <MenuItem
                     id="add-recipe"
                     title="Add A Recipe"
@@ -149,11 +168,29 @@ export default function Nav() {
                     </ListItemIcon>
                     Menu Plan
                 </MenuItem>
-                <MenuItem title="Settings" onClick={handleClose}>
+                <MenuItem id="settings" title="Settings" onClick={handleClose}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
+                </MenuItem>
+                <MenuItem id="light-dark-modes" title="Settings">
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={
+                                        theme.palette.mode === "dark"
+                                            ? true
+                                            : false
+                                    }
+                                    onChange={toggleTheme}
+                                    inputProps={{ "aria-label": "controlled" }}
+                                />
+                            }
+                            label="Dark Mode"
+                        />
+                    </FormGroup>
                 </MenuItem>
                 <MenuItem
                     name="logout"

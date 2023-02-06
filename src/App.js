@@ -1,10 +1,17 @@
+import { useTheme } from "@emotion/react";
 import "./App.css";
 import Main from "./components/Layout/Main/Main.js";
 import Nav from "./components/Layout/Nav/Nav.js";
 
 function App() {
+    const theme = useTheme();
     return (
-        <div className="App">
+        <div
+            style={{
+                backgroundColor: theme.palette.background.default,
+            }}
+            className="App"
+        >
             <Nav />
             <Main />
         </div>

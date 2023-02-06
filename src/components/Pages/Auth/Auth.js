@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "@emotion/react";
 
 export default function Auth() {
     const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export default function Auth() {
     const { type } = useParams();
     console.log("type", type);
     const { user, setUser } = useUser();
+    const theme = useTheme();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -55,14 +57,19 @@ export default function Auth() {
                     height: "330px",
                     alignItems: "center",
                     justifyContent: "space-evenly",
-                    border: "1px solid black",
+                    borderWidth: "1px",
+                    borderStyle: "solid",
+                    borderColor: theme.palette.primary.main,
                     borderRadius: "10px",
                     boxShadow: "5px 5px 15px 0.5px rgb(0 0 0 / 20%)",
                     transition: "all 0.3s ease-in-out",
+                    backgroundColor: theme.palette.background.paper,
+                    // theme.palette.mode === "dark"
+                    //     ? theme.palette.primary.dark
+                    //     : theme.palette.primary.light,
                     "&:hover": {
-                        boxShadow: "5px 5px 15px 1px rgb(0 0 0 / 30%)",
+                        boxShadow: "5px 5px 15px 2px rgb(0 0 0 / 40%)",
                         transition: "all 0.3s ease-in-out",
-                        backgroundColor: "rgba(0, 0, 0, 0.07)",
                     },
                 }}
             >
@@ -72,6 +79,7 @@ export default function Auth() {
                         to="/auth/sign-in"
                         style={({ isActive }) => ({
                             display: !isActive ? "" : "none",
+                            color: theme.palette.primary.contrastText,
                         })}
                     >
                         Have an account? Sign In here.
@@ -81,15 +89,46 @@ export default function Auth() {
                         to="/auth/sign-up"
                         style={({ isActive }) => ({
                             display: !isActive ? "" : "none",
+                            color: theme.palette.primary.contrastText,
                         })}
                     >
                         {`Don't have an account? Sign Up here.`}
                     </NavLink>
                 </div>
 
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                    <InputLabel htmlFor="outlined-email">Email</InputLabel>
+                <FormControl
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                                borderColor: theme.palette.primary.light,
+                            },
+                        },
+                        "& label.Mui-focused": {
+                            color: theme.palette.primary.contrastText,
+                        },
+                        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline":
+                            {
+                                borderColor: theme.palette.primary.light,
+                            },
+                        m: 1,
+                        width: "25ch",
+                    }}
+                    variant="outlined"
+                >
+                    <InputLabel
+                        id="input-border-color"
+                        sx={{
+                            color: theme.palette.primary.contrastText,
+                        }}
+                        htmlFor="outlined-email"
+                    >
+                        Email
+                    </InputLabel>
                     <OutlinedInput
+                        sx={{
+                            backgroundColor: theme.palette.background.paper,
+                            color: theme.palette.primary.contrastText,
+                        }}
                         id="outlined-email"
                         type="email"
                         label="email"
@@ -97,11 +136,38 @@ export default function Auth() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </FormControl>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">
+                <FormControl
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                                borderColor: theme.palette.primary.light,
+                            },
+                        },
+                        "& label.Mui-focused": {
+                            color: theme.palette.primary.contrastText,
+                        },
+                        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline":
+                            {
+                                borderColor: theme.palette.primary.light,
+                            },
+                        m: 1,
+                        width: "25ch",
+                    }}
+                    variant="outlined"
+                >
+                    <InputLabel
+                        sx={{
+                            color: theme.palette.primary.contrastText,
+                        }}
+                        htmlFor="outlined-adornment-password"
+                    >
                         Password
                     </InputLabel>
                     <OutlinedInput
+                        sx={{
+                            backgroundColor: theme.palette.background.paper,
+                            color: theme.palette.primary.contrastText,
+                        }}
                         id="outlined-adornment-password"
                         type={showPassword ? "text" : "password"}
                         endAdornment={
@@ -135,9 +201,13 @@ export default function Auth() {
                     sx={{
                         m: 1,
                         width: "25ch",
+                        color: theme.palette.primary.contrastText,
+                        backgroundColor: theme.palette.background.paper,
                         "&:hover": {
+                            backgroundColor: theme.palette.primary.main,
                             boxShadow: "5px 5px 10px 1px rgb(0 0 0 / 20%)",
                             transition: "all 0.3s ease-in-out",
+                            color: theme.palette.primary.contrastText,
                         },
                     }}
                     color="primary"
