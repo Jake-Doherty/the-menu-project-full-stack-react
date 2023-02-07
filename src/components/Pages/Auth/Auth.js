@@ -17,7 +17,7 @@ import { useTheme } from "@emotion/react";
 export default function Auth() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { type } = useParams();
     console.log("type", type);
     const { user, setUser } = useUser();
@@ -64,9 +64,6 @@ export default function Auth() {
                     boxShadow: "5px 5px 15px 0.5px rgb(0 0 0 / 20%)",
                     transition: "all 0.3s ease-in-out",
                     backgroundColor: theme.palette.background.paper,
-                    // theme.palette.mode === "dark"
-                    //     ? theme.palette.primary.dark
-                    //     : theme.palette.primary.light,
                     "&:hover": {
                         boxShadow: "5px 5px 15px 2px rgb(0 0 0 / 40%)",
                         transition: "all 0.3s ease-in-out",
@@ -220,66 +217,3 @@ export default function Auth() {
         </>
     );
 }
-
-/* <div id="login-container">
-            <nav id="auth-nav">
-                <h1 id="auth-header">Todo Login</h1>
-                <div className="panel-tabs">
-                    <NavLink
-                        className="is-size-6 has-text-weight-bold"
-                        to="/auth/sign-in"
-                        style={({ isActive }) => ({
-                            display: !isActive ? "" : "none",
-                        })}
-                    >
-                        Have an account? Sign In here.
-                    </NavLink>
-                    <NavLink
-                        className="is-size-6 has-text-weight-bold"
-                        to="/auth/sign-up"
-                        style={({ isActive }) => ({
-                            display: !isActive ? "" : "none",
-                        })}
-                    >
-                        {`Don't have an account? Sign Up here.`}
-                    </NavLink>
-                </div>
-                <div className="auth-form">
-                    <div className="input-container">
-                        <label className="label">
-                            <h4>Email</h4>
-                            <input
-                                className="input"
-                                type="email"
-                                placeholder="email@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </label>
-                    </div>
-                    <div className="input-container">
-                        <label className="label">
-                            <h4>Password</h4>
-                        </label>
-                        <input
-                            className="input"
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="control">
-                    <Stack>
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={submitAuth}
-                        >
-                            Submit
-                        </Button>
-                    </Stack>
-                </div>
-            </nav>
-        </div> */
