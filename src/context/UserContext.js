@@ -1,4 +1,8 @@
-import { getProfile, updateProfile } from "../services/profile.js";
+import {
+    getProfile,
+    insertProfile,
+    updateProfile,
+} from "../services/profile.js";
 
 const { createContext, useState, useContext, useEffect } = require("react");
 const { getUser } = require("../services/auth");
@@ -8,13 +12,9 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const currentUser = getUser();
     const [user, setUser] = useState(currentUser);
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState({});
 
     useEffect(() => {
-        if (!user || !profile) {
-            return;
-        }
-
         if (user) {
             const fetchUserProfile = async () => {
                 try {
@@ -26,25 +26,41 @@ const UserProvider = ({ children }) => {
             };
             fetchUserProfile();
         }
-    }, [user, profile]);
+    }, [user]);
+    console.log("user", profile);
 
-    useEffect(() => {
-        if (!user || !profile) {
-            return;
+    const handleProfileChange = (props) => {
+        console.log("handleProfileChange", profile);
+
+        if (!profile) {
+            const fetchInsertProfile = async () => {
+                try {
+                    console.log("in the fetchUpdateProfile", profile);
+                    const resp = await insertProfile(user.id, props);
+                    console.log("resp", resp);
+                } catch (e) {
+                    console.error(e.message);
+                }
+            };
+            fetchInsertProfile();
         }
-        const fetchUpdateProfile = async () => {
-            try {
-                console.log("profile", profile);
-                await updateProfile(user.id, profile);
-            } catch (e) {
-                console.error(e.message);
-            }
-        };
-        fetchUpdateProfile();
-    }, [user, profile]);
+        if (profile) {
+            const fetchUpdateProfile = async () => {
+                try {
+                    const resp = await updateProfile(user.id, props);
+                    setProfile(resp);
+                } catch (e) {
+                    console.error(e.message);
+                }
+            };
+            fetchUpdateProfile();
+        }
+    };
 
     return (
-        <UserContext.Provider value={{ user, setUser, profile, setProfile }}>
+        <UserContext.Provider
+            value={{ user, setUser, profile, setProfile, handleProfileChange }}
+        >
             {children}
         </UserContext.Provider>
     );

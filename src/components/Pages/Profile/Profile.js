@@ -2,29 +2,19 @@ import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext.js";
+import { useTheme as MuiTheme } from "@emotion/react";
 
 export default function Profile() {
-    const { user, profile, setProfile } = useUser();
+    const theme = MuiTheme();
+    const { user, profile, handleProfileChange } = useUser();
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
 
-    const [profileModel, setProfileModel] = useState({
-        username: "",
-        bio: "",
-    });
-
-    const handleChange = (e) => {
-        e.target.name === "username" && setUsernameInput(e.target.value);
-        e.target.name === "bio" && setBioInput(e.target.value);
-        setProfileModel({
-            username: usernameInput,
-            bio: bioInput,
-        });
-    };
-    // console.log(bioInput);
-
     const handleProfileUpdate = (e) => {
-        setProfile(profileModel);
+        console.log("handleProfileUpdate", bioInput, usernameInput);
+        handleProfileChange({ username: usernameInput, bio: bioInput });
+        setBioInput("");
+        setUsernameInput("");
     };
 
     if (!user) {
@@ -43,36 +33,49 @@ export default function Profile() {
                     height: "100%",
                 }}
             >
-                <Typography variant="h4" component="h4" gutterBottom>
+                <Typography
+                    sx={{ color: theme.palette.primary.contrastText }}
+                    variant="h4"
+                    component="h4"
+                    gutterBottom
+                >
                     Profile
                 </Typography>
                 <FormControl>
                     <TextField
+                        focused={profile ? true : false}
                         name="username"
                         id="outlined-basic"
                         label="Username"
                         variant="outlined"
                         value={usernameInput}
-                        onChange={handleChange}
+                        placeholder={profile ? profile.display_name : ""}
+                        onChange={(e) => {
+                            setUsernameInput(e.target.value);
+                        }}
                     />
                 </FormControl>
                 <FormControl>
                     <TextField
+                        focused={profile ? true : false}
                         name="bio"
                         sx={{ width: "100%" }}
                         id="outlined-multiline-flexible"
                         label="Bio"
                         multiline
                         maxRows={4}
-                        defaultValue={bioInput}
-                        onChange={handleChange}
+                        value={bioInput}
+                        placeholder={profile ? profile.bio : null}
+                        onChange={(e) => {
+                            setBioInput(e.target.value);
+                        }}
                     />
                 </FormControl>
                 <Button
                     variant="contained"
                     onClick={(e) => handleProfileUpdate(e)}
                 >
-                    Update
+                    {profile ? "Update" : "Create"}
                 </Button>
             </Box>
         </div>
