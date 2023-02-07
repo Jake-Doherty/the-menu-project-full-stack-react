@@ -1,4 +1,5 @@
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import Image from "mui-image";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext.js";
@@ -24,6 +25,10 @@ export default function Profile() {
     return (
         <div>
             <Box
+                border={1}
+                borderRadius={2}
+                borderColor={theme.palette.primary.main}
+                p={2}
                 gap={2}
                 sx={{
                     display: "flex",
@@ -47,6 +52,7 @@ export default function Profile() {
                         name="username"
                         id="outlined-basic"
                         label="Username"
+                        sx={{ width: "100%" }}
                         variant="outlined"
                         value={usernameInput}
                         placeholder={profile ? profile.display_name : ""}
@@ -71,6 +77,31 @@ export default function Profile() {
                         }}
                     />
                 </FormControl>
+                <Button variant="contained" component="label">
+                    Upload File
+                    <input
+                        onChange={(e) => console.log(e)}
+                        type="file"
+                        hidden
+                    />
+                </Button>
+                {profile ? (
+                    <Image
+                        showLoading={true}
+                        errorIcon={true}
+                        src={
+                            profile.avatar_image_url === ""
+                                ? "https://via.placeholder.com/150"
+                                : profile.avatar_image_url
+                        }
+                        title="Profile Avatar"
+                        alt="Profile Image"
+                        aspectRatio={1}
+                        sx={{ width: "100%", borderRadius: "50%" }}
+                    />
+                ) : (
+                    "https://via.placeholder.com/150"
+                )}
                 <Button
                     variant="contained"
                     onClick={(e) => handleProfileUpdate(e)}
