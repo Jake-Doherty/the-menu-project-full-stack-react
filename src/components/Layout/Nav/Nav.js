@@ -27,7 +27,7 @@ import { useTheme } from "../../../context/ThemeContext.js";
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { user, setUser } = useUser();
+    const { user, setUser, setProfile } = useUser();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -57,6 +57,7 @@ export default function Nav() {
         setAnchorEl(null);
         signOut();
         setUser(null);
+        setProfile(undefined);
     };
 
     return (
