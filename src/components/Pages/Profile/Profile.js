@@ -7,13 +7,24 @@ import { useTheme as MuiTheme } from "@emotion/react";
 
 export default function Profile() {
     const theme = MuiTheme();
-    const { user, profile, handleProfileChange } = useUser();
+    const {
+        user,
+        profile,
+        handleProfileChange,
+        profileAvatarInput,
+        setProfileAvatarInput,
+        profileAvatarUrl,
+    } = useUser();
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
 
-    const handleProfileUpdate = (e) => {
-        console.log("handleProfileUpdate", bioInput, usernameInput);
-        handleProfileChange({ username: usernameInput, bio: bioInput });
+    console.log(profile);
+
+    const handleProfileUpdate = () => {
+        handleProfileChange({
+            username: usernameInput,
+            bio: bioInput,
+        });
         setBioInput("");
         setUsernameInput("");
     };
@@ -28,9 +39,10 @@ export default function Profile() {
                 border={1}
                 borderRadius={2}
                 borderColor={theme.palette.primary.main}
-                p={2}
+                p={5}
                 gap={2}
                 sx={{
+                    width: "max(275px, 35vw)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -52,7 +64,11 @@ export default function Profile() {
                         name="username"
                         id="outlined-basic"
                         label="Username"
-                        sx={{ width: "100%" }}
+                        sx={{
+                            width: "max(300px, 30vw)",
+                            alignSelf: "center",
+                            justifySelf: "center",
+                        }}
                         variant="outlined"
                         value={usernameInput}
                         placeholder={profile ? profile.display_name : ""}
@@ -65,7 +81,11 @@ export default function Profile() {
                     <TextField
                         focused={profile ? true : false}
                         name="bio"
-                        sx={{ width: "100%" }}
+                        sx={{
+                            width: "max(300px, 30vw)",
+                            alignSelf: "center",
+                            justifySelf: "center",
+                        }}
                         id="outlined-multiline-flexible"
                         label="Bio"
                         multiline
@@ -80,27 +100,31 @@ export default function Profile() {
                 <Button variant="contained" component="label">
                     Upload File
                     <input
-                        onChange={(e) => console.log(e)}
+                        onChange={(e) =>
+                            setProfileAvatarInput(e.target.files[0])
+                        }
                         type="file"
                         hidden
                     />
                 </Button>
                 {profile ? (
                     <Image
+                        sx={{ borderRadius: "50%" }}
+                        width={300}
+                        height={300}
                         showLoading={true}
                         errorIcon={true}
                         src={
-                            profile.avatar_image_url === ""
+                            !profileAvatarInput && !profile.avatar_image_url
                                 ? "https://via.placeholder.com/150"
-                                : profile.avatar_image_url
+                                : profileAvatarUrl
                         }
                         title="Profile Avatar"
                         alt="Profile Image"
                         aspectRatio={1}
-                        sx={{ width: "100%", borderRadius: "50%" }}
                     />
                 ) : (
-                    "https://via.placeholder.com/150"
+                    <Image src="https://via.placeholder.com/150" />
                 )}
                 <Button
                     variant="contained"

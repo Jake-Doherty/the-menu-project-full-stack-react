@@ -37,7 +37,7 @@ const UserProvider = ({ children }) => {
             try {
                 const imageFile = profileAvatarInput;
 
-                const imageUrl = URL.createObjectURL(imageFile);
+                // const imageUrl = URL.createObjectURL(imageFile);
 
                 const randomFolder = Math.floor(Date.now() * Math.random());
                 const imagePath = `profile-avatars/${randomFolder}/${imageFile.name}`;
@@ -50,7 +50,7 @@ const UserProvider = ({ children }) => {
 
                 console.log("afters storage bucket url creation", url);
 
-                setProfileAvatarUrl(url ? url : imageUrl);
+                setProfileAvatarUrl(url);
             } catch (e) {
                 console.error(e.message);
             }
@@ -58,16 +58,15 @@ const UserProvider = ({ children }) => {
         uploadAvatarImage();
     }, [profileAvatarInput]);
 
-    const handleProfileChange = async ({ username, bio, profileAvatar }) => {
-        console.log("handle profile avatar change", profileAvatar);
+    const handleProfileChange = async ({ username, bio, profile }) => {
+        console.log("handle profile avatar change", profileAvatarUrl);
 
         if (!profile) {
             const fetchInsertProfile = async () => {
                 try {
-                    await insertProfile(user.id, {
+                    await insertProfile(user.id, profileAvatarUrl, {
                         username,
                         bio,
-                        profileAvatar,
                     });
                 } catch (e) {
                     console.error(e.message);
@@ -78,11 +77,14 @@ const UserProvider = ({ children }) => {
         if (profile) {
             const fetchUpdateProfile = async () => {
                 try {
-                    const resp = await updateProfile(user.id, {
-                        username,
-                        bio,
-                        profileAvatar,
-                    });
+                    const resp = await updateProfile(
+                        user.id,
+                        profileAvatarUrl,
+                        {
+                            username,
+                            bio,
+                        }
+                    );
                     setProfile(resp);
                 } catch (e) {
                     console.error(e.message);
