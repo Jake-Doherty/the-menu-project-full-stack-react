@@ -2,6 +2,7 @@ import {
     getProfile,
     insertProfile,
     updateProfile,
+    uploadImage,
 } from "../services/profile.js";
 
 const { createContext, useState, useContext, useEffect } = require("react");
@@ -12,13 +13,15 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const currentUser = getUser();
     const [user, setUser] = useState(currentUser);
-    const [profile, setProfile] = useState({});
+    const [profile, setProfile] = useState(undefined);
+    const [profileAvatarInput, setProfileAvatarInput] = useState("");
+    const [profileAvatarUrl, setProfileAvatarUrl] = useState("");
 
     useEffect(() => {
         if (user) {
             const fetchUserProfile = async () => {
                 try {
-                    const data = await getProfile(user.id);
+                    const data = await getProfile(user.id, profile);
                     setProfile(data);
                 } catch (e) {
                     console.error(e.message);
@@ -26,18 +29,46 @@ const UserProvider = ({ children }) => {
             };
             fetchUserProfile();
         }
-    }, [user]);
-    console.log("user", profile);
+    }, [user, profile]);
 
-    const handleProfileChange = (props) => {
-        console.log("handleProfileChange", profile);
+    useEffect(() => {
+        const uploadAvatarImage = async () => {
+            if (!profileAvatarInput) return;
+            try {
+                const imageFile = profileAvatarInput;
+
+                const imageUrl = URL.createObjectURL(imageFile);
+
+                const randomFolder = Math.floor(Date.now() * Math.random());
+                const imagePath = `profile-avatars/${randomFolder}/${imageFile.name}`;
+
+                const url = await uploadImage(
+                    "profile-avatars",
+                    imagePath,
+                    imageFile
+                );
+
+                console.log("afters storage bucket url creation", url);
+
+                setProfileAvatarUrl(url ? url : imageUrl);
+            } catch (e) {
+                console.error(e.message);
+            }
+        };
+        uploadAvatarImage();
+    }, [profileAvatarInput]);
+
+    const handleProfileChange = async ({ username, bio, profileAvatar }) => {
+        console.log("handle profile avatar change", profileAvatar);
 
         if (!profile) {
             const fetchInsertProfile = async () => {
                 try {
-                    console.log("in the fetchUpdateProfile", profile);
-                    const resp = await insertProfile(user.id, props);
-                    console.log("resp", resp);
+                    await insertProfile(user.id, {
+                        username,
+                        bio,
+                        profileAvatar,
+                    });
                 } catch (e) {
                     console.error(e.message);
                 }
@@ -47,7 +78,11 @@ const UserProvider = ({ children }) => {
         if (profile) {
             const fetchUpdateProfile = async () => {
                 try {
-                    const resp = await updateProfile(user.id, props);
+                    const resp = await updateProfile(user.id, {
+                        username,
+                        bio,
+                        profileAvatar,
+                    });
                     setProfile(resp);
                 } catch (e) {
                     console.error(e.message);
@@ -59,7 +94,16 @@ const UserProvider = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ user, setUser, profile, setProfile, handleProfileChange }}
+            value={{
+                user,
+                setUser,
+                profile,
+                setProfile,
+                handleProfileChange,
+                profileAvatarInput,
+                setProfileAvatarInput,
+                profileAvatarUrl,
+            }}
         >
             {children}
         </UserContext.Provider>
