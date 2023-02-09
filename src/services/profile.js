@@ -5,7 +5,7 @@ export async function getProfile(userId, profile) {
     const response = await client
         .from("profiles")
         .select("*")
-        .match({ id: userId })
+        .match({ user_id: userId })
         .maybeSingle();
 
     return checkError(response);
@@ -19,8 +19,9 @@ export async function insertProfile(userId, { username, bio, profileAvatar }) {
             bio: bio,
             avatar_image_url: profileAvatar,
         })
-        .match({ id: userId })
+        .match({ user_id: userId })
         .maybeSingle();
+    console.log("===insertProfile response===", response);
 
     return checkError(response);
 }
@@ -33,9 +34,10 @@ export async function updateProfile(userId, { username, bio, profileAvatar }) {
             bio: bio,
             avatar_image_url: profileAvatar,
         })
-        .match({ id: userId })
+        .match({ user_id: userId })
         .maybeSingle();
 
+    console.log("===updateProfile response===", response);
     return checkError(response);
 }
 
