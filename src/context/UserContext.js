@@ -58,33 +58,38 @@ const UserProvider = ({ children }) => {
         uploadAvatarImage();
     }, [profileAvatarInput]);
 
-    const handleProfileChange = async ({ username, bio, profile }) => {
-        console.log("handle profile avatar change", profileAvatarUrl);
+    const handleProfileChange = async ({ username, bio }) => {
+        console.log(
+            "handleProfileChange profileAvatarUrl state",
+            profileAvatarUrl
+        );
 
         if (!profile) {
+            console.log("no profile, inserting");
             const fetchInsertProfile = async () => {
                 try {
-                    await insertProfile(user.id, profileAvatarUrl, {
+                    const resp = await insertProfile(user.id, {
                         username,
                         bio,
+                        profileAvatar: profileAvatarUrl,
                     });
+                    setProfile(resp);
                 } catch (e) {
                     console.error(e.message);
                 }
             };
             fetchInsertProfile();
         }
+
         if (profile) {
+            console.log("profile exists, updating");
             const fetchUpdateProfile = async () => {
                 try {
-                    const resp = await updateProfile(
-                        user.id,
-                        profileAvatarUrl,
-                        {
-                            username,
-                            bio,
-                        }
-                    );
+                    const resp = await updateProfile(user.id, {
+                        username,
+                        bio,
+                        profileAvatar: profileAvatarUrl,
+                    });
                     setProfile(resp);
                 } catch (e) {
                     console.error(e.message);
