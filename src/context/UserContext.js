@@ -18,7 +18,7 @@ const UserProvider = ({ children }) => {
     const [profileAvatarUrl, setProfileAvatarUrl] = useState("");
 
     useEffect(() => {
-        if (user) {
+        if (user && !profile) {
             const fetchUserProfile = async () => {
                 try {
                     const data = await getProfile(user.id, profile);

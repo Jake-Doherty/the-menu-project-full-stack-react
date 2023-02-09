@@ -1,4 +1,13 @@
-import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    Switch,
+    TextField,
+    Typography,
+} from "@mui/material";
 import Image from "mui-image";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -99,6 +108,19 @@ export default function Profile() {
                         }}
                     />
                 </FormControl>
+                <FormGroup>
+                    <FormControlLabel
+                        sx={{ color: theme.palette.primary.contrastText }}
+                        control={
+                            <Switch
+                                checked={profile.dark_mode ? true : false}
+                                // onChange={toggleTheme}
+                                inputProps={{ "aria-label": "controlled" }}
+                            />
+                        }
+                        label="Dark Mode"
+                    />
+                </FormGroup>
                 <Button variant="contained" component="label">
                     Upload File
                     <input

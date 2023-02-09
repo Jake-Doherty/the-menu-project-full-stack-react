@@ -27,7 +27,7 @@ import { useTheme } from "../../../context/ThemeContext.js";
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { user, setUser, setProfile } = useUser();
+    const { user, setUser, profile, setProfile } = useUser();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -75,7 +75,11 @@ export default function Nav() {
                         minWidth: 100,
                         color: theme.palette.primary.contrastText,
                     }}
-                >{`Welcome Back ${user.email}`}</Typography>
+                >
+                    {profile && profile.display_name
+                        ? `Welcome back, ${profile.display_name}!`
+                        : `Welcome back, ${user.email}!`}
+                </Typography>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -86,7 +90,9 @@ export default function Nav() {
                         aria-expanded={open ? "true" : undefined}
                     >
                         <Avatar sx={{ width: 32, height: 32 }}>
-                            {user.email[0]}
+                            {profile && profile.display_name
+                                ? profile.display_name[0]
+                                : user.email[0]}
                         </Avatar>
                     </IconButton>
                 </Tooltip>
