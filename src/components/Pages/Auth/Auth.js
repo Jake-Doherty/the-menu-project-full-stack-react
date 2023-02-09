@@ -19,7 +19,6 @@ export default function Auth() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const { type } = useParams();
-    console.log("type", type);
     const { user, setUser } = useUser();
     const theme = useTheme();
 

@@ -11,14 +11,11 @@ export default function Profile() {
         user,
         profile,
         handleProfileChange,
-        profileAvatarInput,
         setProfileAvatarInput,
         profileAvatarUrl,
     } = useUser();
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
-
-    console.log(profile);
 
     const handleProfileUpdate = () => {
         handleProfileChange({
@@ -33,6 +30,7 @@ export default function Profile() {
         return <Navigate to="/auth/sign-in" />;
     }
 
+    console.log("Profile.js profile state", profile);
     return (
         <div>
             <Box
@@ -91,7 +89,7 @@ export default function Profile() {
                         multiline
                         maxRows={4}
                         value={bioInput}
-                        placeholder={profile ? profile.bio : null}
+                        placeholder={profile ? profile.bio : "none"}
                         onChange={(e) => {
                             setBioInput(e.target.value);
                         }}
@@ -107,25 +105,25 @@ export default function Profile() {
                         hidden
                     />
                 </Button>
-                {profile ? (
-                    <Image
-                        sx={{ borderRadius: "50%" }}
-                        width={300}
-                        height={300}
-                        showLoading={true}
-                        errorIcon={true}
-                        src={
-                            !profileAvatarInput && !profile.avatar_image_url
-                                ? "https://via.placeholder.com/150"
-                                : profileAvatarUrl
-                        }
-                        title="Profile Avatar"
-                        alt="Profile Image"
-                        aspectRatio={1}
-                    />
-                ) : (
-                    <Image src="https://via.placeholder.com/150" />
-                )}
+
+                <Image
+                    sx={{ borderRadius: "50%" }}
+                    width={300}
+                    height={300}
+                    showLoading={true}
+                    errorIcon={false}
+                    src={
+                        profile && !profileAvatarUrl
+                            ? profile.avatar_image_url
+                            : profileAvatarUrl
+                            ? profileAvatarUrl
+                            : "https://via.placeholder.com/300"
+                    }
+                    title="Profile Avatar"
+                    alt="Profile Image"
+                    aspectRatio={1}
+                />
+
                 <Button
                     variant="contained"
                     onClick={(e) => handleProfileUpdate(e)}
