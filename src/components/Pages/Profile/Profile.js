@@ -58,7 +58,7 @@ export default function Profile() {
                 </Typography>
                 <FormControl>
                     <TextField
-                        focused={profile ? true : false}
+                        focused={profile && profile.display_name ? true : false}
                         name="username"
                         id="outlined-basic"
                         label="Username"
@@ -69,7 +69,11 @@ export default function Profile() {
                         }}
                         variant="outlined"
                         value={usernameInput}
-                        placeholder={profile ? profile.display_name : ""}
+                        placeholder={
+                            profile && profile.display_name
+                                ? profile.display_name
+                                : null
+                        }
                         onChange={(e) => {
                             setUsernameInput(e.target.value);
                         }}
@@ -77,7 +81,7 @@ export default function Profile() {
                 </FormControl>
                 <FormControl>
                     <TextField
-                        focused={profile ? true : false}
+                        focused={profile && profile.bio ? true : false}
                         name="bio"
                         sx={{
                             width: "max(300px, 30vw)",
