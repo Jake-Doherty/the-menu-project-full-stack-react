@@ -27,7 +27,7 @@ import { useTheme } from "../../../context/ThemeContext.js";
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { user, setUser, profile, setProfile } = useUser();
+    const { user, setUser, profile, setProfile, themeInput } = useUser();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -199,11 +199,7 @@ export default function Nav() {
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={
-                                        theme.palette.mode === "dark"
-                                            ? true
-                                            : false
-                                    }
+                                    checked={themeInput}
                                     onChange={toggleTheme}
                                     inputProps={{ "aria-label": "controlled" }}
                                 />
