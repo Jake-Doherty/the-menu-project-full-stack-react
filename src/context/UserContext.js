@@ -16,9 +16,10 @@ const UserProvider = ({ children }) => {
     const [profile, setProfile] = useState(undefined);
     const [profileAvatarInput, setProfileAvatarInput] = useState("");
     const [profileAvatarUrl, setProfileAvatarUrl] = useState("");
+    const [themeInput, setThemeInput] = useState(true);
 
     useEffect(() => {
-        if (user && !profile) {
+        if (user) {
             const fetchUserProfile = async () => {
                 try {
                     const data = await getProfile(user.id, profile);
@@ -28,6 +29,9 @@ const UserProvider = ({ children }) => {
                 }
             };
             fetchUserProfile();
+            if (profile) {
+                setThemeInput(profile.dark_mode);
+            }
         }
     }, [user, profile]);
 
@@ -58,11 +62,8 @@ const UserProvider = ({ children }) => {
         uploadAvatarImage();
     }, [profileAvatarInput]);
 
-    const handleProfileChange = async ({ username, bio }) => {
-        console.log(
-            "handleProfileChange profileAvatarUrl state",
-            profileAvatarUrl
-        );
+    const handleProfileChange = async ({ username, bio, darkMode }) => {
+        console.log("handleProfileChange profileAvatarUrl state");
 
         if (!profile) {
             console.log("no profile, inserting");
@@ -72,6 +73,7 @@ const UserProvider = ({ children }) => {
                         username,
                         bio,
                         profileAvatar: profileAvatarUrl,
+                        darkMode,
                     });
                     setProfile(resp);
                 } catch (e) {
@@ -89,6 +91,7 @@ const UserProvider = ({ children }) => {
                         username,
                         bio,
                         profileAvatar: profileAvatarUrl,
+                        darkMode,
                     });
                     setProfile(resp);
                 } catch (e) {
@@ -110,6 +113,8 @@ const UserProvider = ({ children }) => {
                 profileAvatarInput,
                 setProfileAvatarInput,
                 profileAvatarUrl,
+                themeInput,
+                setThemeInput,
             }}
         >
             {children}
