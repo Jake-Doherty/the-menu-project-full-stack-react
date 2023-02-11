@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 // pausing on saving theme to user for now until theme has been set up globally.
-// import { useUser } from "./UserContext.js";
+import { useUser } from "./UserContext.js";
 import { ThemeProvider } from "@mui/system/";
 import { createTheme } from "@mui/material/styles";
 
@@ -111,13 +111,14 @@ const darkTheme = createTheme({
 const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
-    // const { user } = useUser();
+    const { setThemeInput } = useUser();
     const [userTheme, setUserTheme] = useState(darkTheme);
 
     const toggleTheme = () => {
         setUserTheme((prevTheme) =>
             prevTheme === lightTheme ? darkTheme : lightTheme
         );
+        setThemeInput((prevTheme) => !prevTheme);
     };
 
     return (
