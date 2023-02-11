@@ -15,21 +15,27 @@ import { useUser } from "../../../context/UserContext.js";
 import { useTheme as MuiTheme } from "@emotion/react";
 
 export default function Profile() {
-    const theme = MuiTheme();
     const {
         user,
         profile,
         handleProfileChange,
         setProfileAvatarInput,
         profileAvatarUrl,
+        themeInput,
+        setThemeInput,
     } = useUser();
+
+    const theme = MuiTheme();
+
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
+    // const [themeInput, setThemeInput] = useState(profile ? true : false);
 
     const handleProfileUpdate = () => {
         handleProfileChange({
             username: usernameInput,
             bio: bioInput,
+            darkMode: themeInput,
         });
         setBioInput("");
         setUsernameInput("");
@@ -39,7 +45,8 @@ export default function Profile() {
         return <Navigate to="/auth/sign-in" />;
     }
 
-    console.log("Profile.js profile state", profile);
+    console.log("===Profile.js profile state===", profile, themeInput);
+
     return (
         <div>
             <Box
@@ -102,7 +109,9 @@ export default function Profile() {
                         multiline
                         maxRows={4}
                         value={bioInput}
-                        placeholder={profile ? profile.bio : "none"}
+                        placeholder={
+                            profile && profile.bio ? profile.bio : null
+                        }
                         onChange={(e) => {
                             setBioInput(e.target.value);
                         }}
@@ -113,8 +122,10 @@ export default function Profile() {
                         sx={{ color: theme.palette.primary.contrastText }}
                         control={
                             <Switch
-                                checked={profile.dark_mode ? true : false}
-                                // onChange={toggleTheme}
+                                checked={themeInput}
+                                onChange={() => {
+                                    setThemeInput((prevChoice) => !prevChoice);
+                                }}
                                 inputProps={{ "aria-label": "controlled" }}
                             />
                         }
@@ -132,6 +143,7 @@ export default function Profile() {
                     />
                 </Button>
 
+                {/* image ternary logic needs work for case when profile but removed avatar src */}
                 <Image
                     sx={{ borderRadius: "50%" }}
                     width={300}
