@@ -109,6 +109,7 @@ export default function Nav() {
                         overflow: "visible",
                         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                         mt: 1.5,
+                        backgroundColor: theme.palette.background.paper,
                         "& .MuiAvatar-root": {
                             width: 32,
                             height: 32,
@@ -123,7 +124,8 @@ export default function Nav() {
                             right: 14,
                             width: 10,
                             height: 10,
-                            bgcolor: theme.palette.background.paper,
+                            backgroundColor: theme.palette.background.paper,
+
                             transform: "translateY(-50%) rotate(45deg)",
                             zIndex: 0,
                         },
@@ -200,7 +202,7 @@ export default function Nav() {
                             control={
                                 <Switch
                                     checked={themeInput}
-                                    onChange={toggleTheme}
+                                    onClick={toggleTheme}
                                     inputProps={{ "aria-label": "controlled" }}
                                 />
                             }
