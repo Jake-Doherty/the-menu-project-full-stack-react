@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext.js";
 import { useTheme as MuiTheme } from "@emotion/react";
+import { useTheme } from "../../../context/ThemeContext.js";
 
 export default function Profile() {
     const {
@@ -22,10 +23,12 @@ export default function Profile() {
         setProfileAvatarInput,
         profileAvatarUrl,
         themeInput,
-        setThemeInput,
+        // setThemeInput,
     } = useUser();
 
     const theme = MuiTheme();
+
+    const { toggleTheme } = useTheme();
 
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
@@ -45,12 +48,10 @@ export default function Profile() {
         return <Navigate to="/auth/sign-in" />;
     }
 
-    console.log("===Profile.js profile state===", profile, themeInput);
-
     return (
         <div>
             <Box
-                border={1}
+                border={2}
                 borderRadius={2}
                 borderColor={theme.palette.primary.main}
                 p={5}
@@ -78,10 +79,15 @@ export default function Profile() {
                         name="username"
                         id="outlined-basic"
                         label="Username"
+                        helperText="Enter a username"
                         sx={{
                             width: "max(300px, 30vw)",
                             alignSelf: "center",
                             justifySelf: "center",
+                            "& .css-1gjhcy5-MuiInputBase-input-MuiOutlinedInput-input, & .css-645khj-MuiFormHelperText-root":
+                                {
+                                    color: theme.palette.primary.contrastText,
+                                },
                         }}
                         variant="outlined"
                         value={usernameInput}
@@ -103,9 +109,14 @@ export default function Profile() {
                             width: "max(300px, 30vw)",
                             alignSelf: "center",
                             justifySelf: "center",
+                            "& .css-vcg1b0-MuiInputBase-input-MuiOutlinedInput-input, & .css-645khj-MuiFormHelperText-root":
+                                {
+                                    color: theme.palette.primary.contrastText,
+                                },
                         }}
                         id="outlined-multiline-flexible"
                         label="Bio"
+                        helperText="Tell us about yourself, Chef."
                         multiline
                         maxRows={4}
                         value={bioInput}
@@ -119,13 +130,16 @@ export default function Profile() {
                 </FormControl>
                 <FormGroup>
                     <FormControlLabel
-                        sx={{ color: theme.palette.primary.contrastText }}
+                        sx={{
+                            "& .MuiFormControlLabel-label": {
+                                color: theme.palette.primary.contrastText,
+                                fontWeight: "bold",
+                            },
+                        }}
                         control={
                             <Switch
                                 checked={themeInput}
-                                onChange={() => {
-                                    setThemeInput((prevChoice) => !prevChoice);
-                                }}
+                                onClick={toggleTheme}
                                 inputProps={{ "aria-label": "controlled" }}
                             />
                         }
@@ -151,10 +165,14 @@ export default function Profile() {
                     showLoading={true}
                     errorIcon={false}
                     src={
-                        profile && !profileAvatarUrl
-                            ? profile.avatar_image_url
+                        profile &&
+                        !profileAvatarUrl &&
+                        !profile.avatar_image_url
+                            ? "https://via.placeholder.com/300"
                             : profileAvatarUrl
                             ? profileAvatarUrl
+                            : profile
+                            ? profile.avatar_image_url
                             : "https://via.placeholder.com/300"
                     }
                     title="Profile Avatar"
