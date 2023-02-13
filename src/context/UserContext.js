@@ -16,7 +16,9 @@ const UserProvider = ({ children }) => {
     const [profile, setProfile] = useState(undefined);
     const [profileAvatarInput, setProfileAvatarInput] = useState("");
     const [profileAvatarUrl, setProfileAvatarUrl] = useState("");
-    const [themeInput, setThemeInput] = useState(true);
+    const [themeInput, setThemeInput] = useState(
+        profile && profile.dark_mode ? profile.dark_mode : true
+    );
 
     useEffect(() => {
         if (user) {
@@ -40,8 +42,6 @@ const UserProvider = ({ children }) => {
             if (!profileAvatarInput) return;
             try {
                 const imageFile = profileAvatarInput;
-
-                // const imageUrl = URL.createObjectURL(imageFile);
 
                 const randomFolder = Math.floor(Date.now() * Math.random());
                 const imagePath = `profile-avatars/${randomFolder}/${imageFile.name}`;
