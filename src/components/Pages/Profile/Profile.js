@@ -23,7 +23,6 @@ export default function Profile() {
         setProfileAvatarInput,
         profileAvatarUrl,
         themeInput,
-        // setThemeInput,
     } = useUser();
 
     const theme = MuiTheme();
@@ -32,7 +31,6 @@ export default function Profile() {
 
     const [usernameInput, setUsernameInput] = useState("");
     const [bioInput, setBioInput] = useState("");
-    // const [themeInput, setThemeInput] = useState(profile ? true : false);
 
     const handleProfileUpdate = () => {
         handleProfileChange({
@@ -88,6 +86,14 @@ export default function Profile() {
                                 {
                                     color: theme.palette.primary.contrastText,
                                 },
+                            "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused fieldset": {
+                                    borderColor: theme.palette.primary.main,
+                                },
+                            },
+                            "& .css-jnltum-MuiOutlinedInput-notchedOutline": {
+                                borderColor: theme.palette.primary.main,
+                            },
                         }}
                         variant="outlined"
                         value={usernameInput}
@@ -113,6 +119,14 @@ export default function Profile() {
                                 {
                                     color: theme.palette.primary.contrastText,
                                 },
+                            "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused fieldset": {
+                                    borderColor: theme.palette.primary.main,
+                                },
+                            },
+                            "& .css-jnltum-MuiOutlinedInput-notchedOutline": {
+                                borderColor: theme.palette.primary.main,
+                            },
                         }}
                         id="outlined-multiline-flexible"
                         label="Bio"
@@ -157,9 +171,12 @@ export default function Profile() {
                     />
                 </Button>
 
-                {/* image ternary logic needs work for case when profile but removed avatar src */}
                 <Image
-                    sx={{ borderRadius: "50%" }}
+                    sx={{
+                        border: 2,
+                        borderColor: theme.palette.primary.main,
+                        borderRadius: "50%",
+                    }}
                     width={300}
                     height={300}
                     showLoading={true}
