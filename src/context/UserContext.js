@@ -87,12 +87,13 @@ const UserProvider = ({ children }) => {
             console.log("profile exists, updating");
             const fetchUpdateProfile = async () => {
                 try {
-                    const resp = await updateProfile(user.id, {
+                    await updateProfile(user.id, {
                         username,
                         bio,
                         profileAvatar: profileAvatarUrl,
                         darkMode,
                     });
+                    const resp = await getProfile(user.id, profile);
                     setProfile(resp);
                 } catch (e) {
                     console.error(e.message);
