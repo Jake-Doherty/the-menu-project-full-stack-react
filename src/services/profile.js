@@ -34,18 +34,50 @@ export async function updateProfile(
     userId,
     { username, bio, profileAvatar, darkMode }
 ) {
-    const response = await client
+    // const response = await client
+    //     .from("profiles")
+    //     .update({
+    //         display_name: username,
+    //         bio: bio,
+    //         avatar_image_url: profileAvatar,
+    //         dark_mode: darkMode,
+    //     })
+    //     .match({ user_id: userId })
+    //     .maybeSingle();
+
+    let response = await client.from("profiles").select("*");
+
+    if (username) {
+        response = await client
+            .from("profiles")
+            .update({ display_name: username })
+            .match({ user_id: userId })
+            .maybeSingle();
+    }
+
+    if (bio) {
+        response = await client
+            .from("profiles")
+            .update({ bio: bio })
+            .match({ user_id: userId })
+            .maybeSingle();
+    }
+
+    if (profileAvatar) {
+        response = await client
+            .from("profiles")
+            .update({ avatar_image_url: profileAvatar })
+            .match({ user_id: userId })
+            .maybeSingle();
+    }
+    await client
         .from("profiles")
-        .update({
-            display_name: username,
-            bio: bio,
-            avatar_image_url: profileAvatar,
-            dark_mode: darkMode,
-        })
+        .update({ dark_mode: darkMode })
         .match({ user_id: userId })
         .maybeSingle();
 
     console.log("===updateProfile response===", response);
+
     return checkError(response);
 }
 
