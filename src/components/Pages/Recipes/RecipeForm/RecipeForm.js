@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext.js";
 import {
@@ -6,6 +6,9 @@ import {
     FormControl,
     OutlinedInput,
     Typography,
+    IconButton,
+    TextField,
+    MenuItem,
 } from "@mui/material/";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -19,63 +22,100 @@ export default function RecipeForm() {
 
     const theme = useMuiTheme();
 
+    const measurements = [
+        {
+            value: "Cup",
+            label: "Cup",
+        },
+        {
+            value: "TBSP",
+            label: "TBSP",
+        },
+        {
+            value: "TSP",
+            label: "TSP",
+        },
+        {
+            value: "Fl Oz",
+            label: "Fl Oz",
+        },
+    ];
+
+    const [ingredientList, setIngredientList] = useState([
+        {
+            unit: "",
+            quantity: "",
+            ingredientName: "",
+        },
+    ]);
+
     if (!user) {
         return <Navigate to="/auth/sign-in" />;
     }
 
     const handleAddIngredient = () => {
-        console.log("Add Ingredient");
-
         // const ingredientSection = document.getElementById(
         //     "ingredients-section"
         // );
 
-        // const ingredient = (
-        //     <FormControl
-        //         sx={{
-        //             display: "flex",
-        //             flexDirection: "row",
-        //             alignItems: "center",
-        //             gap: "20px",
-        //             "& .MuiInputBase-root *": {
-        //                 borderColor: theme.palette.primary.main,
-        //                 color: theme.palette.primary.contrastText,
-        //             },
-        //             "& .MuiOutlinedInput-root": {
-        //                 "&.Mui-focused fieldset": {
-        //                     borderColor: theme.palette.primary.main,
-        //                 },
-        //             },
-        //             m: 1,
-        //             width: "80%",
-        //         }}
-        //     >
-        //         <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
-        //         <OutlinedInput id="ingredient" type="text" label="Ingredient" />
-        //         <RemoveCircleIcon
-        //             sx={{
-        //                 color: theme.palette.error.light,
-        //             }}
-        //             color="primary"
-        //         />
-        //     </FormControl>
-        // );
-
-        // ingredientSection.append(ingredient);
+        setIngredientList([
+            ...ingredientList,
+            {
+                unit: "",
+                quantity: "",
+                ingredientName: "",
+            },
+        ]);
     };
+
+    // const ingredient = (
+    //     <FormControl
+    //         sx={{
+    //             display: "flex",
+    //             flexDirection: "row",
+    //             alignItems: "center",
+    //             gap: "20px",
+    //             "& .MuiInputBase-root *": {
+    //                 borderColor: theme.palette.primary.main,
+    //                 color: theme.palette.primary.contrastText,
+    //             },
+    //             "& .MuiOutlinedInput-root": {
+    //                 "&.Mui-focused fieldset": {
+    //                     borderColor: theme.palette.primary.main,
+    //                 },
+    //             },
+    //             m: 1,
+    //             width: "80%",
+    //         }}
+    //     >
+    //         <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
+    //         <OutlinedInput id="ingredient" type="text" label="Ingredient" />
+    //         <RemoveCircleIcon
+    //             sx={{
+    //                 color: theme.palette.error.light,
+    //             }}
+    //             color="primary"
+    //         />
+    //     </FormControl>
+    // );
+
+    // ingredientSection.append(ingredient);
+    // };
 
     return (
         <Box
+            id="recipe-form"
             sx={{
                 display: "flex",
                 flexDirection: "column",
                 minHeight: "max(calc(100vh - 80px), 400px)",
-                width: "max(calc(100vw - 400px), 350px)",
+                width: "max(calc(100vw / 2), 350px)",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "flex-start",
                 border: 2,
                 borderColor: theme.palette.primary.main,
                 borderRadius: "10px",
+                transition: "all 0.5s ease",
             }}
         >
             <Typography variant="h6" color="primary">
@@ -117,49 +157,136 @@ export default function RecipeForm() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
-                    width: "100%",
+                    justifyContent: "flex-start",
+                    gap: "10px",
+                    width: "80%",
+                    maxHeight: "190px",
+                    overflowY: "auto",
+                    overflowX: "hidden",
+                    margin: 1,
+                    paddingTop: 5,
                 }}
             >
-                <FormControl
-                    sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: "20px",
-                        "& .MuiInputBase-root *": {
-                            borderColor: theme.palette.primary.main,
-                            color: theme.palette.primary.contrastText,
-                        },
-                        "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                                borderColor: theme.palette.primary.main,
-                            },
-                        },
-                        m: 1,
-                        width: "80%",
-                    }}
-                >
-                    <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
-                    <OutlinedInput
-                        id="ingredient"
-                        type="text"
-                        label="Ingredient"
-                    />
-                    <RemoveCircleIcon
-                        sx={{
-                            color: theme.palette.error.light,
-                        }}
-                        color="primary"
-                    />
-                </FormControl>
+                {ingredientList.map((ingredient, index) => {
+                    return (
+                        <div
+                            className="ingredient"
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                            }}
+                            key={index}
+                        >
+                            <IconButton
+                                sx={{
+                                    scale: "1",
+                                    margin: "0.5",
+                                    padding: "1",
+                                }}
+                                aria-label="delete ingredient"
+                                // onClick={handleClickShowPassword}
+                                // onMouseDown={handleMouseDownPassword}
+                            >
+                                <RemoveCircleIcon
+                                    sx={{
+                                        color: theme.palette.error.light,
+                                    }}
+                                />
+                            </IconButton>
+                            <Typography
+                                sx={{
+                                    color: theme.palette.primary.contrastText,
+                                }}
+                                variant="h6"
+                                component="h6"
+                                gutterBottom
+                            >
+                                {index + 1}.{" "}
+                            </Typography>
+                            <TextField
+                                label="Qty."
+                                inputProps={{
+                                    inputMode: "numeric",
+                                    pattern: "[0-99]*",
+                                }}
+                                sx={{
+                                    width: "max(10%, 100px)",
+                                }}
+                            />
+
+                            <TextField
+                                sx={{
+                                    width: "max(10%, 125px)",
+                                }}
+                                id="outlined-select-measurement"
+                                select
+                                label="Unit"
+                                defaultValue={measurements[0].value}
+                                // helperText="Please select your currency"
+                            >
+                                {measurements.map((option) => (
+                                    <MenuItem
+                                        key={option.value}
+                                        value={option.value}
+                                    >
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            <FormControl
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    "& .MuiInputBase-root *": {
+                                        borderColor: theme.palette.primary.main,
+                                        color: theme.palette.primary
+                                            .contrastText,
+                                    },
+                                    "& .MuiOutlinedInput-root": {
+                                        "&.Mui-focused fieldset": {
+                                            borderColor:
+                                                theme.palette.primary.main,
+                                        },
+                                    },
+
+                                    width: "100%",
+                                }}
+                            >
+                                <InputLabel htmlFor="ingredient">
+                                    Ingredient
+                                </InputLabel>
+                                <OutlinedInput
+                                    sx={{
+                                        width: "98%",
+                                    }}
+                                    id="ingredient"
+                                    type="text"
+                                    label="Ingredient"
+                                    defaultValue={ingredient.ingredientName}
+                                />
+                            </FormControl>
+                        </div>
+                    );
+                })}
             </section>
-            <AddBoxIcon
+            <IconButton
+                aria-label="delete ingredient"
                 onClick={handleAddIngredient}
                 sx={{
-                    color: theme.palette.success.light,
+                    scale: "1.25",
+                    margin: "0 2.5%",
+                    padding: "1",
+                    m: 1,
                 }}
-            />
+            >
+                <AddBoxIcon
+                    sx={{
+                        color: theme.palette.success.light,
+                    }}
+                />
+            </IconButton>
             <Box>
                 <IngredientList />
             </Box>

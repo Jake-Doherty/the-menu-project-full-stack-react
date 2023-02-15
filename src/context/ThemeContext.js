@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-// pausing on saving theme to user for now until theme has been set up globally.
 import { useUser } from "./UserContext.js";
 import { ThemeProvider } from "@mui/system/";
 import { createTheme } from "@mui/material/styles";
