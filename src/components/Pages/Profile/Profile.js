@@ -82,6 +82,11 @@ export default function Profile() {
                             width: "max(300px, 30vw)",
                             alignSelf: "center",
                             justifySelf: "center",
+                            "& .MuiInputBase-input.MuiOutlinedInput-input, .MuiInputBase-input.MuiOutlinedInput-input::placeholder":
+                                {
+                                    color: theme.palette.primary.contrastText,
+                                    opacity: 0.8,
+                                },
                             "& .css-1gjhcy5-MuiInputBase-input-MuiOutlinedInput-input, & .css-645khj-MuiFormHelperText-root":
                                 {
                                     color: theme.palette.primary.contrastText,
@@ -115,6 +120,12 @@ export default function Profile() {
                             width: "max(300px, 30vw)",
                             alignSelf: "center",
                             justifySelf: "center",
+                            color: theme.palette.primary.contrastText,
+                            "& .MuiInputBase-input.MuiOutlinedInput-input, .MuiInputBase-input.MuiOutlinedInput-input::placeholder":
+                                {
+                                    color: theme.palette.primary.contrastText,
+                                    opacity: 0.8,
+                                },
                             "& .css-vcg1b0-MuiInputBase-input-MuiOutlinedInput-input, & .css-645khj-MuiFormHelperText-root":
                                 {
                                     color: theme.palette.primary.contrastText,
