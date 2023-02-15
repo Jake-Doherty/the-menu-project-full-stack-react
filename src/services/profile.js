@@ -25,7 +25,6 @@ export async function insertProfile(
         })
         .match({ user_id: userId })
         .maybeSingle();
-    console.log("===insertProfile response===", response);
 
     return checkError(response);
 }
@@ -34,17 +33,6 @@ export async function updateProfile(
     userId,
     { username, bio, profileAvatar, darkMode }
 ) {
-    // const response = await client
-    //     .from("profiles")
-    //     .update({
-    //         display_name: username,
-    //         bio: bio,
-    //         avatar_image_url: profileAvatar,
-    //         dark_mode: darkMode,
-    //     })
-    //     .match({ user_id: userId })
-    //     .maybeSingle();
-
     let response = await client.from("profiles").select("*");
 
     if (username) {
@@ -70,13 +58,12 @@ export async function updateProfile(
             .match({ user_id: userId })
             .maybeSingle();
     }
-    await client
+
+    response = await client
         .from("profiles")
         .update({ dark_mode: darkMode })
         .match({ user_id: userId })
         .maybeSingle();
-
-    console.log("===updateProfile response===", response);
 
     return checkError(response);
 }
