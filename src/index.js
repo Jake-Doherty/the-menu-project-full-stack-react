@@ -5,20 +5,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
-import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
+// import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 import { ThemeContextProvider } from "./context/ThemeContext.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <CssVarsProvider>
-                <UserProvider>
-                    <ThemeContextProvider>
-                        <App />
-                    </ThemeContextProvider>
-                </UserProvider>
-            </CssVarsProvider>
+            {/* <CssVarsProvider> */}
+            <UserProvider>
+                <ThemeContextProvider>
+                    <App />
+                </ThemeContextProvider>
+            </UserProvider>
+            {/* </CssVarsProvider> */}
         </BrowserRouter>
     </React.StrictMode>
 );
