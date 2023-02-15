@@ -27,7 +27,7 @@ import { useTheme } from "../../../context/ThemeContext.js";
 export default function Nav() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { user, setUser } = useUser();
+    const { user, setUser, profile, setProfile, themeInput } = useUser();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -44,7 +44,8 @@ export default function Nav() {
     const handleClose = (e) => {
         e.target.id === "home" && navigate("/home");
         e.target.id === "add-recipe" && navigate("/recipe-editor");
-        // e.target.id === "my-recipes" && navigate("/my-recipes");
+        e.target.id === "user-profile" && navigate("/user-profile");
+        // e.target.id === "recipe-book" && navigate("/recipe-book");
         // e.target.id === "find-recipes" && navigate("/find-recipes");
         // e.target.id === "my-calendar" && navigate("/my-calendar");
         e.target.id === "settings" && navigate("/settings");
@@ -56,6 +57,7 @@ export default function Nav() {
         setAnchorEl(null);
         signOut();
         setUser(null);
+        setProfile(undefined);
     };
 
     return (
@@ -73,7 +75,11 @@ export default function Nav() {
                         minWidth: 100,
                         color: theme.palette.primary.contrastText,
                     }}
-                >{`Welcome Back ${user.email}`}</Typography>
+                >
+                    {profile && profile.display_name
+                        ? `Welcome back, ${profile.display_name}!`
+                        : `Welcome back, ${user.email}!`}
+                </Typography>
                 <Tooltip title="Account settings">
                     <IconButton
                         onClick={handleClick}
@@ -84,7 +90,9 @@ export default function Nav() {
                         aria-expanded={open ? "true" : undefined}
                     >
                         <Avatar sx={{ width: 32, height: 32 }}>
-                            {user.email[0]}
+                            {profile && profile.display_name
+                                ? profile.display_name[0]
+                                : user.email[0]}
                         </Avatar>
                     </IconButton>
                 </Tooltip>
@@ -101,6 +109,7 @@ export default function Nav() {
                         overflow: "visible",
                         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                         mt: 1.5,
+                        backgroundColor: theme.palette.background.paper,
                         "& .MuiAvatar-root": {
                             width: 32,
                             height: 32,
@@ -115,7 +124,8 @@ export default function Nav() {
                             right: 14,
                             width: 10,
                             height: 10,
-                            bgcolor: theme.palette.background.paper,
+                            backgroundColor: theme.palette.background.paper,
+
                             transform: "translateY(-50%) rotate(45deg)",
                             zIndex: 0,
                         },
@@ -127,7 +137,11 @@ export default function Nav() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <MenuItem title="Profile" onClick={handleClose}>
+                <MenuItem
+                    id="user-profile"
+                    title="Profile"
+                    onClick={handleClose}
+                >
                     <Avatar /> Profile
                 </MenuItem>
                 <MenuItem title="My Account" onClick={handleClose}>
@@ -150,19 +164,27 @@ export default function Nav() {
                     </ListItemIcon>
                     Add A Recipe
                 </MenuItem>
-                <MenuItem title="Menu Plan" onClick={handleClose}>
+                <MenuItem
+                    id="recipe-book"
+                    title="Recipe Book"
+                    onClick={handleClose}
+                >
                     <ListItemIcon>
                         <MenuBookIcon fontSize="small" />
                     </ListItemIcon>
                     Recipe Book
                 </MenuItem>
-                <MenuItem title="Explore" onClick={handleClose}>
+                <MenuItem id="explore" title="Explore" onClick={handleClose}>
                     <ListItemIcon>
                         <RestaurantMenuIcon fontSize="small" />
                     </ListItemIcon>
                     Explore
                 </MenuItem>
-                <MenuItem title="Menu Plan" onClick={handleClose}>
+                <MenuItem
+                    id="menu-plan"
+                    title="Menu Plan"
+                    onClick={handleClose}
+                >
                     <ListItemIcon>
                         <CalendarMonthIcon fontSize="small" />
                     </ListItemIcon>
@@ -179,12 +201,8 @@ export default function Nav() {
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={
-                                        theme.palette.mode === "dark"
-                                            ? true
-                                            : false
-                                    }
-                                    onChange={toggleTheme}
+                                    checked={themeInput}
+                                    onClick={toggleTheme}
                                     inputProps={{ "aria-label": "controlled" }}
                                 />
                             }

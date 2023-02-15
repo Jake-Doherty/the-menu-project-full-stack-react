@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 // pausing on saving theme to user for now until theme has been set up globally.
-// import { useUser } from "./UserContext.js";
+import { useUser } from "./UserContext.js";
 import { ThemeProvider } from "@mui/system/";
 import { createTheme } from "@mui/material/styles";
 
@@ -11,7 +11,7 @@ const lightTheme = createTheme({
             main: "#5893df",
             light: "rgba(121, 168, 229, 0.45)",
             dark: "rgb(61, 102, 156)",
-            contrastText: "rgba(0, 0, 0, 0.87)",
+            contrastText: "#0B1E38",
         },
         secondary: {
             main: "#2ec5d3",
@@ -20,8 +20,8 @@ const lightTheme = createTheme({
             contrastText: "rgba(0, 0, 0, 0.87)",
         },
         background: {
-            default: "#f3f3f3",
-            paper: "#fff",
+            default: "#F7F7F7",
+            paper: "#FCFCFC",
         },
         text: {
             primary: "rgba(255, 255, 255, 0.87)",
@@ -111,13 +111,25 @@ const darkTheme = createTheme({
 const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
-    // const { user } = useUser();
+    const { profile, themeInput, setThemeInput } = useUser();
     const [userTheme, setUserTheme] = useState(darkTheme);
+
+    useEffect(() => {
+        if (profile) {
+            if (themeInput) {
+                setUserTheme(darkTheme);
+            }
+            if (!themeInput) {
+                setUserTheme(lightTheme);
+            }
+        }
+    }, [profile, themeInput]);
 
     const toggleTheme = () => {
         setUserTheme((prevTheme) =>
             prevTheme === lightTheme ? darkTheme : lightTheme
         );
+        setThemeInput((prevTheme) => !prevTheme);
     };
 
     return (

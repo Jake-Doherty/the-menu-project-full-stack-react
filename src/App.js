@@ -8,6 +8,7 @@ function App() {
     return (
         <div
             style={{
+                overflowX: "hidden",
                 backgroundColor: theme.palette.background.default,
             }}
             className="App"
