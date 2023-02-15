@@ -51,9 +51,6 @@ const UserProvider = ({ children }) => {
                     imagePath,
                     imageFile
                 );
-
-                console.log("afters storage bucket url creation", url);
-
                 setProfileAvatarUrl(url);
             } catch (e) {
                 console.error(e.message);

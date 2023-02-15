@@ -30,9 +30,9 @@ export default function RecipeForm() {
                 width: "max(calc(100vw - 400px), 350px)",
                 alignItems: "center",
                 justifyContent: "center",
-                border: "1px solid black",
+                border: 2,
+                borderColor: theme.palette.primary.main,
                 borderRadius: "10px",
-                backgroundColor: theme.palette.primary.light,
             }}
         >
             <h3>Add A Recipe</h3>
@@ -40,20 +40,14 @@ export default function RecipeForm() {
             {/* DISH NAME HERE */}
             <FormControl
                 sx={{
+                    "& .MuiInputBase-root *": {
+                        borderColor: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
+                    },
                     "& .MuiOutlinedInput-root": {
                         "&.Mui-focused fieldset": {
-                            borderColor: theme.palette.primary.dark,
+                            borderColor: theme.palette.primary.main,
                         },
-                    },
-                    "& label.Mui-focused": {
-                        position: "absolute",
-                        left: "-5px",
-                        margin: "0",
-                        padding: "0 5px",
-                        borderRadius: "5px",
-                        backgroundColor: theme.palette.background.paper,
-                        color: theme.palette.primary.contrastText,
-                        fontWeight: "700",
                     },
                     m: 1,
                     width: "80%",
@@ -64,7 +58,6 @@ export default function RecipeForm() {
                     Dish Name
                 </InputLabel>
                 <OutlinedInput
-                    sx={{ backgroundColor: theme.palette.background.paper }}
                     name="dish-name"
                     id="outlined-dish-name"
                     type="text"
@@ -75,32 +68,21 @@ export default function RecipeForm() {
             {/* INGREDIENTS HERE */}
             <FormControl
                 sx={{
+                    "& .MuiInputBase-root *": {
+                        borderColor: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
+                    },
                     "& .MuiOutlinedInput-root": {
                         "&.Mui-focused fieldset": {
-                            borderColor: theme.palette.primary.dark,
+                            borderColor: theme.palette.primary.main,
                         },
-                    },
-                    "& label.Mui-focused": {
-                        position: "absolute",
-                        left: "-5px",
-                        margin: "0",
-                        padding: "0 5px",
-                        borderRadius: "5px",
-                        backgroundColor: theme.palette.background.paper,
-                        color: theme.palette.primary.contrastText,
-                        fontWeight: "700",
                     },
                     m: 1,
                     width: "80%",
                 }}
             >
                 <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
-                <OutlinedInput
-                    sx={{ backgroundColor: theme.palette.background.paper }}
-                    id="ingredient"
-                    type="text"
-                    label="Ingredient"
-                />
+                <OutlinedInput id="ingredient" type="text" label="Ingredient" />
             </FormControl>
             <Box>
                 <IngredientList />
