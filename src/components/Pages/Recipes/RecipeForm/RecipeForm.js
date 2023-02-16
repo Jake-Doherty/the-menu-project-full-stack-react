@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext.js";
 import {
@@ -54,6 +54,9 @@ export default function RecipeForm() {
         },
     ];
 
+    const ingredientRef = useRef(null);
+    const instructionRef = useRef(null);
+
     const [ingredientList, setIngredientList] = useState([
         {
             unit: "",
@@ -82,6 +85,12 @@ export default function RecipeForm() {
                 ingredientName: "",
             },
         ]);
+        setTimeout(() => {
+            ingredientRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "end",
+            });
+        }, 50);
     };
 
     const handleAddInstruction = () => {
@@ -92,6 +101,12 @@ export default function RecipeForm() {
                 instruction: "",
             },
         ]);
+        setTimeout(() => {
+            instructionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "end",
+            });
+        }, 50);
     };
 
     const handleRemoveClick = (obj, index) => {
@@ -146,7 +161,11 @@ export default function RecipeForm() {
                 }}
                 variant="outlined"
             >
-                <InputLabel margin="dense" htmlFor="outlined-dish-name">
+                <InputLabel
+                    component="label"
+                    margin="dense"
+                    htmlFor="outlined-dish-name"
+                >
                     Dish Name
                 </InputLabel>
                 <OutlinedInput
@@ -215,7 +234,7 @@ export default function RecipeForm() {
                     </IconButton>
                 </div>
             </div>
-            <section
+            <article
                 id="ingredients-section"
                 style={{
                     display: "flex",
@@ -234,6 +253,11 @@ export default function RecipeForm() {
                 {ingredientList.map((ingredient, index) => {
                     return (
                         <div
+                            ref={
+                                ingredientList.length - 1 === index
+                                    ? ingredientRef
+                                    : null
+                            }
                             className="ingredient"
                             style={{
                                 display: "flex",
@@ -347,7 +371,7 @@ export default function RecipeForm() {
                         </div>
                     );
                 })}
-            </section>
+            </article>
 
             {/* INSTRUCTIONS HERE */}
             <div
@@ -409,7 +433,7 @@ export default function RecipeForm() {
             </div>
             <Box
                 id="instructions-section"
-                component={"section"}
+                component={"article"}
                 sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -428,6 +452,11 @@ export default function RecipeForm() {
                     instruction.step = index + 1;
                     return (
                         <div
+                            ref={
+                                instructionList.length - 1 === index
+                                    ? instructionRef
+                                    : null
+                            }
                             className="instruction"
                             style={{
                                 display: "flex",
