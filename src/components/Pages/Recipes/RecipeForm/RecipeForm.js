@@ -9,6 +9,7 @@ import {
     IconButton,
     TextField,
     MenuItem,
+    Button,
 } from "@mui/material/";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -489,6 +490,7 @@ export default function RecipeForm() {
                     );
                 })}
             </Box>
+            <Button>Save Recipe</Button>
         </Box>
     );
 }
