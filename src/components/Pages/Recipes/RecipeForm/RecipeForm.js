@@ -39,6 +39,18 @@ export default function RecipeForm() {
             value: "Fl Oz",
             label: "Fl Oz",
         },
+        {
+            value: "pt",
+            label: "Pint",
+        },
+        {
+            value: "qt",
+            label: "Quart",
+        },
+        {
+            value: "gal",
+            label: "Gallon",
+        },
     ];
 
     const [ingredientList, setIngredientList] = useState([
@@ -61,10 +73,6 @@ export default function RecipeForm() {
     }
 
     const handleAddIngredient = () => {
-        // const ingredientSection = document.getElementById(
-        //     "ingredients-section"
-        // );
-
         setIngredientList([
             ...ingredientList,
             {
@@ -149,15 +157,63 @@ export default function RecipeForm() {
             </FormControl>
 
             {/* INGREDIENTS HERE */}
-            <Typography
-                sx={{
-                    color: theme.palette.primary.contrastText,
+            <div
+                style={{
+                    display: "flex",
+                    flexFlow: "row nowrap",
+                    width: "80%",
+                    height: "40px",
+                    alignItems: "center",
+                    justifyContent: "space-around",
                 }}
-                variant="h6"
-                component="h6"
             >
-                Ingredients
-            </Typography>
+                <Typography
+                    sx={{
+                        color: theme.palette.primary.contrastText,
+                    }}
+                    variant="h6"
+                    component="h6"
+                >
+                    Ingredients
+                </Typography>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        margin: 1,
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: "1rem",
+                            color: theme.palette.primary.contrastText,
+                        }}
+                        variant="h6"
+                        component="h6"
+                    >
+                        Add an Ingredient
+                    </Typography>
+                    <IconButton
+                        aria-label="add ingredient"
+                        onClick={handleAddIngredient}
+                        sx={{
+                            scale: "1.25",
+                            margin: "0 2.5%",
+                            padding: "1",
+                            m: 1,
+                        }}
+                    >
+                        <AddBoxIcon
+                            sx={{
+                                color: theme.palette.success.light,
+                            }}
+                        />
+                    </IconButton>
+                </div>
+            </div>
             <section
                 id="ingredients-section"
                 style={{
@@ -219,12 +275,22 @@ export default function RecipeForm() {
                                 }}
                                 sx={{
                                     width: "max(10%, 100px)",
+                                    "& .MuiInputBase-root *": {
+                                        borderColor: theme.palette.primary.main,
+                                        color: theme.palette.primary
+                                            .contrastText,
+                                    },
                                 }}
                             />
 
                             <TextField
                                 sx={{
                                     width: "max(10%, 125px)",
+                                    "& .MuiInputBase-root *": {
+                                        borderColor: theme.palette.primary.main,
+                                        color: theme.palette.primary
+                                            .contrastText,
+                                    },
                                 }}
                                 id="outlined-select-measurement"
                                 select
@@ -233,6 +299,10 @@ export default function RecipeForm() {
                             >
                                 {measurements.map((option) => (
                                     <MenuItem
+                                        sx={{
+                                            color: theme.palette.primary
+                                                .contrastText,
+                                        }}
                                         key={option.value}
                                         value={option.value}
                                     >
@@ -277,33 +347,65 @@ export default function RecipeForm() {
                     );
                 })}
             </section>
-            <IconButton
-                aria-label="delete ingredient"
-                onClick={handleAddIngredient}
-                sx={{
-                    scale: "1.25",
-                    margin: "0 2.5%",
-                    padding: "1",
-                    m: 1,
-                }}
-            >
-                <AddBoxIcon
-                    sx={{
-                        color: theme.palette.success.light,
-                    }}
-                />
-            </IconButton>
 
             {/* INSTRUCTIONS HERE */}
-            <Typography
-                sx={{
-                    color: theme.palette.primary.contrastText,
+            <div
+                style={{
+                    display: "flex",
+                    flexFlow: "row wrap",
+                    width: "80%",
+                    height: "40px",
+                    alignItems: "center",
+                    justifyContent: "space-around",
                 }}
-                variant="h6"
-                component="h6"
             >
-                Instructions
-            </Typography>
+                <Typography
+                    sx={{
+                        color: theme.palette.primary.contrastText,
+                    }}
+                    variant="h6"
+                    component="h6"
+                >
+                    Instructions
+                </Typography>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        margin: 1,
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: "1rem",
+                            color: theme.palette.primary.contrastText,
+                        }}
+                        variant="h6"
+                        component="h6"
+                    >
+                        Add a Step
+                    </Typography>
+                    <IconButton
+                        aria-label="add instruction"
+                        onClick={handleAddInstruction}
+                        sx={{
+                            scale: "1.25",
+                            margin: "0 2.5%",
+                            padding: "1",
+                            m: 1,
+                        }}
+                    >
+                        <AddBoxIcon
+                            sx={{
+                                color: theme.palette.success.light,
+                            }}
+                        />
+                    </IconButton>
+                </div>
+            </div>
             <Box
                 id="instructions-section"
                 component={"section"}
@@ -318,6 +420,7 @@ export default function RecipeForm() {
                     overflowY: "auto",
                     overflowX: "hidden",
                     margin: 1,
+                    paddingTop: "5px",
                 }}
             >
                 {instructionList.map((instruction, index) => {
@@ -349,16 +452,6 @@ export default function RecipeForm() {
                                     }}
                                 />
                             </IconButton>
-
-                            <Typography
-                                sx={{
-                                    color: theme.palette.primary.contrastText,
-                                }}
-                                variant="h6"
-                                component="h6"
-                            >
-                                {index + 1}.{" "}
-                            </Typography>
                             <FormControl
                                 sx={{
                                     display: "flex",
@@ -396,22 +489,6 @@ export default function RecipeForm() {
                     );
                 })}
             </Box>
-            <IconButton
-                aria-label="delete ingredient"
-                onClick={handleAddInstruction}
-                sx={{
-                    scale: "1.25",
-                    margin: "0 2.5%",
-                    padding: "1",
-                    m: 1,
-                }}
-            >
-                <AddBoxIcon
-                    sx={{
-                        color: theme.palette.success.light,
-                    }}
-                />
-            </IconButton>
         </Box>
     );
 }
