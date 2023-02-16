@@ -13,14 +13,23 @@
         gap: 5px;
     }
 
-    #recipe-form > section > div {
+    #recipe-form > #ingredients-section > div {
+        gap: 5px;
+        width: 99%;
+    }
+
+    #recipe-form > #instructions-section > div {
         gap: 5px;
         width: 99%;
     }
 }
 
 @media screen and (min-width: 768px) {
-    #recipe-form > section > div {
+    #recipe-form > #ingredients-section > div {
+        gap: 10px;
+        width: 100%;
+    }
+    #recipe-form > #instructions-section > div {
         gap: 10px;
         width: 100%;
     }
