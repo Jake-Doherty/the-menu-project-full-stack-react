@@ -15,7 +15,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 
 import Box from "@mui/material/Box";
-import IngredientList from "./FormComponents/IngredientList.js";
+// import IngredientList from "./FormComponents/IngredientList.js";
 
 export default function RecipeForm() {
     const { user } = useUser();
@@ -49,6 +49,13 @@ export default function RecipeForm() {
         },
     ]);
 
+    const [instructionList, setInstructionList] = useState([
+        {
+            step: "",
+            instruction: "",
+        },
+    ]);
+
     if (!user) {
         return <Navigate to="/auth/sign-in" />;
     }
@@ -68,42 +75,33 @@ export default function RecipeForm() {
         ]);
     };
 
-    // const ingredient = (
-    //     <FormControl
-    //         sx={{
-    //             display: "flex",
-    //             flexDirection: "row",
-    //             alignItems: "center",
-    //             gap: "20px",
-    //             "& .MuiInputBase-root *": {
-    //                 borderColor: theme.palette.primary.main,
-    //                 color: theme.palette.primary.contrastText,
-    //             },
-    //             "& .MuiOutlinedInput-root": {
-    //                 "&.Mui-focused fieldset": {
-    //                     borderColor: theme.palette.primary.main,
-    //                 },
-    //             },
-    //             m: 1,
-    //             width: "80%",
-    //         }}
-    //     >
-    //         <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
-    //         <OutlinedInput id="ingredient" type="text" label="Ingredient" />
-    //         <RemoveCircleIcon
-    //             sx={{
-    //                 color: theme.palette.error.light,
-    //             }}
-    //             color="primary"
-    //         />
-    //     </FormControl>
-    // );
+    const handleAddInstruction = () => {
+        setInstructionList([
+            ...instructionList,
+            {
+                step: "",
+                instruction: "",
+            },
+        ]);
+    };
 
-    // ingredientSection.append(ingredient);
-    // };
+    const handleRemoveClick = (obj, index) => {
+        if (Object.keys(obj)[0] === "unit") {
+            const list = [...ingredientList];
+            list.splice(index, 1);
+            setIngredientList(list);
+        }
+
+        if (Object.keys(obj)[0] === "step") {
+            const list = [...instructionList];
+            list.splice(index, 1);
+            setInstructionList(list);
+        }
+    };
 
     return (
         <Box
+            component={"section"}
             id="recipe-form"
             sx={{
                 display: "flex",
@@ -118,7 +116,7 @@ export default function RecipeForm() {
                 transition: "all 0.5s ease",
             }}
         >
-            <Typography variant="h6" color="primary">
+            <Typography mt={1} variant="h6" color="primary">
                 Add A Recipe
             </Typography>
 
@@ -151,6 +149,15 @@ export default function RecipeForm() {
             </FormControl>
 
             {/* INGREDIENTS HERE */}
+            <Typography
+                sx={{
+                    color: theme.palette.primary.contrastText,
+                }}
+                variant="h6"
+                component="h6"
+            >
+                Ingredients
+            </Typography>
             <section
                 id="ingredients-section"
                 style={{
@@ -185,8 +192,9 @@ export default function RecipeForm() {
                                     padding: "1",
                                 }}
                                 aria-label="delete ingredient"
-                                // onClick={handleClickShowPassword}
-                                // onMouseDown={handleMouseDownPassword}
+                                onClick={() =>
+                                    handleRemoveClick(ingredient, index)
+                                }
                             >
                                 <RemoveCircleIcon
                                     sx={{
@@ -200,7 +208,6 @@ export default function RecipeForm() {
                                 }}
                                 variant="h6"
                                 component="h6"
-                                gutterBottom
                             >
                                 {index + 1}.{" "}
                             </Typography>
@@ -223,7 +230,6 @@ export default function RecipeForm() {
                                 select
                                 label="Unit"
                                 defaultValue={measurements[0].value}
-                                // helperText="Please select your currency"
                             >
                                 {measurements.map((option) => (
                                     <MenuItem
@@ -287,9 +293,125 @@ export default function RecipeForm() {
                     }}
                 />
             </IconButton>
-            <Box>
-                <IngredientList />
+
+            {/* INSTRUCTIONS HERE */}
+            <Typography
+                sx={{
+                    color: theme.palette.primary.contrastText,
+                }}
+                variant="h6"
+                component="h6"
+            >
+                Instructions
+            </Typography>
+            <Box
+                id="instructions-section"
+                component={"section"}
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "10px",
+                    width: "80%",
+                    maxHeight: "190px",
+                    overflowY: "auto",
+                    overflowX: "hidden",
+                    margin: 1,
+                }}
+            >
+                {instructionList.map((instruction, index) => {
+                    instruction.step = index + 1;
+                    return (
+                        <div
+                            className="instruction"
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                            }}
+                            key={index}
+                        >
+                            <IconButton
+                                sx={{
+                                    scale: "1",
+                                    margin: "0.5",
+                                    padding: "1",
+                                }}
+                                aria-label="delete instruction"
+                                onClick={() =>
+                                    handleRemoveClick(instruction, index)
+                                }
+                            >
+                                <RemoveCircleIcon
+                                    sx={{
+                                        color: theme.palette.error.light,
+                                    }}
+                                />
+                            </IconButton>
+
+                            <Typography
+                                sx={{
+                                    color: theme.palette.primary.contrastText,
+                                }}
+                                variant="h6"
+                                component="h6"
+                            >
+                                {index + 1}.{" "}
+                            </Typography>
+                            <FormControl
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    "& .MuiInputBase-root *": {
+                                        borderColor: theme.palette.primary.main,
+                                        color: theme.palette.primary
+                                            .contrastText,
+                                    },
+                                    "& .MuiOutlinedInput-root": {
+                                        "&.Mui-focused fieldset": {
+                                            borderColor:
+                                                theme.palette.primary.main,
+                                        },
+                                    },
+
+                                    width: "100%",
+                                }}
+                            >
+                                <InputLabel htmlFor="instruction">
+                                    {`Step ${instruction.step}`}
+                                </InputLabel>
+                                <OutlinedInput
+                                    sx={{
+                                        width: "99%",
+                                    }}
+                                    id="instruction"
+                                    type="text"
+                                    label={`Step ${index + 1}`}
+                                    defaultValue={instruction.instruction}
+                                />
+                            </FormControl>
+                        </div>
+                    );
+                })}
             </Box>
+            <IconButton
+                aria-label="delete ingredient"
+                onClick={handleAddInstruction}
+                sx={{
+                    scale: "1.25",
+                    margin: "0 2.5%",
+                    padding: "1",
+                    m: 1,
+                }}
+            >
+                <AddBoxIcon
+                    sx={{
+                        color: theme.palette.success.light,
+                    }}
+                />
+            </IconButton>
         </Box>
     );
 }
