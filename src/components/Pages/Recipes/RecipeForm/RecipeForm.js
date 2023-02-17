@@ -101,6 +101,15 @@ export default function RecipeForm() {
         }
     };
 
+    const handleInstructionInputChange = (e, index) => {
+        const { value } = e.target;
+
+        const list = [...instructionList];
+        list[index].instruction = value;
+        console.log(list);
+        setInstructionList(list);
+    };
+
     const handleAddIngredient = () => {
         setIngredientList([
             ...ingredientList,
@@ -551,7 +560,10 @@ export default function RecipeForm() {
                                     id="instruction"
                                     type="text"
                                     label={`Step ${index + 1}`}
-                                    defaultValue={instruction.instruction}
+                                    value={instruction.instruction}
+                                    onChange={(e) =>
+                                        handleInstructionInputChange(e, index)
+                                    }
                                 />
                             </FormControl>
                         </div>
