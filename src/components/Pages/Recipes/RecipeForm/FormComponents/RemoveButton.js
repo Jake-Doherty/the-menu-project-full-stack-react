@@ -11,15 +11,15 @@ export default function RemoveButton({
 }) {
     return (
         <IconButton
+            aria-label="delete ingredient"
+            onClick={() =>
+                handleRemoveClick(ingredient ? ingredient : instruction, index)
+            }
             sx={{
                 scale: "1",
                 margin: "0.5",
                 padding: "1",
             }}
-            aria-label="delete ingredient"
-            onClick={() =>
-                handleRemoveClick(ingredient ? ingredient : instruction, index)
-            }
         >
             <RemoveCircleIcon
                 sx={{

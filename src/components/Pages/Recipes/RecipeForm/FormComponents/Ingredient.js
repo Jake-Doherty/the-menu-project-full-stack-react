@@ -22,8 +22,8 @@ export default function Ingredient({
 }) {
     return (
         <div
-            ref={ingredientList.length - 1 === index ? ingredientRef : null}
             className="ingredient"
+            ref={ingredientList.length - 1 === index ? ingredientRef : null}
             style={{
                 display: "flex",
                 flexDirection: "row",
@@ -33,15 +33,17 @@ export default function Ingredient({
             <RemoveButton
                 {...{ theme, handleRemoveClick, ingredient, index }}
             />
+
             <Typography
+                variant="h6"
+                component="h6"
                 sx={{
                     color: theme.palette.primary.contrastText,
                 }}
-                variant="h6"
-                component="h6"
             >
                 {index + 1}.{" "}
             </Typography>
+
             <TextField
                 name="qty"
                 label="Qty."
@@ -49,6 +51,8 @@ export default function Ingredient({
                     inputMode: "numeric",
                     pattern: "[0-99]*",
                 }}
+                value={ingredient.quantity}
+                onChange={(e) => handleIngredientInputChange(e, index)}
                 sx={{
                     width: "max(10%, 100px)",
                     "& .MuiInputBase-root *": {
@@ -56,8 +60,6 @@ export default function Ingredient({
                         color: theme.palette.primary.contrastText,
                     },
                 }}
-                value={ingredient.quantity}
-                onChange={(e) => handleIngredientInputChange(e, index)}
             />
 
             <TextField
@@ -77,18 +79,20 @@ export default function Ingredient({
             >
                 {measurements.map((option) => (
                     <MenuItem
+                        key={option.value}
+                        value={option.value}
                         sx={{
                             color: theme.palette.primary.contrastText,
                         }}
-                        key={option.value}
-                        value={option.value}
                     >
                         {option.label}
                     </MenuItem>
                 ))}
             </TextField>
+
             <FormControl
                 sx={{
+                    width: "100%",
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
@@ -101,8 +105,6 @@ export default function Ingredient({
                             borderColor: theme.palette.primary.main,
                         },
                     },
-
-                    width: "100%",
                 }}
             >
                 <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
