@@ -77,10 +77,28 @@ export default function RecipeForm() {
     }
 
     const handleIngredientInputChange = (e, index) => {
-        const list = [...ingredientList];
-        list[index].ingredientName = e.target.value;
-        console.log(list);
-        setIngredientList(list);
+        const { name, value } = e.target;
+
+        if (name === "ingredientName") {
+            const list = [...ingredientList];
+            list[index].ingredientName = value;
+            console.log(list);
+            setIngredientList(list);
+        }
+
+        if (name === "qty") {
+            const list = [...ingredientList];
+            list[index].quantity = value;
+            console.log(list);
+            setIngredientList(list);
+        }
+
+        if (name === "unit") {
+            const list = [...ingredientList];
+            list[index].unit = value;
+            console.log(list);
+            setIngredientList(list);
+        }
     };
 
     const handleAddIngredient = () => {
@@ -120,6 +138,7 @@ export default function RecipeForm() {
         if (Object.keys(obj)[0] === "unit") {
             const list = [...ingredientList];
             list.splice(index, 1);
+            console.log(list);
             setIngredientList(list);
         }
 
@@ -300,6 +319,7 @@ export default function RecipeForm() {
                                 {index + 1}.{" "}
                             </Typography>
                             <TextField
+                                name="qty"
                                 label="Qty."
                                 inputProps={{
                                     inputMode: "numeric",
@@ -313,10 +333,21 @@ export default function RecipeForm() {
                                             .contrastText,
                                     },
                                 }}
+                                value={ingredient.quantity}
+                                onChange={(e) =>
+                                    handleIngredientInputChange(e, index)
+                                }
                             />
 
                             <TextField
+                                id="outlined-select-measurement"
                                 label="Unit"
+                                name="unit"
+                                select
+                                value={ingredient.unit}
+                                onChange={(e) =>
+                                    handleIngredientInputChange(e, index)
+                                }
                                 sx={{
                                     width: "max(10%, 125px)",
                                     "& .MuiInputBase-root *": {
@@ -325,9 +356,6 @@ export default function RecipeForm() {
                                             .contrastText,
                                     },
                                 }}
-                                id="outlined-select-measurement"
-                                select
-                                defaultValue={measurements[0].value}
                             >
                                 {measurements.map((option) => (
                                     <MenuItem
@@ -366,16 +394,17 @@ export default function RecipeForm() {
                                     Ingredient
                                 </InputLabel>
                                 <OutlinedInput
-                                    sx={{
-                                        width: "98%",
-                                    }}
                                     id="ingredient"
-                                    type="text"
                                     label="Ingredient"
+                                    name="ingredientName"
+                                    type="text"
                                     value={ingredient.ingredientName}
                                     onChange={(e) =>
                                         handleIngredientInputChange(e, index)
                                     }
+                                    sx={{
+                                        width: "98%",
+                                    }}
                                 />
                             </FormControl>
                         </div>
