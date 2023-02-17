@@ -76,6 +76,13 @@ export default function RecipeForm() {
         return <Navigate to="/auth/sign-in" />;
     }
 
+    const handleIngredientInputChange = (e, index) => {
+        const list = [...ingredientList];
+        list[index].ingredientName = e.target.value;
+        console.log(list);
+        setIngredientList(list);
+    };
+
     const handleAddIngredient = () => {
         setIngredientList([
             ...ingredientList,
@@ -309,6 +316,7 @@ export default function RecipeForm() {
                             />
 
                             <TextField
+                                label="Unit"
                                 sx={{
                                     width: "max(10%, 125px)",
                                     "& .MuiInputBase-root *": {
@@ -319,7 +327,6 @@ export default function RecipeForm() {
                                 }}
                                 id="outlined-select-measurement"
                                 select
-                                label="Unit"
                                 defaultValue={measurements[0].value}
                             >
                                 {measurements.map((option) => (
@@ -365,7 +372,10 @@ export default function RecipeForm() {
                                     id="ingredient"
                                     type="text"
                                     label="Ingredient"
-                                    defaultValue={ingredient.ingredientName}
+                                    value={ingredient.ingredientName}
+                                    onChange={(e) =>
+                                        handleIngredientInputChange(e, index)
+                                    }
                                 />
                             </FormControl>
                         </div>
