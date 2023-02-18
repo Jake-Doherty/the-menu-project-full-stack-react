@@ -34,7 +34,7 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
                         fontSize: "0.8rem",
                         color: theme.palette.primary.contrastText,
                         width: "150px",
-                        textAlign: "center",
+                        textAlign: "right",
                     }}
                 >
                     Add an Ingredient

@@ -32,8 +32,8 @@ export default function InstructionsHeader({ theme, handleAddInstruction }) {
                     sx={{
                         fontSize: "0.8rem",
                         color: theme.palette.primary.contrastText,
-                        width: "150px",
-                        textAlign: "center",
+                        width: "100px",
+                        textAlign: "right",
                     }}
                     variant="h6"
                     component="h6"
