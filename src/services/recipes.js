@@ -4,8 +4,7 @@ export async function getNonSecretRecipes(userId, recipes) {
     const response = await client
         .from("recipes")
         .select("*")
-        .match({ secret_recipe: false })
-        .maybeSingle();
+        .match({ secret_recipe: false });
 
     return checkError(response);
 }
