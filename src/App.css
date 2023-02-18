@@ -5,7 +5,66 @@
     align-items: center;
 }
 
-/* #nav {
-    position: relative;
-    right: 50px;
-} */
+@media screen and (max-width: 768px) {
+    #recipe-form {
+        width: 100%;
+        border: none;
+        transition: all 0.5s ease;
+        gap: 5px;
+    }
+
+    #recipe-form > #ingredients-section > div {
+        gap: 5px;
+        width: 99%;
+    }
+
+    #recipe-form > #instructions-section > div {
+        gap: 5px;
+        width: 99%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #recipe-form > #ingredients-section > div {
+        gap: 10px;
+        width: 100%;
+    }
+    #recipe-form > #instructions-section > div {
+        gap: 10px;
+        width: 100%;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #5893df;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(121, 168, 229);
+}
+::-webkit-scrollbar-thumb:active {
+    background: rgb(61, 102, 156);
+}
+::-webkit-scrollbar-track {
+    background: #666666;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+    background: #666666;
+}
+::-webkit-scrollbar-track:active {
+    background: #333333;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

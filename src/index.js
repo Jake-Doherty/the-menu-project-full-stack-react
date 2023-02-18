@@ -7,6 +7,7 @@ import { UserProvider } from "./context/UserContext.js";
 import { BrowserRouter } from "react-router-dom";
 // import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 import { ThemeContextProvider } from "./context/ThemeContext.js";
+import { RecipeProvider } from "./context/RecipeContext.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
             {/* <CssVarsProvider> */}
             <UserProvider>
                 <ThemeContextProvider>
-                    <App />
+                    <RecipeProvider>
+                        <App />
+                    </RecipeProvider>
                 </ThemeContextProvider>
             </UserProvider>
             {/* </CssVarsProvider> */}

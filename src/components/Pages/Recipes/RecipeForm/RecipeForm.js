@@ -1,110 +1,160 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext.js";
-import { InputLabel, FormControl, OutlinedInput } from "@mui/material/";
-import { useTheme } from "@mui/material/styles";
 
-import Box from "@mui/material/Box";
-import IngredientList from "./FormComponents/IngredientList.js";
+import {
+    Typography,
+    Button,
+    Box,
+    Snackbar,
+    Alert,
+    IconButton,
+} from "@mui/material/";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { useTheme as useMuiTheme } from "@mui/material/styles";
+
+import useRecipeFormFunctions from "../../../../hooks/useRecipeFormFunctions.js";
+import DishNameInput from "./FormComponents/DishNameInput.js";
+import InstructionGroup from "./FormComponents/InstructionsGroup/InstructionGroup.js";
+import IngredientGroup from "./FormComponents/IngredientsGroup/IngredientGroup.js";
+import Notes from "./FormComponents/NotesGroup/Notes.js";
+import { useRecipe } from "../../../../context/RecipeContext.js";
 
 export default function RecipeForm() {
-    const { user } = useUser();
+    const { user, loading } = useUser();
 
-    const theme = useTheme();
+    const theme = useMuiTheme();
+
+    const {
+        open,
+        setOpen,
+        setDishName,
+        setIngredientList,
+        setInstructionList,
+        ingredientList,
+        instructionList,
+        setNotes,
+        dishName,
+        notes,
+        handleSaveRecipe,
+        snackbarSeverity,
+    } = useRecipe();
+
+    const {
+        ingredientRef,
+        instructionRef,
+        handleDishNameChange,
+        handleAddIngredient,
+        handleIngredientInputChange,
+        handleAddInstruction,
+        handleInstructionInputChange,
+        handleRemoveClick,
+        handleNoteInputChange,
+    } = useRecipeFormFunctions({
+        setDishName,
+        setIngredientList,
+        setInstructionList,
+        ingredientList,
+        instructionList,
+        setNotes,
+        dishName,
+        notes,
+    });
 
     if (!user) {
         return <Navigate to="/auth/sign-in" />;
     }
 
-    // Pausing on this for now until theme has been set up.
-    // const handleAddIngredient = () => {
-    //     console.log("Add Ingredient");
-    // };
+    const handleClose = (event, reason) => {
+        if (reason === "") {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     return (
         <Box
+            id="recipe-form"
+            component={"section"}
             sx={{
                 display: "flex",
                 flexDirection: "column",
                 minHeight: "max(calc(100vh - 80px), 400px)",
-                width: "max(calc(100vw - 400px), 350px)",
+                width: "max(calc(100vw / 2), 350px)",
                 alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid black",
+                justifyContent: "flex-start",
+                border: 2,
+                borderColor: theme.palette.primary.main,
                 borderRadius: "10px",
-                backgroundColor: theme.palette.primary.light,
+                transition: "all 0.5s ease",
             }}
         >
-            <h3>Add A Recipe</h3>
-
-            {/* DISH NAME HERE */}
-            <FormControl
-                sx={{
-                    "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                            borderColor: theme.palette.primary.dark,
-                        },
-                    },
-                    "& label.Mui-focused": {
-                        position: "absolute",
-                        left: "-5px",
-                        margin: "0",
-                        padding: "0 5px",
-                        borderRadius: "5px",
-                        backgroundColor: theme.palette.background.paper,
-                        color: theme.palette.primary.contrastText,
-                        fontWeight: "700",
-                    },
-                    m: 1,
-                    width: "80%",
-                }}
-                variant="outlined"
+            <Snackbar
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+                action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        sx={{ p: 0.5 }}
+                        onClick={handleClose}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                }
             >
-                <InputLabel margin="dense" htmlFor="outlined-dish-name">
-                    Dish Name
-                </InputLabel>
-                <OutlinedInput
-                    sx={{ backgroundColor: theme.palette.background.paper }}
-                    name="dish-name"
-                    id="outlined-dish-name"
-                    type="text"
-                    label="Dish Name"
-                />
-            </FormControl>
-
-            {/* INGREDIENTS HERE */}
-            <FormControl
-                sx={{
-                    "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                            borderColor: theme.palette.primary.dark,
-                        },
-                    },
-                    "& label.Mui-focused": {
-                        position: "absolute",
-                        left: "-5px",
-                        margin: "0",
-                        padding: "0 5px",
-                        borderRadius: "5px",
-                        backgroundColor: theme.palette.background.paper,
-                        color: theme.palette.primary.contrastText,
-                        fontWeight: "700",
-                    },
-                    m: 1,
-                    width: "80%",
-                }}
+                <Alert
+                    onClick={handleClose}
+                    onClose={handleClose}
+                    severity={snackbarSeverity}
+                    sx={{ width: "100%" }}
+                >
+                    {snackbarSeverity === "success"
+                        ? "Recipe Saved!"
+                        : "Error Saving Recipe, Please Try Again."}
+                </Alert>
+            </Snackbar>
+            <Typography
+                mt={1}
+                variant="h6"
+                color={theme.palette.primary.contrastText}
             >
-                <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
-                <OutlinedInput
-                    sx={{ backgroundColor: theme.palette.background.paper }}
-                    id="ingredient"
-                    type="text"
-                    label="Ingredient"
-                />
-            </FormControl>
-            <Box>
-                <IngredientList />
-            </Box>
+                Add A Recipe
+            </Typography>
+
+            <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
+
+            <IngredientGroup
+                {...{
+                    theme,
+                    ingredientList,
+                    ingredientRef,
+                    handleAddIngredient,
+                    handleIngredientInputChange,
+                    handleRemoveClick,
+                }}
+            />
+
+            <InstructionGroup
+                {...{
+                    theme,
+                    instructionList,
+                    instructionRef,
+                    handleAddInstruction,
+                    handleInstructionInputChange,
+                    handleRemoveClick,
+                }}
+            />
+
+            <Notes {...{ theme, notes, handleNoteInputChange }} />
+
+            {loading ? null : (
+                <Button onClick={handleSaveRecipe}>Save Recipe</Button>
+            )}
         </Box>
     );
 }

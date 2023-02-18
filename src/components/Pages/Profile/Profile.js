@@ -6,7 +6,7 @@ import {
     FormGroup,
     Switch,
     TextField,
-    Typography,
+    // Typography,
 } from "@mui/material";
 import Image from "mui-image";
 import React, { useState } from "react";
@@ -56,6 +56,7 @@ export default function Profile() {
                 gap={2}
                 sx={{
                     width: "max(275px, 35vw)",
+                    minHeight: "max(calc(100vh - 800px), 400px)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -63,14 +64,6 @@ export default function Profile() {
                     height: "100%",
                 }}
             >
-                <Typography
-                    sx={{ color: theme.palette.primary.contrastText }}
-                    variant="h4"
-                    component="h4"
-                    gutterBottom
-                >
-                    Profile
-                </Typography>
                 <FormControl>
                     <TextField
                         focused={profile && profile.display_name ? true : false}

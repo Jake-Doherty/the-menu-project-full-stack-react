@@ -19,11 +19,13 @@ const UserProvider = ({ children }) => {
     const [themeInput, setThemeInput] = useState(
         profile && profile.dark_mode ? profile.dark_mode : true
     );
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (user) {
             const fetchUserProfile = async () => {
                 try {
+                    setLoading(true);
                     const data = await getProfile(user.id, profile);
                     setProfile(data);
                 } catch (e) {
@@ -34,6 +36,7 @@ const UserProvider = ({ children }) => {
             if (profile) {
                 setThemeInput(profile.dark_mode);
             }
+            setLoading(false);
         }
     }, [user, profile]);
 
@@ -41,6 +44,7 @@ const UserProvider = ({ children }) => {
         const uploadAvatarImage = async () => {
             if (!profileAvatarInput) return;
             try {
+                setLoading(true);
                 const imageFile = profileAvatarInput;
 
                 const randomFolder = Math.floor(Date.now() * Math.random());
@@ -51,15 +55,13 @@ const UserProvider = ({ children }) => {
                     imagePath,
                     imageFile
                 );
-
-                console.log("afters storage bucket url creation", url);
-
                 setProfileAvatarUrl(url);
             } catch (e) {
                 console.error(e.message);
             }
         };
         uploadAvatarImage();
+        setLoading(false);
     }, [profileAvatarInput]);
 
     const handleProfileChange = async ({ username, bio, darkMode }) => {
@@ -69,6 +71,7 @@ const UserProvider = ({ children }) => {
             console.log("no profile, inserting");
             const fetchInsertProfile = async () => {
                 try {
+                    setLoading(true);
                     const resp = await insertProfile(user.id, {
                         username,
                         bio,
@@ -81,12 +84,14 @@ const UserProvider = ({ children }) => {
                 }
             };
             fetchInsertProfile();
+            setLoading(false);
         }
 
         if (profile) {
             console.log("profile exists, updating");
             const fetchUpdateProfile = async () => {
                 try {
+                    setLoading(true);
                     const resp = await updateProfile(user.id, {
                         username,
                         bio,
@@ -99,12 +104,15 @@ const UserProvider = ({ children }) => {
                 }
             };
             fetchUpdateProfile();
+            setLoading(false);
         }
     };
 
     return (
         <UserContext.Provider
             value={{
+                loading,
+                setLoading,
                 user,
                 setUser,
                 profile,
