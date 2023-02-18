@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import AddButton from "./AddButton.js";
+import AddButton from "../AddButton.js";
 
 export default function InstructionsHeader({ theme, handleAddInstruction }) {
     return (

@@ -8,8 +8,8 @@ import {
     Typography,
 } from "@mui/material";
 
-import measurements from "../../../../../measurement-data.js";
-import RemoveButton from "./RemoveButton.js";
+import measurements from "../../../../../../measurement-data.js";
+import RemoveButton from "../RemoveButton.js";
 
 export default function Ingredient({
     theme,
