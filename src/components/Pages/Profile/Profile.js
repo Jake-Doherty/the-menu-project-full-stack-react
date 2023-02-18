@@ -6,7 +6,6 @@ import {
     FormGroup,
     Switch,
     TextField,
-    // Typography,
 } from "@mui/material";
 import Image from "mui-image";
 import React, { useState } from "react";
