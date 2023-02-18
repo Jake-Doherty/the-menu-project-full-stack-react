@@ -13,13 +13,13 @@ import {
 } from "@mui/material/";
 
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 
 import IngredientList from "./FormComponents/IngredientList.js";
 import useRecipeFormFunctions from "../../../../hooks/useRecipeFormFunctions.js";
 import IngredientsHeader from "./FormComponents/IngredientsHeader.js";
 import DishNameInput from "./FormComponents/DishNameInput.js";
+import InstructionsHeader from "./FormComponents/InstructionsHeader.js";
 
 export default function RecipeForm() {
     const { user } = useUser();
@@ -87,64 +87,8 @@ export default function RecipeForm() {
             />
 
             {/* INSTRUCTIONS HERE */}
-            <div
-                style={{
-                    display: "flex",
-                    flexFlow: "row wrap",
-                    width: "80%",
-                    height: "40px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    borderBottom: `2px solid ${theme.palette.primary.main}`,
-                }}
-            >
-                <Typography
-                    sx={{
-                        color: theme.palette.primary.contrastText,
-                    }}
-                    variant="h6"
-                    component="h6"
-                >
-                    Instructions
-                </Typography>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "10px",
-                        margin: 1,
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            fontSize: "1rem",
-                            color: theme.palette.primary.contrastText,
-                        }}
-                        variant="h6"
-                        component="h6"
-                    >
-                        Add a Step
-                    </Typography>
-                    <IconButton
-                        aria-label="add instruction"
-                        onClick={handleAddInstruction}
-                        sx={{
-                            scale: "1.25",
-                            margin: "0 2.5%",
-                            padding: "1",
-                            m: 1,
-                        }}
-                    >
-                        <AddBoxIcon
-                            sx={{
-                                color: theme.palette.success.light,
-                            }}
-                        />
-                    </IconButton>
-                </div>
-            </div>
+            <InstructionsHeader {...{ theme, handleAddInstruction }} />
+
             <Box
                 id="instructions-section"
                 component={"article"}
