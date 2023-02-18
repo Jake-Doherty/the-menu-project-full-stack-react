@@ -25,5 +25,5 @@ export async function insertRecipe(
         .match({ user_id: userId })
         .maybeSingle();
 
-    return checkError(response);
+    return response;
 }
