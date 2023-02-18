@@ -1,6 +1,16 @@
 import { client, checkError } from "./client.js";
 
-export async function getRecipes(userId, recipes) {
+export async function getNonSecretRecipes(userId, recipes) {
+    const response = await client
+        .from("recipes")
+        .select("*")
+        .match({ secret_recipe: false })
+        .maybeSingle();
+
+    return checkError(response);
+}
+
+export async function getUserRecipes(userId, recipes) {
     const response = await client
         .from("recipes")
         .select("*")
