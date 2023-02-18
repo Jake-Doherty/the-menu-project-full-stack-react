@@ -1,7 +1,11 @@
 import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import React from "react";
 
-export default function DishNameInput({ theme }) {
+export default function DishNameInput({
+    theme,
+    dishName,
+    handleDishNameChange,
+}) {
     return (
         <FormControl
             sx={{
@@ -31,6 +35,8 @@ export default function DishNameInput({ theme }) {
                 id="outlined-dish-name"
                 type="text"
                 label="Dish Name"
+                value={dishName}
+                onChange={(e) => handleDishNameChange(e)}
             />
         </FormControl>
     );
