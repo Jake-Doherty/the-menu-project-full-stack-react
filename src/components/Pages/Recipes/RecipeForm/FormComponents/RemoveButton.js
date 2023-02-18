@@ -11,7 +11,7 @@ export default function RemoveButton({
 }) {
     return (
         <IconButton
-            aria-label="delete ingredient"
+            aria-label={ingredient ? "delete ingredient" : "delete instruction"}
             onClick={() =>
                 handleRemoveClick(ingredient ? ingredient : instruction, index)
             }
