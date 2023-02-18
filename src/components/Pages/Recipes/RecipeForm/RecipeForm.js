@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext.js";
 
@@ -38,6 +38,7 @@ export default function RecipeForm() {
         dishName,
         notes,
         handleSaveRecipe,
+        snackbarSeverity,
     } = useRecipe();
 
     const {
@@ -66,7 +67,7 @@ export default function RecipeForm() {
     }
 
     const handleClose = (event, reason) => {
-        if (reason === "clickaway") {
+        if (reason === "") {
             return;
         }
 
@@ -109,10 +110,12 @@ export default function RecipeForm() {
                 <Alert
                     onClick={handleClose}
                     onClose={handleClose}
-                    severity="success"
+                    severity={snackbarSeverity}
                     sx={{ width: "100%" }}
                 >
-                    Recipe Saved!
+                    {snackbarSeverity === "success"
+                        ? "Recipe Saved!"
+                        : "Error Saving Recipe, Please Try Again."}
                 </Alert>
             </Snackbar>
             <Typography
