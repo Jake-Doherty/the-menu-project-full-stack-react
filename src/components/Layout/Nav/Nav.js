@@ -46,7 +46,7 @@ export default function Nav() {
         e.target.id === "add-recipe" && navigate("/recipe-editor");
         e.target.id === "user-profile" && navigate("/user-profile");
         // e.target.id === "recipe-book" && navigate("/recipe-book");
-        // e.target.id === "find-recipes" && navigate("/find-recipes");
+        e.target.id === "explore" && navigate("/explore-recipes");
         // e.target.id === "my-calendar" && navigate("/my-calendar");
         e.target.id === "settings" && navigate("/settings");
 
