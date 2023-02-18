@@ -17,9 +17,8 @@ export default function AddButton({
             }
             sx={{
                 scale: "1.25",
-                margin: "0 2.5%",
-                padding: "1",
-                m: 1,
+                margin: "0 0 0 5%",
+                padding: "5px",
             }}
         >
             <AddBoxIcon

@@ -11,7 +11,7 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
                 width: "80%",
                 height: "40px",
                 alignItems: "center",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 borderBottom: `2px solid ${theme.palette.primary.main}`,
             }}
         >
@@ -38,8 +38,10 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
                     variant="h6"
                     component="h6"
                     sx={{
-                        fontSize: "1rem",
+                        fontSize: "0.8rem",
                         color: theme.palette.primary.contrastText,
+                        width: "150px",
+                        textAlign: "center",
                     }}
                 >
                     Add an Ingredient
