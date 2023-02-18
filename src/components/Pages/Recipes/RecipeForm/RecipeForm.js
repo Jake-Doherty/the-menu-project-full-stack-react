@@ -17,6 +17,8 @@ export default function RecipeForm() {
     const theme = useMuiTheme();
 
     const {
+        dishName,
+        handleDishNameChange,
         ingredientList,
         ingredientRef,
         handleAddIngredient,
@@ -26,6 +28,7 @@ export default function RecipeForm() {
         handleAddInstruction,
         handleInstructionInputChange,
         handleRemoveClick,
+        handleSaveRecipe,
     } = useRecipeFormFunctions();
 
     if (!user) {
@@ -57,7 +60,7 @@ export default function RecipeForm() {
                 Add A Recipe
             </Typography>
 
-            <DishNameInput {...{ theme }} />
+            <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
 
             <IngredientGroup
                 {...{
@@ -81,7 +84,7 @@ export default function RecipeForm() {
                 }}
             />
 
-            <Button>Save Recipe</Button>
+            <Button onClick={handleSaveRecipe}>Save Recipe</Button>
         </Box>
     );
 }
