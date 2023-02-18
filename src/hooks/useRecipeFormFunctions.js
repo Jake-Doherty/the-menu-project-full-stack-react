@@ -19,6 +19,8 @@ export default function useRecipeFormFunctions() {
         },
     ]);
 
+    const [notes, setNotes] = useState("");
+
     const ingredientRef = useRef(null);
     const instructionRef = useRef(null);
 
@@ -110,6 +112,10 @@ export default function useRecipeFormFunctions() {
         }
     };
 
+    const handleNoteInputChange = (e) => {
+        setNotes(e.target.value);
+    };
+
     const handleSaveRecipe = async () => {
         console.log("save recipe");
         try {
@@ -117,6 +123,7 @@ export default function useRecipeFormFunctions() {
                 dishName: dishName,
                 ingredients: ingredientList,
                 instructions: instructionList,
+                notes: notes,
             });
             console.log(data);
         } catch (e) {
@@ -128,11 +135,13 @@ export default function useRecipeFormFunctions() {
         dishName,
         ingredientList,
         instructionList,
+        notes,
         ingredientRef,
         instructionRef,
         handleDishNameChange,
         handleIngredientInputChange,
         handleInstructionInputChange,
+        handleNoteInputChange,
         handleAddIngredient,
         handleAddInstruction,
         handleRemoveClick,

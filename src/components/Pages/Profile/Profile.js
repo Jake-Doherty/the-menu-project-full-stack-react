@@ -64,14 +64,6 @@ export default function Profile() {
                     height: "100%",
                 }}
             >
-                {/* <Typography
-                    sx={{ color: theme.palette.primary.contrastText }}
-                    variant="h6"
-                    component="h6"
-                    gutterBottom
-                >
-                    Profile
-                </Typography> */}
                 <FormControl>
                     <TextField
                         focused={profile && profile.display_name ? true : false}
