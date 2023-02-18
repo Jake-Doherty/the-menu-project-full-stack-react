@@ -7,33 +7,48 @@ const RecipeContext = createContext();
 const RecipeProvider = ({ children }) => {
     const { user, setLoading } = useUser();
     const [dishName, setDishName] = useState("");
-    const [ingredientList, setIngredientList] = useState([
+    const initialIngredientList = [
         {
             unit: "",
             quantity: "",
             ingredientName: "",
         },
-    ]);
-    const [instructionList, setInstructionList] = useState([
+    ];
+    const [ingredientList, setIngredientList] = useState(initialIngredientList);
+    const initialInstructionList = [
         {
             step: "",
             instruction: "",
         },
-    ]);
+    ];
+    const [instructionList, setInstructionList] = useState(
+        initialInstructionList
+    );
     const [notes, setNotes] = useState("");
 
     const [open, setOpen] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
     const handleSaveRecipe = async () => {
-        console.log("save recipe");
         try {
             setLoading(true);
-            await insertRecipe(user.id, {
+            const { data, error } = await insertRecipe(user.id, {
                 dishName: dishName,
                 ingredients: ingredientList,
                 instructions: instructionList,
                 notes: notes,
             });
+
+            if (data) {
+                setDishName("");
+                setIngredientList(initialIngredientList);
+                setInstructionList(initialInstructionList);
+                setNotes("");
+            }
+
+            error
+                ? setSnackbarSeverity("error")
+                : setSnackbarSeverity("success");
         } catch (e) {
             console.error(e);
         }
@@ -46,6 +61,7 @@ const RecipeProvider = ({ children }) => {
             value={{
                 open,
                 setOpen,
+                snackbarSeverity,
                 setDishName,
                 setIngredientList,
                 setInstructionList,
