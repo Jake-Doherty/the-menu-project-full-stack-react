@@ -1,10 +1,12 @@
-import { createContext, useContext, useState } from "react";
-import { insertRecipe } from "../services/recipes.js";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { getNonSecretRecipes, insertRecipe } from "../services/recipes.js";
 import { useUser } from "./UserContext.js";
 
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
+    const location = useLocation();
     const { user, setLoading } = useUser();
     const [dishName, setDishName] = useState("");
     const initialIngredientList = [
@@ -28,6 +30,23 @@ const RecipeProvider = ({ children }) => {
 
     const [open, setOpen] = useState(false);
     const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+    const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
+
+    useEffect(() => {
+        if (location.pathname === "/explore-recipes") {
+            const fetchNonSecretRecipes = async () => {
+                try {
+                    setLoading(true);
+                    const data = await getNonSecretRecipes();
+                    setNonSecretRecipes(data);
+                } catch (e) {
+                    console.error(e);
+                }
+            };
+            fetchNonSecretRecipes();
+            setLoading(false);
+        }
+    }, [setLoading, location.pathname]);
 
     const handleSaveRecipe = async () => {
         try {
@@ -59,6 +78,7 @@ const RecipeProvider = ({ children }) => {
     return (
         <RecipeContext.Provider
             value={{
+                nonSecretRecipes,
                 open,
                 setOpen,
                 snackbarSeverity,
