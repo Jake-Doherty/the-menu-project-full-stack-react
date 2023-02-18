@@ -13,6 +13,7 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
                 height: "40px",
                 alignItems: "center",
                 justifyContent: "space-between",
+                marginBottom: "5px",
                 borderBottom: `2px solid ${theme.palette.primary.main}`,
             }}
         >

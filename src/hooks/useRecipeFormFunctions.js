@@ -1,26 +1,17 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useUser } from "../context/UserContext.js";
 import { insertRecipe } from "../services/recipes.js";
 
-export default function useRecipeFormFunctions() {
-    const [dishName, setDishName] = useState("");
-    const [ingredientList, setIngredientList] = useState([
-        {
-            unit: "",
-            quantity: "",
-            ingredientName: "",
-        },
-    ]);
-
-    const [instructionList, setInstructionList] = useState([
-        {
-            step: "",
-            instruction: "",
-        },
-    ]);
-
-    const [notes, setNotes] = useState("");
-
+export default function useRecipeFormFunctions({
+    setDishName,
+    setIngredientList,
+    setInstructionList,
+    ingredientList,
+    instructionList,
+    setNotes,
+    dishName,
+    notes,
+}) {
     const ingredientRef = useRef(null);
     const instructionRef = useRef(null);
 
