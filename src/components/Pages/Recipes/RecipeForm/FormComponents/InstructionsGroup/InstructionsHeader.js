@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import AddButton from "../AddButton.js";
+import SectionHeader from "../SectionHeader.js";
 
 export default function InstructionsHeader({ theme, handleAddInstruction }) {
     return (
@@ -12,18 +13,11 @@ export default function InstructionsHeader({ theme, handleAddInstruction }) {
                 height: "40px",
                 alignItems: "center",
                 justifyContent: "space-between",
+                marginTop: "10px",
                 borderBottom: `2px solid ${theme.palette.primary.main}`,
             }}
         >
-            <Typography
-                sx={{
-                    color: theme.palette.primary.contrastText,
-                }}
-                variant="h6"
-                component="h6"
-            >
-                Instructions
-            </Typography>
+            <SectionHeader theme={theme} text="Instructions" />
             <div
                 style={{
                     display: "flex",

@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import AddButton from "../AddButton.js";
+import SectionHeader from "../SectionHeader.js";
 
 export default function IngredientsHeader({ theme, handleAddIngredient }) {
     return (
@@ -15,15 +16,7 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
                 borderBottom: `2px solid ${theme.palette.primary.main}`,
             }}
         >
-            <Typography
-                variant="h6"
-                component="h6"
-                sx={{
-                    color: theme.palette.primary.contrastText,
-                }}
-            >
-                Ingredients
-            </Typography>
+            <SectionHeader theme={theme} text="Ingredient" />
             <div
                 style={{
                     display: "flex",
