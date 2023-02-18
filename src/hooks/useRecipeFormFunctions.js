@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
+import { useUser } from "../context/UserContext.js";
+import { insertRecipe } from "../services/recipes.js";
 
 export default function useRecipeFormFunctions() {
+    const [dishName, setDishName] = useState("");
     const [ingredientList, setIngredientList] = useState([
         {
             unit: "",
@@ -18,6 +21,12 @@ export default function useRecipeFormFunctions() {
 
     const ingredientRef = useRef(null);
     const instructionRef = useRef(null);
+
+    const { user } = useUser();
+
+    const handleDishNameChange = (e) => {
+        setDishName(e.target.value);
+    };
 
     const handleIngredientInputChange = (e, index) => {
         const { name, value } = e.target;
@@ -101,15 +110,32 @@ export default function useRecipeFormFunctions() {
         }
     };
 
+    const handleSaveRecipe = async () => {
+        console.log("save recipe");
+        try {
+            const data = await insertRecipe(user.id, {
+                dishName: dishName,
+                ingredients: ingredientList,
+                instructions: instructionList,
+            });
+            console.log(data);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return {
+        dishName,
         ingredientList,
         instructionList,
         ingredientRef,
         instructionRef,
+        handleDishNameChange,
         handleIngredientInputChange,
         handleInstructionInputChange,
         handleAddIngredient,
         handleAddInstruction,
         handleRemoveClick,
+        handleSaveRecipe,
     };
 }
