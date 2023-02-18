@@ -10,6 +10,7 @@ import useRecipeFormFunctions from "../../../../hooks/useRecipeFormFunctions.js"
 import DishNameInput from "./FormComponents/DishNameInput.js";
 import InstructionGroup from "./FormComponents/InstructionsGroup/InstructionGroup.js";
 import IngredientGroup from "./FormComponents/IngredientsGroup/IngredientGroup.js";
+import Notes from "./FormComponents/NotesGroup/Notes.js";
 
 export default function RecipeForm() {
     const { user } = useUser();
@@ -28,6 +29,8 @@ export default function RecipeForm() {
         handleAddInstruction,
         handleInstructionInputChange,
         handleRemoveClick,
+        notes,
+        handleNoteInputChange,
         handleSaveRecipe,
     } = useRecipeFormFunctions();
 
@@ -83,6 +86,8 @@ export default function RecipeForm() {
                     handleRemoveClick,
                 }}
             />
+
+            <Notes {...{ theme, notes, handleNoteInputChange }} />
 
             <Button onClick={handleSaveRecipe}>Save Recipe</Button>
         </Box>
