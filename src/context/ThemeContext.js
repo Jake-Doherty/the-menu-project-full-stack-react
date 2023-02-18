@@ -121,7 +121,7 @@ const ThemeContextProvider = ({ children }) => {
                 setUserTheme(lightTheme);
             }
         }
-    }, [profile, themeInput]);
+    }, [profile, themeInput, darkTheme, lightTheme]);
 
     const toggleTheme = () => {
         setUserTheme((prevTheme) =>
