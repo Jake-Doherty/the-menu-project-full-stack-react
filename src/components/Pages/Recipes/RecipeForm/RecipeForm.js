@@ -11,12 +11,15 @@ import {
     Button,
     Box,
 } from "@mui/material/";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useTheme as useMuiTheme } from "@mui/material/styles";
 
 import IngredientList from "./FormComponents/IngredientList.js";
 import useRecipeFormFunctions from "../../../../hooks/useRecipeFormFunctions.js";
+import IngredientsHeader from "./FormComponents/IngredientsHeader.js";
+import DishNameInput from "./FormComponents/DishNameInput.js";
 
 export default function RecipeForm() {
     const { user } = useUser();
@@ -41,8 +44,8 @@ export default function RecipeForm() {
 
     return (
         <Box
-            component={"section"}
             id="recipe-form"
+            component={"section"}
             sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -56,100 +59,23 @@ export default function RecipeForm() {
                 transition: "all 0.5s ease",
             }}
         >
-            <Typography mt={1} variant="h6" color="primary">
+            <Typography
+                mt={1}
+                variant="h6"
+                color={theme.palette.primary.contrastText}
+            >
                 Add A Recipe
             </Typography>
 
-            {/* DISH NAME HERE */}
-            <FormControl
-                sx={{
-                    "& .MuiInputBase-root *": {
-                        borderColor: theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
-                    },
-                    "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                            borderColor: theme.palette.primary.main,
-                        },
-                    },
-                    m: 1,
-                    width: "80%",
-                }}
-                variant="outlined"
-            >
-                <InputLabel
-                    component="label"
-                    margin="dense"
-                    htmlFor="outlined-dish-name"
-                >
-                    Dish Name
-                </InputLabel>
-                <OutlinedInput
-                    name="dish-name"
-                    id="outlined-dish-name"
-                    type="text"
-                    label="Dish Name"
-                />
-            </FormControl>
+            <DishNameInput {...{ theme }} />
 
-            {/* INGREDIENTS HERE */}
-            <div
-                style={{
-                    display: "flex",
-                    flexFlow: "row nowrap",
-                    width: "80%",
-                    height: "40px",
-                    alignItems: "center",
-                    justifyContent: "space-around",
+            <IngredientsHeader
+                {...{
+                    theme,
+                    handleAddIngredient,
                 }}
-            >
-                <Typography
-                    sx={{
-                        color: theme.palette.primary.contrastText,
-                    }}
-                    variant="h6"
-                    component="h6"
-                >
-                    Ingredients
-                </Typography>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "10px",
-                        margin: 1,
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            fontSize: "1rem",
-                            color: theme.palette.primary.contrastText,
-                        }}
-                        variant="h6"
-                        component="h6"
-                    >
-                        Add an Ingredient
-                    </Typography>
-                    <IconButton
-                        aria-label="add ingredient"
-                        onClick={handleAddIngredient}
-                        sx={{
-                            scale: "1.25",
-                            margin: "0 2.5%",
-                            padding: "1",
-                            m: 1,
-                        }}
-                    >
-                        <AddBoxIcon
-                            sx={{
-                                color: theme.palette.success.light,
-                            }}
-                        />
-                    </IconButton>
-                </div>
-            </div>
+            />
+
             <IngredientList
                 {...{
                     theme,
@@ -168,7 +94,8 @@ export default function RecipeForm() {
                     width: "80%",
                     height: "40px",
                     alignItems: "center",
-                    justifyContent: "space-around",
+                    justifyContent: "space-between",
+                    borderBottom: `2px solid ${theme.palette.primary.main}`,
                 }}
             >
                 <Typography
