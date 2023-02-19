@@ -1,6 +1,6 @@
 import { client, checkError } from "./client.js";
 
-export async function getNonSecretRecipes(userId, recipes) {
+export async function getNonSecretRecipes() {
     const response = await client
         .from("recipes")
         .select("*")
@@ -9,12 +9,11 @@ export async function getNonSecretRecipes(userId, recipes) {
     return checkError(response);
 }
 
-export async function getUserRecipes(userId, recipes) {
+export async function getUserRecipes(userId) {
     const response = await client
         .from("recipes")
         .select("*")
-        .match({ user_id: userId })
-        .maybeSingle();
+        .match({ user_id: userId });
 
     return checkError(response);
 }
