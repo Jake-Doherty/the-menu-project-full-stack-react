@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext.js";
 import { useTheme as MuiTheme } from "@emotion/react";
 
-import { Autocomplete, Box, TextField, Typography } from "@mui/material/";
+import {
+    Autocomplete,
+    Box,
+    Modal,
+    TextField,
+    Typography,
+} from "@mui/material/";
 import { useRecipe } from "../../../../context/RecipeContext.js";
 
 export default function ExploreRecipes() {
     const { user } = useUser();
     const theme = MuiTheme();
     const { nonSecretRecipes } = useRecipe();
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalRecipe, setModalRecipe] = useState({});
+
+    const handleModalOpen = (recipe) => {
+        console.log("recipe", recipe);
+        setModalRecipe(recipe);
+        setTimeout(() => {}, 5);
+        console.log("modalRecipe", modalRecipe.ingredients);
+        setModalOpen(true);
+    };
+    const handleModalClose = () => setModalOpen(false);
 
     if (!user) {
         return <Navigate to="/auth/sign-in" />;
@@ -33,10 +51,10 @@ export default function ExploreRecipes() {
                 border={2}
                 borderRadius={2}
                 borderColor={theme.palette.primary.main}
-                p={5}
+                p={1}
                 gap={2}
                 sx={{
-                    width: "max(275px, 35vw)",
+                    width: "max(300px, 40vw)",
                     minHeight: "50px",
                     display: "flex",
                     flexDirection: "column",
@@ -78,16 +96,16 @@ export default function ExploreRecipes() {
                 border={2}
                 borderRadius={2}
                 borderColor={theme.palette.primary.main}
-                p={5}
+                p={1}
                 gap={2}
                 sx={{
-                    width: "max(275px, 35vw)",
-                    minHeight: "50px",
+                    width: "max(275px, 40vw)",
+                    maxHeight: "max(275px, 40vw)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
-                    height: "100%",
+                    justifyItems: "flex-start",
+                    justifyContent: "flex-start",
                 }}
             >
                 <Typography
@@ -101,23 +119,87 @@ export default function ExploreRecipes() {
                 >
                     Recipes
                 </Typography>
-                <Box component={"ul"}>
+                <Box
+                    component={"ul"}
+                    sx={{
+                        width: "100%",
+                        height: "100%",
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fill, minmax(100px, 1fr))",
+                        gridTemplateRows:
+                            "repeat(auto-fill, minmax(60px, 1fr))",
+                        gridAutoFlow: "row",
+                        gap: 2,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        listStyle: "none",
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                        scrollBehavior: "smooth",
+                        padding: "0 0 0 5px",
+                        margin: 0,
+                    }}
+                >
                     {nonSecretRecipes.map((recipe) => (
                         <Box
                             key={recipe.id}
                             variant="h6"
                             component={"li"}
+                            onClick={() => handleModalOpen(recipe)}
                             sx={{
+                                height: "20px",
+                                width: "100px",
                                 color: theme.palette.primary.contrastText,
-                                margin: "0",
-                                padding: "0",
+                                margin: 1,
+                                padding: 1,
+                                cursor: "pointer",
+                                backgroundColor: theme.palette.primary.dark,
+                                borderRadius: 2,
+                                textAlign: "center",
+                                "&:hover": {
+                                    backgroundColor: theme.palette.primary.main,
+                                },
                             }}
                         >
-                            Name: {recipe.dish_name}, Ingredients:{" "}
-                            {recipe.ingredients.length}, Instructions:
-                            {recipe.instructions.length}
+                            {recipe.dish_name}
                         </Box>
                     ))}
+                    <Modal
+                        open={modalOpen}
+                        onClose={handleModalClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                width: 400,
+                                bgcolor: "background.paper",
+                                border: "2px solid #000",
+                                boxShadow: 24,
+                                p: 4,
+                            }}
+                        >
+                            <Typography
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h2"
+                            >
+                                {modalRecipe.dish_name}
+                            </Typography>
+
+                            <Typography
+                                id="modal-modal-description"
+                                sx={{ mt: 2 }}
+                            >
+                                {modalRecipe.notes}
+                            </Typography>
+                        </Box>
+                    </Modal>
                 </Box>
             </Box>
         </Box>
