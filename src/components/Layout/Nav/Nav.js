@@ -48,7 +48,7 @@ export default function Nav() {
         // e.target.id === "recipe-book" && navigate("/recipe-book");
         e.target.id === "explore" && navigate("/explore-recipes");
         // e.target.id === "my-calendar" && navigate("/my-calendar");
-        e.target.id === "settings" && navigate("/settings");
+        // e.target.id === "settings" && navigate("/settings");
 
         setAnchorEl(null);
     };
