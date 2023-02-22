@@ -67,7 +67,7 @@ const RecipeProvider = ({ children }) => {
             fetchUserRecipes();
             setLoading(false);
         }
-    }, [setLoading, location.pathname, user.id]);
+    }, [setLoading, location.pathname, user]);
 
     const handleSaveRecipe = async () => {
         try {
