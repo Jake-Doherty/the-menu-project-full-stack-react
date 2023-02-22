@@ -15,6 +15,7 @@ export default function Main() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                height: "100%",
             }}
         >
             <Routes>

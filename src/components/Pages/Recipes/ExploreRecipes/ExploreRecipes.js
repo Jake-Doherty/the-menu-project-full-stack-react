@@ -37,11 +37,11 @@ export default function ExploreRecipes() {
         <Box
             component={"section"}
             sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                display: "grid",
+                gridTemplateRows: "150px 1fr",
                 justifyContent: "center",
-                justifySelf: "flex-start",
+                alignItems: "stretch",
+                justifyItems: "center",
                 height: "100%",
                 gap: 2,
             }}
@@ -54,13 +54,11 @@ export default function ExploreRecipes() {
                 p={1}
                 gap={2}
                 sx={{
-                    width: "max(300px, 40vw)",
-                    minHeight: "50px",
+                    width: "max(320px, 40vw)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    height: "100%",
                 }}
             >
                 <Typography
@@ -99,8 +97,8 @@ export default function ExploreRecipes() {
                 p={1}
                 gap={2}
                 sx={{
-                    width: "max(275px, 40vw)",
-                    maxHeight: "max(275px, 40vw)",
+                    width: "max(320px, 40vw)",
+                    maxHeight: "max(275px, 60vh)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -122,23 +120,22 @@ export default function ExploreRecipes() {
                 <Box
                     component={"ul"}
                     sx={{
-                        width: "100%",
+                        width: "97%",
                         height: "100%",
                         display: "grid",
                         gridTemplateColumns:
-                            "repeat(auto-fill, minmax(100px, 1fr))",
-                        gridTemplateRows:
-                            "repeat(auto-fill, minmax(60px, 1fr))",
+                            "repeat(auto-fit, minmax(120px, 1fr))",
+                        gridTemplateRows: "repeat(auto-fit, minmax(60px, 1fr))",
                         gridAutoFlow: "row",
-                        gap: 2,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        gap: "10px",
                         listStyle: "none",
                         overflowY: "auto",
                         overflowX: "hidden",
-                        scrollBehavior: "smooth",
-                        padding: "0 0 0 5px",
-                        margin: 0,
+                        padding: "10px",
+                        margin: "0px",
+                        justifyItems: "center",
+                        alignItems: "end",
+                        alignContent: "stretch",
                     }}
                 >
                     {nonSecretRecipes.map((recipe) => (
@@ -148,17 +145,21 @@ export default function ExploreRecipes() {
                             component={"li"}
                             onClick={() => handleModalOpen(recipe)}
                             sx={{
-                                height: "20px",
-                                width: "100px",
+                                height: "60px",
+                                width: "120px",
                                 color: theme.palette.primary.contrastText,
-                                margin: 1,
-                                padding: 1,
                                 cursor: "pointer",
-                                backgroundColor: theme.palette.primary.dark,
+                                // backgroundColor: theme.palette.primary.dark,
                                 borderRadius: 2,
+                                borderWidth: 2,
+                                borderStyle: "solid",
+                                borderColor: theme.palette.primary.main,
                                 textAlign: "center",
+                                wordBreak: "break-word",
                                 "&:hover": {
                                     backgroundColor: theme.palette.primary.main,
+                                    borderColor: theme.palette.primary.dark,
+                                    transition: "all 0.2s ease-in-out",
                                 },
                             }}
                         >
@@ -177,11 +178,17 @@ export default function ExploreRecipes() {
                                 top: "50%",
                                 left: "50%",
                                 transform: "translate(-50%, -50%)",
-                                width: 400,
-                                bgcolor: "background.paper",
-                                border: "2px solid #000",
+                                width: "max(275px, 40vw)",
+                                bgcolor: theme.palette.primary.dark,
+                                borderWidth: 2,
+                                borderStyle: "solid",
+                                borderColor: theme.palette.primary.main,
+                                borderRadius: 2,
                                 boxShadow: 24,
                                 p: 4,
+                                "& *": {
+                                    color: theme.palette.primary.contrastText,
+                                },
                             }}
                         >
                             <Typography
@@ -194,7 +201,7 @@ export default function ExploreRecipes() {
 
                             <Typography
                                 id="modal-modal-description"
-                                sx={{ mt: 2 }}
+                                sx={{ mt: 2, wordWrap: "break-word" }}
                             >
                                 {modalRecipe.notes}
                             </Typography>

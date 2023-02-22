@@ -101,7 +101,7 @@ export default function Home() {
                 >
                     Recipes
                 </Typography>
-                <Box component={"ul"}>
+                {/* <Box component={"ul"}>
                     {userRecipes.map((recipe) => (
                         <Box
                             key={recipe.id}
@@ -118,7 +118,7 @@ export default function Home() {
                             {recipe.instructions.length}
                         </Box>
                     ))}
-                </Box>
+                </Box> */}
             </Box>
         </Box>
     );
