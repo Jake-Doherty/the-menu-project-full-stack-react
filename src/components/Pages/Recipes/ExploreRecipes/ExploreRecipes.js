@@ -4,12 +4,16 @@ import { useUser } from "../../../../context/UserContext.js";
 import { useTheme as MuiTheme } from "@emotion/react";
 
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Autocomplete,
     Box,
     Modal,
     TextField,
     Typography,
 } from "@mui/material/";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRecipe } from "../../../../context/RecipeContext.js";
 
 export default function ExploreRecipes() {
@@ -22,6 +26,11 @@ export default function ExploreRecipes() {
     const [modalIngredientList, setModalIngredientList] = useState([]);
     const [modalInstructionList, setModalInstructionList] = useState([]);
     const [modalNotes, setModalNotes] = useState("");
+    const [expanded, setExpanded] = useState(false);
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
 
     const handleModalOpen = (recipe) => {
         console.log("recipe", recipe);
@@ -32,7 +41,9 @@ export default function ExploreRecipes() {
 
         setModalOpen(true);
     };
-    const handleModalClose = () => setModalOpen(false);
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
 
     if (!user) {
         return <Navigate to="/auth/sign-in" />;
@@ -200,42 +211,131 @@ export default function ExploreRecipes() {
                         >
                             <Typography
                                 id="modal-modal-title"
-                                variant="h6"
-                                component="h2"
+                                variant="h3"
+                                component="h3"
+                                align="center"
+                                mb={2}
                             >
                                 {modalDishName}
                             </Typography>
-
+                            <Typography
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h2"
+                                sx={{
+                                    textAlign: "center",
+                                    fontWeight: "bold",
+                                    textDecoration: "underline",
+                                }}
+                            >
+                                Ingredients
+                            </Typography>
                             {modalIngredientList.map((ingredient, index) => (
-                                <Typography
+                                <Box
                                     key={index}
-                                    id="modal-modal-title"
-                                    variant="h6"
-                                    component="h2"
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        width: "100%",
+                                        borderBottom: "1px solid",
+                                        marginBottom: "5px",
+                                    }}
                                 >
-                                    {ingredient.quantity} {ingredient.unit}{" "}
-                                    {ingredient.ingredientName}
-                                </Typography>
-                            ))}
-
-                            {modalInstructionList.map((instruction) => (
-                                <Typography
-                                    key={instruction.step}
-                                    id="modal-modal-title"
-                                    variant="h6"
-                                    component="h2"
-                                >
-                                    Step: {instruction.step}{" "}
-                                    {instruction.instruction}
-                                </Typography>
+                                    <Typography
+                                        id="modal-modal-title"
+                                        variant="h6"
+                                        component="h2"
+                                    >
+                                        {ingredient.quantity} {ingredient.unit}{" "}
+                                    </Typography>
+                                    <Typography variant="span" component="span">
+                                        {ingredient.ingredientName}
+                                    </Typography>
+                                </Box>
                             ))}
 
                             <Typography
-                                id="modal-modal-description"
-                                sx={{ mt: 2, wordWrap: "break-word" }}
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h6"
+                                sx={{
+                                    textAlign: "center",
+                                    fontWeight: "bold",
+                                    textDecoration: "underline",
+                                }}
                             >
-                                {modalNotes}
+                                Instructions
                             </Typography>
+                            {modalInstructionList.map((instruction) => (
+                                <Accordion
+                                    key={instruction.step}
+                                    expanded={
+                                        expanded === `panel${instruction.step}`
+                                    }
+                                    onChange={handleChange(
+                                        `panel${instruction.step}`
+                                    )}
+                                >
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel4bh-content"
+                                        id="panel4bh-header"
+                                    >
+                                        <Typography
+                                            id="modal-modal-title"
+                                            variant="h6"
+                                            component="h6"
+                                            sx={{ width: "33%", flexShrink: 0 }}
+                                        >
+                                            Step: {instruction.step}{" "}
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography
+                                            variant="span"
+                                            component="span"
+                                        >
+                                            {instruction.instruction}
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                                // <Box key={instruction.step} sx={{ mb: 2 }}>
+                                //     <Typography
+                                //         id="modal-modal-title"
+                                //         variant="h6"
+                                //         component="h6"
+                                //     >
+                                //         Step: {instruction.step}{" "}
+                                //     </Typography>
+                                //     <Typography variant="span" component="span">
+                                //         {instruction.instruction}
+                                //     </Typography>
+                                // </Box>
+                            ))}
+                            {modalNotes ? (
+                                <>
+                                    <Typography
+                                        id="modal-modal-title"
+                                        variant="h6"
+                                        component="h6"
+                                        sx={{
+                                            textAlign: "center",
+                                            fontWeight: "bold",
+                                            textDecoration: "underline",
+                                        }}
+                                    >
+                                        Notes
+                                    </Typography>
+                                    <Typography
+                                        id="modal-modal-description"
+                                        sx={{ mt: 2, wordWrap: "break-word" }}
+                                    >
+                                        {modalNotes}
+                                    </Typography>
+                                </>
+                            ) : null}
                         </Box>
                     </Modal>
                 </Box>
