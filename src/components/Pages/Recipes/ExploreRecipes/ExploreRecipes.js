@@ -18,13 +18,18 @@ export default function ExploreRecipes() {
     const { nonSecretRecipes } = useRecipe();
 
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalRecipe, setModalRecipe] = useState({});
+    const [modalDishName, setModalDishName] = useState("");
+    const [modalIngredientList, setModalIngredientList] = useState([]);
+    const [modalInstructionList, setModalInstructionList] = useState([]);
+    const [modalNotes, setModalNotes] = useState("");
 
     const handleModalOpen = (recipe) => {
         console.log("recipe", recipe);
-        setModalRecipe(recipe);
-        setTimeout(() => {}, 5);
-        console.log("modalRecipe", modalRecipe.ingredients);
+        setModalDishName(recipe.dish_name);
+        setModalIngredientList(recipe.ingredients);
+        setModalInstructionList(recipe.instructions);
+        setModalNotes(recipe.notes);
+
         setModalOpen(true);
     };
     const handleModalClose = () => setModalOpen(false);
@@ -179,12 +184,14 @@ export default function ExploreRecipes() {
                                 left: "50%",
                                 transform: "translate(-50%, -50%)",
                                 width: "max(275px, 40vw)",
+                                height: "max(275px, 60vh)",
                                 bgcolor: theme.palette.primary.dark,
                                 borderWidth: 2,
                                 borderStyle: "solid",
                                 borderColor: theme.palette.primary.main,
                                 borderRadius: 2,
                                 boxShadow: 24,
+                                overflow: "auto",
                                 p: 4,
                                 "& *": {
                                     color: theme.palette.primary.contrastText,
@@ -196,14 +203,38 @@ export default function ExploreRecipes() {
                                 variant="h6"
                                 component="h2"
                             >
-                                {modalRecipe.dish_name}
+                                {modalDishName}
                             </Typography>
+
+                            {modalIngredientList.map((ingredient, index) => (
+                                <Typography
+                                    key={index}
+                                    id="modal-modal-title"
+                                    variant="h6"
+                                    component="h2"
+                                >
+                                    {ingredient.quantity} {ingredient.unit}{" "}
+                                    {ingredient.ingredientName}
+                                </Typography>
+                            ))}
+
+                            {modalInstructionList.map((instruction) => (
+                                <Typography
+                                    key={instruction.step}
+                                    id="modal-modal-title"
+                                    variant="h6"
+                                    component="h2"
+                                >
+                                    Step: {instruction.step}{" "}
+                                    {instruction.instruction}
+                                </Typography>
+                            ))}
 
                             <Typography
                                 id="modal-modal-description"
                                 sx={{ mt: 2, wordWrap: "break-word" }}
                             >
-                                {modalRecipe.notes}
+                                {modalNotes}
                             </Typography>
                         </Box>
                     </Modal>
