@@ -9,6 +9,7 @@ import {
     AccordionSummary,
     Autocomplete,
     Box,
+    Divider,
     Modal,
     TextField,
     Typography,
@@ -150,7 +151,7 @@ export default function ExploreRecipes() {
                         padding: "10px",
                         margin: "0px",
                         justifyItems: "center",
-                        alignItems: "end",
+                        alignItems: "stretch",
                         alignContent: "stretch",
                     }}
                 >
@@ -165,15 +166,16 @@ export default function ExploreRecipes() {
                                 width: "120px",
                                 color: theme.palette.primary.contrastText,
                                 cursor: "pointer",
-                                // backgroundColor: theme.palette.primary.dark,
+                                backgroundColor: theme.palette.background.paper,
                                 borderRadius: 2,
                                 borderWidth: 2,
                                 borderStyle: "solid",
                                 borderColor: theme.palette.primary.main,
                                 textAlign: "center",
                                 wordBreak: "break-word",
+                                transition: "all 0.2s ease-in-out",
                                 "&:hover": {
-                                    backgroundColor: theme.palette.primary.main,
+                                    backgroundColor: theme.palette.primary.dark,
                                     borderColor: theme.palette.primary.dark,
                                     transition: "all 0.2s ease-in-out",
                                 },
@@ -183,6 +185,7 @@ export default function ExploreRecipes() {
                         </Box>
                     ))}
                     <Modal
+                        outline="0"
                         open={modalOpen}
                         onClose={handleModalClose}
                         aria-labelledby="modal-modal-title"
@@ -196,14 +199,17 @@ export default function ExploreRecipes() {
                                 transform: "translate(-50%, -50%)",
                                 width: "max(275px, 40vw)",
                                 height: "max(275px, 60vh)",
-                                bgcolor: theme.palette.primary.dark,
+                                bgcolor: theme.palette.background.paper,
                                 borderWidth: 2,
                                 borderStyle: "solid",
                                 borderColor: theme.palette.primary.main,
                                 borderRadius: 2,
                                 boxShadow: 24,
                                 overflow: "auto",
-                                p: 4,
+                                pt: 1,
+                                pr: 4,
+                                pb: 2,
+                                pl: 4,
                                 "& *": {
                                     color: theme.palette.primary.contrastText,
                                 },
@@ -218,6 +224,7 @@ export default function ExploreRecipes() {
                             >
                                 {modalDishName}
                             </Typography>
+                            <Divider variant="middle" sx={{ m: 2 }} />
                             <Typography
                                 id="modal-modal-title"
                                 variant="h6"
@@ -226,6 +233,7 @@ export default function ExploreRecipes() {
                                     textAlign: "center",
                                     fontWeight: "bold",
                                     textDecoration: "underline",
+                                    mb: 1,
                                 }}
                             >
                                 Ingredients
@@ -255,7 +263,7 @@ export default function ExploreRecipes() {
                                     </Typography>
                                 </Box>
                             ))}
-
+                            <Divider variant="middle" sx={{ m: 2 }} />
                             <Typography
                                 id="modal-modal-title"
                                 variant="h6"
@@ -264,58 +272,52 @@ export default function ExploreRecipes() {
                                     textAlign: "center",
                                     fontWeight: "bold",
                                     textDecoration: "underline",
+                                    mb: 1,
                                 }}
                             >
                                 Instructions
                             </Typography>
-                            {modalInstructionList.map((instruction) => (
-                                <Accordion
-                                    key={instruction.step}
-                                    expanded={
-                                        expanded === `panel${instruction.step}`
-                                    }
-                                    onChange={handleChange(
-                                        `panel${instruction.step}`
-                                    )}
-                                >
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls="panel4bh-content"
-                                        id="panel4bh-header"
+                            {modalInstructionList.map(
+                                ({ instruction, step }) => (
+                                    <Accordion
+                                        key={step}
+                                        expanded={expanded === `panel${step}`}
+                                        onChange={handleChange(`panel${step}`)}
                                     >
-                                        <Typography
-                                            id="modal-modal-title"
-                                            variant="h6"
-                                            component="h6"
-                                            sx={{ width: "33%", flexShrink: 0 }}
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon />}
+                                            aria-controls="panel4bh-content"
+                                            id={`panel${step}bh-header`}
+                                            sx={{
+                                                backgroundColor:
+                                                    theme.palette.background
+                                                        .main,
+                                            }}
                                         >
-                                            Step: {instruction.step}{" "}
-                                        </Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography
-                                            variant="span"
-                                            component="span"
-                                        >
-                                            {instruction.instruction}
-                                        </Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                                // <Box key={instruction.step} sx={{ mb: 2 }}>
-                                //     <Typography
-                                //         id="modal-modal-title"
-                                //         variant="h6"
-                                //         component="h6"
-                                //     >
-                                //         Step: {instruction.step}{" "}
-                                //     </Typography>
-                                //     <Typography variant="span" component="span">
-                                //         {instruction.instruction}
-                                //     </Typography>
-                                // </Box>
-                            ))}
+                                            <Typography
+                                                id="modal-modal-title"
+                                                variant="h6"
+                                                component="h6"
+                                                sx={{ flexShrink: 0 }}
+                                            >
+                                                Step: {step}{" "}
+                                            </Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Typography
+                                                variant="span"
+                                                component="span"
+                                            >
+                                                {instruction}
+                                            </Typography>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                )
+                            )}
+
                             {modalNotes ? (
                                 <>
+                                    <Divider variant="middle" sx={{ m: 2 }} />
                                     <Typography
                                         id="modal-modal-title"
                                         variant="h6"
