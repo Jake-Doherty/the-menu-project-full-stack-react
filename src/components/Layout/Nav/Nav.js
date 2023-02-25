@@ -144,9 +144,9 @@ export default function Nav() {
                 >
                     <Avatar /> Profile
                 </MenuItem>
-                <MenuItem title="My Account" onClick={handleClose}>
+                {/* <MenuItem title="My Account" onClick={handleClose}>
                     <Avatar /> My account
-                </MenuItem>
+                </MenuItem> */}
                 <Divider />
                 <MenuItem id="home" title="Home" onClick={handleClose}>
                     <ListItemIcon>
@@ -164,7 +164,7 @@ export default function Nav() {
                     </ListItemIcon>
                     Add A Recipe
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     id="recipe-book"
                     title="Recipe Book"
                     onClick={handleClose}
@@ -173,14 +173,14 @@ export default function Nav() {
                         <MenuBookIcon fontSize="small" />
                     </ListItemIcon>
                     Recipe Book
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem id="explore" title="Explore" onClick={handleClose}>
                     <ListItemIcon>
                         <RestaurantMenuIcon fontSize="small" />
                     </ListItemIcon>
                     Explore
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     id="menu-plan"
                     title="Menu Plan"
                     onClick={handleClose}
@@ -195,7 +195,7 @@ export default function Nav() {
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem id="light-dark-modes" title="Settings">
                     <FormGroup>
                         <FormControlLabel
