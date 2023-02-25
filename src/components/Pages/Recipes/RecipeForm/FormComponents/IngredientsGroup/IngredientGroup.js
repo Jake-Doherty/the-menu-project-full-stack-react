@@ -1,33 +1,33 @@
-import React from "react";
-import IngredientList from "./IngredientList.js";
-import IngredientsHeader from "./IngredientsHeader.js";
+import React from 'react';
+import IngredientList from './IngredientList.js';
+import IngredientsHeader from './IngredientsHeader.js';
 
 export default function IngredientGroup({
-    theme,
-    ingredientList,
-    ingredientRef,
-    handleAddIngredient,
-    handleIngredientInputChange,
-    handleRemoveClick,
+  theme,
+  ingredientList,
+  ingredientRef,
+  handleAddIngredient,
+  handleIngredientInputChange,
+  handleRemoveClick,
 }) {
-    return (
-        <>
-            <IngredientsHeader
-                {...{
-                    theme,
-                    handleAddIngredient,
-                }}
-            />
+  return (
+    <>
+      <IngredientsHeader
+        {...{
+          theme,
+          handleAddIngredient,
+        }}
+      />
 
-            <IngredientList
-                {...{
-                    theme,
-                    ingredientList,
-                    ingredientRef,
-                    handleIngredientInputChange,
-                    handleRemoveClick,
-                }}
-            />
-        </>
-    );
+      <IngredientList
+        {...{
+          theme,
+          ingredientList,
+          ingredientRef,
+          handleIngredientInputChange,
+          handleRemoveClick,
+        }}
+      />
+    </>
+  );
 }
