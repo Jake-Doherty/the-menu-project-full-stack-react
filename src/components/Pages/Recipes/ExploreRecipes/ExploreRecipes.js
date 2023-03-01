@@ -55,8 +55,8 @@ export default function ExploreRecipes() {
   };
 
   const handleModalOpen = (e, recipe) => {
-    console.log('event', e);
-    console.log('recipe', recipe);
+    // console.log('event', e);
+    // console.log('recipe', recipe);
 
     if (e.target.classList.contains('edamam-recipe')) {
       setModalDishName(recipe.label);
