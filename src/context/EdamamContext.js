@@ -18,7 +18,7 @@ const EdamamProvider = ({ children }) => {
 
   const { setLoading } = useUser();
 
-  console.log(inView);
+  // console.log(inView);
 
   useEffect(() => {
     const fetchEdamamRecipes = async () => {
