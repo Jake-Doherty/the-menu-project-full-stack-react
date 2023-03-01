@@ -7,20 +7,25 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Autocomplete,
+  // Autocomplete,
   Box,
   Divider,
+  FormControl,
+  InputLabel,
   Modal,
-  TextField,
+  OutlinedInput,
+  // TextField,
   Typography,
 } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRecipe } from '../../../../context/RecipeContext.js';
+import { useEdamam } from '../../../../context/EdamamContext.js';
 
 export default function ExploreRecipes() {
   const { user } = useUser();
   const theme = useMuiTheme();
   const { nonSecretRecipes } = useRecipe();
+  const { setQuery, edamamRecipes } = useEdamam();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDishName, setModalDishName] = useState('');
@@ -28,13 +33,28 @@ export default function ExploreRecipes() {
   const [modalInstructionList, setModalInstructionList] = useState([]);
   const [modalNotes, setModalNotes] = useState('');
   const [expanded, setExpanded] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+
+  const checkForEdamamRecipes = () => {
+    if (!edamamRecipes.hits) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleSearchRequest = (event) => {
+    if (event.key === 'Enter') {
+      setQuery(searchInput);
+      setSearchInput('');
+    }
+  };
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   const handleModalOpen = (recipe) => {
-    // console.log('recipe', recipe);
     setModalDishName(recipe.dish_name);
     setModalIngredientList(recipe.ingredients);
     setModalInstructionList(recipe.instructions);
@@ -42,6 +62,7 @@ export default function ExploreRecipes() {
 
     setModalOpen(true);
   };
+
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -89,7 +110,16 @@ export default function ExploreRecipes() {
         >
           ExploreRecipes
         </Typography>
-        <Autocomplete
+        <FormControl>
+          <InputLabel>Recipe Search...</InputLabel>
+          <OutlinedInput
+            label="Recipe Search.."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => handleSearchRequest(e)}
+          />
+        </FormControl>
+        {/* <Autocomplete
           disablePortal
           id="combo-box-demo"
           freeSolo
@@ -102,7 +132,8 @@ export default function ExploreRecipes() {
             </Box>
           )}
           renderInput={(params) => <TextField {...params} label="Recipe Search" />}
-        />
+          onChange={(e) => setSearchInput(e.target.value)}
+        /> */}
       </Box>
       <Box
         component={'article'}
@@ -181,6 +212,41 @@ export default function ExploreRecipes() {
               {recipe.dish_name}
             </Box>
           ))}
+          {
+            checkForEdamamRecipes()
+              ? edamamRecipes.hits.map((recipe) => (
+                  /* eslint-disable indent */
+                  <Box
+                    key={recipe.recipe.uri}
+                    variant="h6"
+                    component={'li'}
+                    // onClick={() => handleModalOpen(recipe.recipe)}
+                    sx={{
+                      height: '60px',
+                      width: '120px',
+                      color: theme.palette.primary.contrastText,
+                      cursor: 'pointer',
+                      backgroundColor: theme.palette.background.paper,
+                      borderRadius: 2,
+                      borderWidth: 2,
+                      borderStyle: 'solid',
+                      borderColor: theme.palette.primary.main,
+                      textAlign: 'center',
+                      wordBreak: 'break-word',
+                      transition: 'all 0.2s ease-in-out',
+                      '&:hover': {
+                        backgroundColor: theme.palette.primary.dark,
+                        borderColor: theme.palette.primary.dark,
+                        transition: 'all 0.2s ease-in-out',
+                      },
+                    }}
+                  >
+                    {recipe.recipe.label}
+                  </Box>
+                ))
+              : null
+            /* eslint-enable indent */
+          }
           <Modal
             outline="0"
             open={modalOpen}
