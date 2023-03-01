@@ -54,10 +54,25 @@ export default function ExploreRecipes() {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const handleModalOpen = (recipe) => {
-    setModalDishName(recipe.dish_name);
-    setModalIngredientList(recipe.ingredients);
-    setModalInstructionList(recipe.instructions);
+  const handleModalOpen = (e, recipe) => {
+    console.log('event', e);
+    console.log('recipe', recipe);
+
+    if (e.target.classList.contains('edamam-recipe')) {
+      setModalDishName(recipe.label);
+      setModalIngredientList(recipe.ingredients);
+      setModalInstructionList(recipe.instructions);
+    }
+
+    if (e.target.classList.contains('menu-project-recipe')) {
+      setModalDishName(recipe.dish_name);
+      setModalIngredientList(recipe.ingredients);
+      setModalInstructionList(recipe.instructions);
+    }
+
+    // setModalDishName(recipe.dish_name);
+    // setModalIngredientList(recipe.ingredients);
+    // setModalInstructionList(recipe.instructions);
     setModalNotes(recipe.notes);
 
     setModalOpen(true);
@@ -186,9 +201,10 @@ export default function ExploreRecipes() {
           {nonSecretRecipes.map((recipe) => (
             <Box
               key={recipe.id}
+              className="menu-project-recipe"
               variant="h6"
               component={'li'}
-              onClick={() => handleModalOpen(recipe)}
+              onClick={(e) => handleModalOpen(e, recipe)}
               sx={{
                 height: '60px',
                 width: '120px',
@@ -212,15 +228,18 @@ export default function ExploreRecipes() {
               {recipe.dish_name}
             </Box>
           ))}
+
           {
             checkForEdamamRecipes()
-              ? edamamRecipes.hits.map((recipe) => (
+              ? edamamRecipes.hits.map((recipe, index) => (
                   /* eslint-disable indent */
                   <Box
                     key={recipe.recipe.uri}
+                    id={`edamam-${index}`}
+                    className="edamam-recipe"
                     variant="h6"
                     component={'li'}
-                    // onClick={() => handleModalOpen(recipe.recipe)}
+                    onClick={(e) => handleModalOpen(e, recipe.recipe)}
                     sx={{
                       height: '60px',
                       width: '120px',
@@ -309,57 +328,73 @@ export default function ExploreRecipes() {
                   }}
                 >
                   <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {ingredient.quantity} {ingredient.unit}{' '}
+                    {ingredient.quantity}{' '}
+                    {
+                      /* eslint-disable indent */
+                      ingredient.unit
+                        ? ingredient.unit
+                        : ingredient.measure === '<unit>'
+                        ? ''
+                        : ingredient.measure
+                      /* eslint-disable indent */
+                    }
                   </Typography>
                   <Typography variant="span" component="span">
-                    {ingredient.ingredientName}
+                    {ingredient.ingredientName ? ingredient.ingredientName : ingredient.text}
                   </Typography>
                 </Box>
               ))}
+
               <Divider variant="middle" sx={{ m: 2 }} />
-              <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h6"
-                sx={{
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  textDecoration: 'underline',
-                  mb: 1,
-                }}
-              >
-                Instructions
-              </Typography>
-              {modalInstructionList.map(({ instruction, step }) => (
-                <Accordion
-                  key={step}
-                  expanded={expanded === `panel${step}`}
-                  onChange={handleChange(`panel${step}`)}
+
+              {modalInstructionList && modalInstructionList.length > 0 ? (
+                <Typography
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h6"
+                  sx={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    textDecoration: 'underline',
+                    mb: 1,
+                  }}
                 >
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel4bh-content"
-                    id={`panel${step}bh-header`}
-                    sx={{
-                      backgroundColor: theme.palette.background.main,
-                    }}
-                  >
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h6"
-                      sx={{ flexShrink: 0 }}
+                  Instructions
+                </Typography>
+              ) : null}
+
+              {modalInstructionList && modalInstructionList.length > 0
+                ? modalInstructionList.map(({ instruction, step }) => (
+                    <Accordion
+                      key={step}
+                      expanded={expanded === `panel${step}`}
+                      onChange={handleChange(`panel${step}`)}
                     >
-                      Step: {step}{' '}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography variant="span" component="span">
-                      {instruction}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel4bh-content"
+                        id={`panel${step}bh-header`}
+                        sx={{
+                          backgroundColor: theme.palette.background.main,
+                        }}
+                      >
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h6"
+                          sx={{ flexShrink: 0 }}
+                        >
+                          Step: {step}{' '}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography variant="span" component="span">
+                          {instruction}
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))
+                : null}
 
               {modalNotes ? (
                 <>
