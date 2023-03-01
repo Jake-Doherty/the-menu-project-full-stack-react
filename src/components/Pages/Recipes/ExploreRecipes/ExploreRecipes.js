@@ -7,14 +7,12 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  // Autocomplete,
   Box,
   Divider,
   FormControl,
   InputLabel,
   Modal,
   OutlinedInput,
-  // TextField,
   Typography,
 } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -134,21 +132,6 @@ export default function ExploreRecipes() {
             onKeyDown={(e) => handleSearchRequest(e)}
           />
         </FormControl>
-        {/* <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          freeSolo
-          getOptionLabel={(option) => option.dish_name}
-          options={nonSecretRecipes}
-          sx={{ width: 300 }}
-          renderOption={(props, option) => (
-            <Box component="li" {...props} key={option.id}>
-              {option.dish_name}
-            </Box>
-          )}
-          renderInput={(params) => <TextField {...params} label="Recipe Search" />}
-          onChange={(e) => setSearchInput(e.target.value)}
-        /> */}
       </Box>
       <Box
         component={'article'}
