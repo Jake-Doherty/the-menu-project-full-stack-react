@@ -10,3 +10,13 @@ export async function getEdamamRecipes(query) {
 
   return data;
 }
+
+export async function getMoreEdamamRecipes(url) {
+  const response = await fetch(url);
+
+  const data = await response.json();
+
+  console.log('MOARdata', data);
+
+  return data;
+}
