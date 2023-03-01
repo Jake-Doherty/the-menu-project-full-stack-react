@@ -23,7 +23,7 @@ export default function ExploreRecipes() {
   const { user } = useUser();
   const theme = useMuiTheme();
   const { nonSecretRecipes } = useRecipe();
-  const { setQuery, edamamRecipes } = useEdamam();
+  const { setQuery, edamamRecipes, ref } = useEdamam();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDishName, setModalDishName] = useState('');
@@ -141,8 +141,8 @@ export default function ExploreRecipes() {
         p={1}
         gap={2}
         sx={{
-          width: 'max(320px, 40vw)',
-          maxHeight: 'max(275px, 60vh)',
+          width: 'max(320px, 70vw)',
+          maxHeight: 'max(275px, 65vh)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -217,7 +217,8 @@ export default function ExploreRecipes() {
               ? edamamRecipes.hits.map((recipe, index) => (
                   /* eslint-disable indent */
                   <Box
-                    key={recipe.recipe.uri}
+                    key={index}
+                    ref={edamamRecipes.hits.length - 1 === index ? ref : null}
                     id={`edamam-${index}`}
                     className="edamam-recipe"
                     variant="h6"
