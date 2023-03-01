@@ -16,7 +16,7 @@ export async function getMoreEdamamRecipes(url) {
 
   const data = await response.json();
 
-  console.log('MOARdata', data);
+  // console.log('MOARdata', data);
 
   return data;
 }
