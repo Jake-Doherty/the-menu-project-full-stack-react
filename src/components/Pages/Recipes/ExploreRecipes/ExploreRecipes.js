@@ -17,13 +17,11 @@ import {
 } from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRecipe } from '../../../../context/RecipeContext.js';
-import { useEdamam } from '../../../../context/EdamamContext.js';
 
 export default function ExploreRecipes() {
   const { user } = useUser();
   const theme = useMuiTheme();
-  const { nonSecretRecipes } = useRecipe();
-  const { setQuery, edamamRecipes, ref } = useEdamam();
+  const { nonSecretRecipes, query, setQuery } = useRecipe();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDishName, setModalDishName] = useState('');
@@ -32,14 +30,6 @@ export default function ExploreRecipes() {
   const [modalNotes, setModalNotes] = useState('');
   const [expanded, setExpanded] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-
-  const checkForEdamamRecipes = () => {
-    if (!edamamRecipes.hits) {
-      return false;
-    } else {
-      return true;
-    }
-  };
 
   const handleSearchRequest = (event) => {
     if (event.key === 'Enter') {
@@ -53,24 +43,9 @@ export default function ExploreRecipes() {
   };
 
   const handleModalOpen = (e, recipe) => {
-    // console.log('event', e);
-    // console.log('recipe', recipe);
-
-    if (e.target.classList.contains('edamam-recipe')) {
-      setModalDishName(recipe.label);
-      setModalIngredientList(recipe.ingredients);
-      setModalInstructionList(recipe.instructions);
-    }
-
-    if (e.target.classList.contains('menu-project-recipe')) {
-      setModalDishName(recipe.dish_name);
-      setModalIngredientList(recipe.ingredients);
-      setModalInstructionList(recipe.instructions);
-    }
-
-    // setModalDishName(recipe.dish_name);
-    // setModalIngredientList(recipe.ingredients);
-    // setModalInstructionList(recipe.instructions);
+    setModalDishName(recipe.dish_name);
+    setModalIngredientList(recipe.ingredients);
+    setModalInstructionList(recipe.instructions);
     setModalNotes(recipe.notes);
 
     setModalOpen(true);
@@ -113,15 +88,15 @@ export default function ExploreRecipes() {
         }}
       >
         <Typography
-          variant="h4"
-          component={'h4'}
+          variant="h5"
+          component={'h5'}
           sx={{
             color: theme.palette.primary.contrastText,
             margin: '0',
             padding: '0',
           }}
         >
-          ExploreRecipes
+          Explore Recipes
         </Typography>
         <FormControl>
           <InputLabel>Recipe Search...</InputLabel>
@@ -151,15 +126,15 @@ export default function ExploreRecipes() {
         }}
       >
         <Typography
-          variant="h4"
-          component={'h4'}
+          variant="h6"
+          component={'h6'}
           sx={{
             color: theme.palette.primary.contrastText,
             margin: '0',
             padding: '0',
           }}
         >
-          Recipes
+          Displaying {nonSecretRecipes.length} Recipes
         </Typography>
         <Box
           component={'ul'}
@@ -212,44 +187,6 @@ export default function ExploreRecipes() {
             </Box>
           ))}
 
-          {
-            checkForEdamamRecipes()
-              ? edamamRecipes.hits.map((recipe, index) => (
-                  /* eslint-disable indent */
-                  <Box
-                    key={index}
-                    ref={edamamRecipes.hits.length - 1 === index ? ref : null}
-                    id={`edamam-${index}`}
-                    className="edamam-recipe"
-                    variant="h6"
-                    component={'li'}
-                    onClick={(e) => handleModalOpen(e, recipe.recipe)}
-                    sx={{
-                      height: '60px',
-                      width: '120px',
-                      color: theme.palette.primary.contrastText,
-                      cursor: 'pointer',
-                      backgroundColor: theme.palette.background.paper,
-                      borderRadius: 2,
-                      borderWidth: 2,
-                      borderStyle: 'solid',
-                      borderColor: theme.palette.primary.main,
-                      textAlign: 'center',
-                      wordBreak: 'break-word',
-                      transition: 'all 0.2s ease-in-out',
-                      '&:hover': {
-                        backgroundColor: theme.palette.primary.dark,
-                        borderColor: theme.palette.primary.dark,
-                        transition: 'all 0.2s ease-in-out',
-                      },
-                    }}
-                  >
-                    {recipe.recipe.label}
-                  </Box>
-                ))
-              : null
-            /* eslint-enable indent */
-          }
           <Modal
             outline="0"
             open={modalOpen}

@@ -30,6 +30,7 @@ const RecipeProvider = ({ children }) => {
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     if (location.pathname === '/explore-recipes') {
@@ -105,6 +106,8 @@ const RecipeProvider = ({ children }) => {
         dishName,
         notes,
         handleSaveRecipe,
+        query,
+        setQuery,
       }}
     >
       {children}

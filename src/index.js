@@ -8,7 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 // import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
 import { ThemeContextProvider } from './context/ThemeContext.js';
 import { RecipeProvider } from './context/RecipeContext.js';
-import { EdamamProvider } from './context/EdamamContext.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,11 +16,9 @@ root.render(
       {/* <CssVarsProvider> */}
       <UserProvider>
         <ThemeContextProvider>
-          <EdamamProvider>
-            <RecipeProvider>
-              <App />
-            </RecipeProvider>
-          </EdamamProvider>
+          <RecipeProvider>
+            <App />
+          </RecipeProvider>
         </ThemeContextProvider>
       </UserProvider>
       {/* </CssVarsProvider> */}
