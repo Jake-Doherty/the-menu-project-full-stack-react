@@ -107,6 +107,19 @@ export default function ExploreRecipes() {
             onKeyDown={(e) => handleSearchRequest(e)}
           />
         </FormControl>
+        {query && (
+          <Typography
+            variant="h6"
+            component={'h6'}
+            sx={{
+              color: theme.palette.primary.contrastText,
+              margin: '0',
+              padding: '0',
+            }}
+          >
+            Showing {nonSecretRecipes.length} results for {query}
+          </Typography>
+        )}
       </Box>
       <Box
         component={'article'}
