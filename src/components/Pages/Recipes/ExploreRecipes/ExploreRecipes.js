@@ -3,32 +3,21 @@ import { Navigate } from 'react-router-dom';
 import { useUser } from '../../../../context/UserContext.js';
 import { useTheme as useMuiTheme } from '@emotion/react';
 
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Divider,
-  FormControl,
-  InputLabel,
-  Modal,
-  OutlinedInput,
-  Typography,
-} from '@mui/material/';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box, FormControl, InputLabel, OutlinedInput, Typography } from '@mui/material/';
+
 import { useRecipe } from '../../../../context/RecipeContext.js';
+import RecipeModal from '../RecipeModal/RecipeModal.js';
 
 export default function ExploreRecipes() {
   const { user } = useUser();
   const theme = useMuiTheme();
-  const { nonSecretRecipes, query, setQuery } = useRecipe();
+  const { nonSecretRecipes, query, setQuery, expanded, setExpanded } = useRecipe();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDishName, setModalDishName] = useState('');
   const [modalIngredientList, setModalIngredientList] = useState([]);
   const [modalInstructionList, setModalInstructionList] = useState([]);
   const [modalNotes, setModalNotes] = useState('');
-  const [expanded, setExpanded] = useState(false);
   const [searchInput, setSearchInput] = useState('');
 
   const handleSearchRequest = (event) => {
@@ -36,10 +25,6 @@ export default function ExploreRecipes() {
       setQuery(searchInput);
       setSearchInput('');
     }
-  };
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
   };
 
   const handleModalOpen = (e, recipe) => {
@@ -200,158 +185,19 @@ export default function ExploreRecipes() {
             </Box>
           ))}
 
-          <Modal
-            outline="0"
-            open={modalOpen}
-            onClose={handleModalClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 'max(275px, 40vw)',
-                height: 'max(275px, 60vh)',
-                bgcolor: theme.palette.background.paper,
-                borderWidth: 2,
-                borderStyle: 'solid',
-                borderColor: theme.palette.primary.main,
-                borderRadius: 2,
-                boxShadow: 24,
-                overflow: 'auto',
-                pt: 1,
-                pr: 4,
-                pb: 2,
-                pl: 4,
-                '& *': {
-                  color: theme.palette.primary.contrastText,
-                },
-              }}
-            >
-              <Typography id="modal-modal-title" variant="h3" component="h3" align="center" mb={2}>
-                {modalDishName}
-              </Typography>
-              <Divider variant="middle" sx={{ m: 2 }} />
-              <Typography
-                id="modal-modal-title"
-                variant="h6"
-                component="h2"
-                sx={{
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  textDecoration: 'underline',
-                  mb: 1,
-                }}
-              >
-                Ingredients
-              </Typography>
-              {modalIngredientList.map((ingredient, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    borderBottom: '1px solid',
-                    marginBottom: '5px',
-                  }}
-                >
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {ingredient.quantity}{' '}
-                    {
-                      /* eslint-disable indent */
-                      ingredient.unit
-                        ? ingredient.unit
-                        : ingredient.measure === '<unit>'
-                        ? ''
-                        : ingredient.measure
-                      /* eslint-disable indent */
-                    }
-                  </Typography>
-                  <Typography variant="span" component="span">
-                    {ingredient.ingredientName ? ingredient.ingredientName : ingredient.text}
-                  </Typography>
-                </Box>
-              ))}
-
-              <Divider variant="middle" sx={{ m: 2 }} />
-
-              {modalInstructionList && modalInstructionList.length > 0 ? (
-                <Typography
-                  id="modal-modal-title"
-                  variant="h6"
-                  component="h6"
-                  sx={{
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    mb: 1,
-                  }}
-                >
-                  Instructions
-                </Typography>
-              ) : null}
-
-              {modalInstructionList && modalInstructionList.length > 0
-                ? modalInstructionList.map(({ instruction, step }) => (
-                    <Accordion
-                      key={step}
-                      expanded={expanded === `panel${step}`}
-                      onChange={handleChange(`panel${step}`)}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel4bh-content"
-                        id={`panel${step}bh-header`}
-                        sx={{
-                          backgroundColor: theme.palette.background.main,
-                        }}
-                      >
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h6"
-                          component="h6"
-                          sx={{ flexShrink: 0 }}
-                        >
-                          Step: {step}{' '}
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Typography variant="span" component="span">
-                          {instruction}
-                        </Typography>
-                      </AccordionDetails>
-                    </Accordion>
-                  ))
-                : null}
-
-              {modalNotes ? (
-                <>
-                  <Divider variant="middle" sx={{ m: 2 }} />
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h6"
-                    sx={{
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    Notes
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2, wordWrap: 'break-word' }}>
-                    {modalNotes}
-                  </Typography>
-                </>
-              ) : null}
-            </Box>
-          </Modal>
+          <RecipeModal
+            {...{
+              modalOpen,
+              handleModalClose,
+              modalDishName,
+              modalIngredientList,
+              modalInstructionList,
+              modalNotes,
+              expanded,
+              setExpanded,
+              theme,
+            }}
+          />
         </Box>
       </Box>
     </Box>

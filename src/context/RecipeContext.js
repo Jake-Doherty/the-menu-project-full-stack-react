@@ -31,6 +31,7 @@ const RecipeProvider = ({ children }) => {
   const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
   const [query, setQuery] = useState('');
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     if (location.pathname === '/explore-recipes') {
@@ -108,6 +109,8 @@ const RecipeProvider = ({ children }) => {
         handleSaveRecipe,
         query,
         setQuery,
+        expanded,
+        setExpanded,
       }}
     >
       {children}

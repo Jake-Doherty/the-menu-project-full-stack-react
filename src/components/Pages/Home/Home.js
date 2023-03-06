@@ -37,12 +37,11 @@ export default function Home() {
         gap={2}
         sx={{
           width: 'max(275px, 35vw)',
-          minHeight: '50px',
+
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100%',
         }}
       >
         <Typography
