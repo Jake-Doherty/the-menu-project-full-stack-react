@@ -14,6 +14,7 @@
         "mui-image": "^1.0.7",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-intersection-observer": "^9.4.3",
         "react-router-dom": "^6.8.0",
         "react-scripts": "5.0.1",
         "web-vitals": "^2.1.4"
@@ -41,5 +42,13 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.27.1",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "prettier": "^2.5.0"
     }
 }
