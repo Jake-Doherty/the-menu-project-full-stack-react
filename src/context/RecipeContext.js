@@ -31,7 +31,14 @@ const RecipeProvider = ({ children }) => {
   const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
   const [query, setQuery] = useState('');
+
   const [expanded, setExpanded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalDishName, setModalDishName] = useState('');
+  const [modalIngredientList, setModalIngredientList] = useState([]);
+  const [modalInstructionList, setModalInstructionList] = useState([]);
+  const [modalNotes, setModalNotes] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
     if (location.pathname === '/explore-recipes') {
@@ -111,6 +118,18 @@ const RecipeProvider = ({ children }) => {
         setQuery,
         expanded,
         setExpanded,
+        modalOpen,
+        setModalOpen,
+        modalDishName,
+        setModalDishName,
+        modalIngredientList,
+        setModalIngredientList,
+        modalInstructionList,
+        setModalInstructionList,
+        modalNotes,
+        setModalNotes,
+        searchInput,
+        setSearchInput,
       }}
     >
       {children}

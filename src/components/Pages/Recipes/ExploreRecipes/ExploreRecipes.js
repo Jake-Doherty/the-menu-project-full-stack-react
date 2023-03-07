@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUser } from '../../../../context/UserContext.js';
 import { useTheme as useMuiTheme } from '@emotion/react';
@@ -11,14 +11,25 @@ import RecipeModal from '../RecipeModal/RecipeModal.js';
 export default function ExploreRecipes() {
   const { user } = useUser();
   const theme = useMuiTheme();
-  const { nonSecretRecipes, query, setQuery, expanded, setExpanded } = useRecipe();
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalDishName, setModalDishName] = useState('');
-  const [modalIngredientList, setModalIngredientList] = useState([]);
-  const [modalInstructionList, setModalInstructionList] = useState([]);
-  const [modalNotes, setModalNotes] = useState('');
-  const [searchInput, setSearchInput] = useState('');
+  const {
+    nonSecretRecipes,
+    query,
+    setQuery,
+    expanded,
+    setExpanded,
+    modalOpen,
+    setModalOpen,
+    modalDishName,
+    setModalDishName,
+    modalIngredientList,
+    setModalIngredientList,
+    modalInstructionList,
+    setModalInstructionList,
+    modalNotes,
+    setModalNotes,
+    searchInput,
+    setSearchInput,
+  } = useRecipe();
 
   const handleSearchRequest = (event) => {
     if (event.key === 'Enter') {

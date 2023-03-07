@@ -1,33 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext.js';
 import { useTheme as useMuiTheme } from '@emotion/react';
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, TextField, Typography } from '@mui/material';
 import { useRecipe } from '../../../context/RecipeContext.js';
+import RecipeModal from '../Recipes/RecipeModal/RecipeModal.js';
 
 export default function Home() {
   const { user } = useUser();
-
   const theme = useMuiTheme();
-  const { userRecipes } = useRecipe();
+  const {
+    userRecipes,
+    modalOpen,
+    setModalOpen,
+    modalDishName,
+    setModalDishName,
+    modalIngredientList,
+    setModalIngredientList,
+    modalInstructionList,
+    setModalInstructionList,
+    modalNotes,
+    setModalNotes,
+    expanded,
+    setExpanded,
+  } = useRecipe();
+
+  const [value, setValue] = useState(userRecipes[0]);
+  const [inputValue, setInputValue] = useState('');
 
   if (!user) {
     return <Navigate to="/auth/sign-in" />;
   }
 
+  const handleModalOpen = (e) => {
+    if (e.key === 'Enter') {
+      setModalDishName(value.dish_name);
+      setModalIngredientList(value.ingredients);
+      setModalInstructionList(value.instructions);
+      setModalNotes(value.notes);
+
+      setModalOpen(true);
+    }
+
+    if (e.target.id === 'open-modal-button') {
+      setModalDishName(value.dish_name);
+      setModalIngredientList(value.ingredients);
+      setModalInstructionList(value.instructions);
+      setModalNotes(value.notes);
+
+      setModalOpen(true);
+    }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <Box
-      component={'section'}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        justifySelf: 'flex-start',
-        height: '100%',
-        gap: 2,
-      }}
-    >
+    <Box component={'section'}>
       <Box
         component={'article'}
         border={2}
@@ -37,7 +67,6 @@ export default function Home() {
         gap={2}
         sx={{
           width: 'max(275px, 35vw)',
-
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -45,8 +74,8 @@ export default function Home() {
         }}
       >
         <Typography
-          variant="h4"
-          component={'h4'}
+          variant="h5"
+          component="h5"
           sx={{
             color: theme.palette.primary.contrastText,
             margin: '0',
@@ -56,8 +85,17 @@ export default function Home() {
           Quick Search Your Recipes
         </Typography>
         <Autocomplete
+          value={value || null}
+          onChange={(_, newValue) => {
+            setValue(newValue);
+          }}
+          inputValue={inputValue}
+          onInputChange={(_, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          onKeyDown={(e) => handleModalOpen(e)}
           disablePortal
-          id="combo-box-demo"
+          id="autocomplete-search"
           freeSolo
           getOptionLabel={(option) => option.dish_name}
           options={userRecipes}
@@ -69,54 +107,28 @@ export default function Home() {
           )}
           renderInput={(params) => <TextField {...params} label="Recipe Search" />}
         />
-      </Box>
-      <Box
-        component={'article'}
-        border={2}
-        borderRadius={2}
-        borderColor={theme.palette.primary.main}
-        p={5}
-        gap={2}
-        sx={{
-          width: 'max(275px, 35vw)',
-          minHeight: '50px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-        }}
-      >
-        <Typography
-          variant="h4"
-          component={'h4'}
-          sx={{
-            color: theme.palette.primary.contrastText,
-            margin: '0',
-            padding: '0',
-          }}
+        <Button
+          id="open-modal-button"
+          variant="contained"
+          type="button"
+          onClick={(e) => handleModalOpen(e)}
         >
-          Recipes
-        </Typography>
-        {/* <Box component={"ul"}>
-                    {userRecipes.map((recipe) => (
-                        <Box
-                            key={recipe.id}
-                            variant="h6"
-                            component={"li"}
-                            sx={{
-                                color: theme.palette.primary.contrastText,
-                                margin: "0",
-                                padding: "0",
-                            }}
-                        >
-                            Name: {recipe.dish_name}, Ingredients:{" "}
-                            {recipe.ingredients.length}, Instructions:
-                            {recipe.instructions.length}
-                        </Box>
-                    ))}
-                </Box> */}
+          Open Recipe
+        </Button>
       </Box>
+      <RecipeModal
+        {...{
+          modalOpen,
+          handleModalClose,
+          modalDishName,
+          modalIngredientList,
+          modalInstructionList,
+          modalNotes,
+          expanded,
+          setExpanded,
+          theme,
+        }}
+      />
     </Box>
   );
 }

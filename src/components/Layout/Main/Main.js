@@ -13,9 +13,11 @@ export default function Main() {
     <main
       style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         height: '100%',
+        flexDirection: 'column',
+        flexWrap: 'nowrap',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
       }}
     >
       <Routes>
