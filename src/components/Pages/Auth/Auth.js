@@ -12,9 +12,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import CloseIcon from '@mui/icons-material/Close';
 import { useTheme as useMuiTheme } from '@emotion/react';
-import { Typography } from '@mui/material';
+import { Alert, Snackbar, Typography } from '@mui/material';
 import Image from 'mui-image';
+import { useRecipe } from '../../../context/RecipeContext.js';
 
 const menuIcon = require('../../../assets/images/menu_book.png');
 
@@ -23,6 +25,8 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [open, setOpen] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   const { type } = useParams();
   const { user, setUser } = useUser();
@@ -45,11 +49,41 @@ export default function Auth() {
     } catch (e) {
       console.error(e);
       setError(e.message);
+      setSnackbarSeverity('error');
+      setOpen(true);
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === '') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        action={
+          <IconButton aria-label="close" color="inherit" sx={{ p: 0.5 }} onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        }
+      >
+        <Alert
+          onClick={handleClose}
+          onClose={handleClose}
+          severity={snackbarSeverity}
+          sx={{ width: '100%' }}
+        >
+          {snackbarSeverity === 'error' && error}
+        </Alert>
+      </Snackbar>
       <Box
         component={'section'}
         sx={{
@@ -264,6 +298,8 @@ export default function Auth() {
             width: '25ch',
             color: theme.palette.primary.contrastText,
             backgroundColor: error ? theme.palette.error.main : theme.palette.background.paper,
+            border: '1px solid',
+            borderColor: theme.palette.primary.main,
             '&:hover': {
               backgroundColor: theme.palette.primary.main,
               boxShadow: '5px 5px 10px 1px rgb(0 0 0 / 20%)',
@@ -271,24 +307,11 @@ export default function Auth() {
               color: theme.palette.primary.contrastText,
             },
           }}
-          color="primary"
           variant="contained"
           onClick={submitAuth}
         >
           Submit
         </Button>
-        {error && (
-          <Typography
-            sx={{
-              color: theme.palette.error.main,
-            }}
-            variant="h6"
-            component="h6"
-            gutterBottom
-          >
-            {error}
-          </Typography>
-        )}
       </Box>
     </>
   );
