@@ -16,7 +16,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme as useMuiTheme } from '@emotion/react';
 import { Alert, Snackbar, Typography } from '@mui/material';
 import Image from 'mui-image';
-import { useRecipe } from '../../../context/RecipeContext.js';
 
 const menuIcon = require('../../../assets/images/menu_book.png');
 
