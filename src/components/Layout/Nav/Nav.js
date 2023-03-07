@@ -72,7 +72,6 @@ export default function Nav() {
       >
         <Typography
           sx={{
-            minWidth: 100,
             color: theme.palette.primary.contrastText,
           }}
         >
@@ -80,7 +79,8 @@ export default function Nav() {
             ? `Welcome back, ${profile.display_name}!`
             : `Welcome back, ${user.email}!`}
         </Typography>
-        <Tooltip title="Account settings">
+
+        <Tooltip title="Site Menu">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -89,7 +89,10 @@ export default function Nav() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
+            <Avatar
+              sx={{ width: 32, height: 32 }}
+              src={profile && profile.avatar_image_url ? profile.avatar_image_url : null}
+            >
               {profile && profile.display_name ? profile.display_name[0] : user.email[0]}
             </Avatar>
           </IconButton>
@@ -186,7 +189,7 @@ export default function Nav() {
                     </ListItemIcon>
                     Settings
                 </MenuItem> */}
-        <MenuItem id="light-dark-modes" title="Settings">
+        <MenuItem id="light-dark-modes" title="Theme Toggle">
           <FormGroup>
             <FormControlLabel
               control={
