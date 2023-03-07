@@ -25,7 +25,7 @@ export default function Home() {
     setExpanded,
   } = useRecipe();
 
-  const [value, setValue] = useState(userRecipes[0]);
+  const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
 
   if (!user) {
