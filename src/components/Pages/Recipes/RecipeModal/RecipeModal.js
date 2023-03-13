@@ -22,7 +22,7 @@ export default function RecipeModal({
       outline="0"
       open={modalOpen}
       onClose={handleModalClose}
-      aria-labelledby="modal-modal-title"
+      aria-labelledby="modal-recipe-dish-name"
       aria-describedby="modal-modal-description"
     >
       <Box
@@ -32,7 +32,7 @@ export default function RecipeModal({
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 'max(275px, 40vw)',
-          height: 'max(275px, 60vh)',
+          height: 'max(275px, 80vh)',
           bgcolor: theme.palette.background.paper,
           borderWidth: 2,
           borderStyle: 'solid',
@@ -40,16 +40,13 @@ export default function RecipeModal({
           borderRadius: 2,
           boxShadow: 24,
           overflow: 'auto',
-          pt: 1,
-          pr: 4,
-          pb: 2,
-          pl: 4,
+          padding: '8px 32px 16px 32px',
           '& *': {
             color: theme.palette.primary.contrastText,
           },
         }}
       >
-        <ModalDishName {...{ modalDishName }} />
+        <ModalDishName {...{ modalDishName, theme, handleModalClose }} />
 
         <Divider variant="middle" sx={{ m: 2 }} />
 
