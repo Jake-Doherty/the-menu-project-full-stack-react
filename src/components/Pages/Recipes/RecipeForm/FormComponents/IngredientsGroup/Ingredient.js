@@ -28,6 +28,7 @@ export default function Ingredient({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        width: '100%',
       }}
     >
       <RemoveButton {...{ theme, handleRemoveClick, ingredient, index }} />

@@ -76,9 +76,7 @@ export default function RecipeForm() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        // minHeight: 'max(calc(100vh - 80px), 400px)',
         height: '100%',
-        width: 'max(calc(100vw / 2), 350px)',
         alignItems: 'center',
         justifyContent: 'flex-start',
         border: 2,

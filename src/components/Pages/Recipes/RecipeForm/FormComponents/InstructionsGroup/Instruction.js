@@ -19,6 +19,7 @@ export default function Instruction({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        width: '100%',
       }}
     >
       <RemoveButton
