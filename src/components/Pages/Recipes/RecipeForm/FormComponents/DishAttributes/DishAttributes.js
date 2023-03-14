@@ -1,4 +1,3 @@
-import { Label } from '@mui/icons-material';
 import { Box, FormControl, InputLabel, OutlinedInput, Select, Switch } from '@mui/material';
 import React from 'react';
 
