@@ -23,8 +23,8 @@ export default function DishAttributes() {
         <Switch />
       </FormControl>
       {/* <FormControl>
-        <InputLabel htmlFor="outlined-adornment-prep-time">Prep Time</InputLabel>
-        <OutlinedInput label="Prep Time" />
+        <InputLabel htmlFor="outlined-adornment-tags">Tags</InputLabel>
+        <OutlinedInput label="Tags" />
       </FormControl> */}
       <Select label="Hrs" value="">
         <MenuItem value={1}>1</MenuItem>

@@ -71,7 +71,8 @@ export default function RecipeForm() {
   return (
     <Box
       id="recipe-form"
-      component={'section'}
+      component={'form'}
+      onSubmit={(e) => handleSaveRecipe(e)}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -84,7 +85,7 @@ export default function RecipeForm() {
         borderColor: theme.palette.primary.main,
         borderRadius: '10px',
         transition: 'all 0.5s ease',
-        overflowY: 'scroll',
+        overflowY: 'auto',
       }}
     >
       <Snackbar
@@ -142,7 +143,11 @@ export default function RecipeForm() {
 
       <Notes {...{ theme, notes, handleNoteInputChange }} />
 
-      {loading ? null : <Button onClick={handleSaveRecipe}>Save Recipe</Button>}
+      {loading ? null : (
+        <Button type="submit" variant="contained" sx={{ mb: 2 }}>
+          Save Recipe
+        </Button>
+      )}
     </Box>
   );
 }
