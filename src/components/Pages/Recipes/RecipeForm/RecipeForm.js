@@ -75,7 +75,8 @@ export default function RecipeForm() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: 'max(calc(100vh - 80px), 400px)',
+        // minHeight: 'max(calc(100vh - 80px), 400px)',
+        height: '100%',
         width: 'max(calc(100vw / 2), 350px)',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -83,6 +84,7 @@ export default function RecipeForm() {
         borderColor: theme.palette.primary.main,
         borderRadius: '10px',
         transition: 'all 0.5s ease',
+        overflowY: 'scroll',
       }}
     >
       <Snackbar
