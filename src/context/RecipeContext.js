@@ -72,7 +72,8 @@ const RecipeProvider = ({ children }) => {
     }
   }, [setLoading, location.pathname, user]);
 
-  const handleSaveRecipe = async () => {
+  const handleSaveRecipe = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
       const { data, error } = await insertRecipe(user.id, {

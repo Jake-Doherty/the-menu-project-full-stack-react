@@ -17,7 +17,8 @@ export default function IngredientsHeader({ theme, handleAddIngredient }) {
         borderBottom: `2px solid ${theme.palette.primary.main}`,
       }}
     >
-      <SectionHeader theme={theme} text="Ingredient" />
+      <SectionHeader theme={theme} text="Ingredients" />
+
       <div
         style={{
           display: 'flex',

@@ -5,7 +5,7 @@ export default function ModalIngredients({ modalIngredientList }) {
   return (
     <Box>
       <Typography
-        id="modal-modal-title"
+        id="ingredients-title"
         variant="h6"
         component="h6"
         sx={{
@@ -31,16 +31,7 @@ export default function ModalIngredients({ modalIngredientList }) {
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {ingredient.quantity}{' '}
-            {
-              /* eslint-disable indent */
-              ingredient.unit
-                ? ingredient.unit
-                : ingredient.measure === '<unit>'
-                ? ''
-                : ingredient.measure
-              /* eslint-disable indent */
-            }
+            {ingredient.quantity} {ingredient.unit}
           </Typography>
           <Typography variant="span" component="span">
             {ingredient.ingredientName ? ingredient.ingredientName : ingredient.text}

@@ -13,6 +13,7 @@ import InstructionGroup from './FormComponents/InstructionsGroup/InstructionGrou
 import IngredientGroup from './FormComponents/IngredientsGroup/IngredientGroup.js';
 import Notes from './FormComponents/NotesGroup/Notes.js';
 import { useRecipe } from '../../../../context/RecipeContext.js';
+import DishAttributes from './FormComponents/DishAttributes/DishAttributes.js';
 
 export default function RecipeForm() {
   const { user, loading } = useUser();
@@ -70,11 +71,13 @@ export default function RecipeForm() {
   return (
     <Box
       id="recipe-form"
-      component={'section'}
+      component={'form'}
+      onSubmit={(e) => handleSaveRecipe(e)}
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: 'max(calc(100vh - 80px), 400px)',
+        // minHeight: 'max(calc(100vh - 80px), 400px)',
+        height: '100%',
         width: 'max(calc(100vw / 2), 350px)',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -82,6 +85,7 @@ export default function RecipeForm() {
         borderColor: theme.palette.primary.main,
         borderRadius: '10px',
         transition: 'all 0.5s ease',
+        overflowY: 'auto',
       }}
     >
       <Snackbar
@@ -106,11 +110,14 @@ export default function RecipeForm() {
             : 'Error Saving Recipe, Please Try Again.'}
         </Alert>
       </Snackbar>
+
       <Typography mt={1} variant="h6" color={theme.palette.primary.contrastText}>
         Add A Recipe
       </Typography>
 
       <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
+
+      <DishAttributes />
 
       <IngredientGroup
         {...{
@@ -136,7 +143,11 @@ export default function RecipeForm() {
 
       <Notes {...{ theme, notes, handleNoteInputChange }} />
 
-      {loading ? null : <Button onClick={handleSaveRecipe}>Save Recipe</Button>}
+      {loading ? null : (
+        <Button type="submit" variant="contained" sx={{ mb: 2 }}>
+          Save Recipe
+        </Button>
+      )}
     </Box>
   );
 }
