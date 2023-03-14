@@ -1,4 +1,3 @@
-import { Label } from '@mui/icons-material';
 import {
   Box,
   FormControl,
@@ -23,13 +22,13 @@ export default function DishAttributes() {
       <FormControl>
         <Switch />
       </FormControl>
-      <FormControl>
+      {/* <FormControl>
         <InputLabel htmlFor="outlined-adornment-prep-time">Prep Time</InputLabel>
         <OutlinedInput label="Prep Time" />
-      </FormControl>
-      {/* <Select label="Hrs" value="">
+      </FormControl> */}
+      <Select label="Hrs" value="">
         <MenuItem value={1}>1</MenuItem>
-      </Select> */}
+      </Select>
       <Select label="Min" value=""></Select>
       <FormControl>
         <InputLabel htmlFor="outlined-adornment-servings">Servings</InputLabel>
