@@ -1,13 +1,7 @@
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import React from 'react';
 
-export default function DishNameInput({
-  theme,
-  dishName,
-  handleDishNameChange,
-  formError,
-  setFormError,
-}) {
+export default function DishNameInput({ theme, dishName, handleDishNameChange }) {
   return (
     <FormControl
       sx={{
@@ -26,7 +20,7 @@ export default function DishNameInput({
       variant="outlined"
     >
       <InputLabel component="label" htmlFor="outlined-dish-name">
-        Dish Name
+        Dish Name *
       </InputLabel>
       <OutlinedInput
         autoComplete="off"
@@ -37,8 +31,9 @@ export default function DishNameInput({
         value={dishName}
         onChange={(e) => handleDishNameChange(e)}
         required
-        error={formError}
-        onInvalid={() => setFormError(true)}
+        onInvalid={(e) => {
+          e.target.setCustomValidity('Please enter a dish name');
+        }}
       />
     </FormControl>
   );

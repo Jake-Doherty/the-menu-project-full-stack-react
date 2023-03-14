@@ -37,6 +37,7 @@ export default function Ingredient({
         variant="h6"
         component="h6"
         sx={{
+          fontSize: '1rem',
           color: theme.palette.primary.contrastText,
         }}
       >
@@ -53,11 +54,15 @@ export default function Ingredient({
         value={ingredient.quantity}
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
-          width: 'max(10%, 100px)',
+          minWidth: '63px',
           '& .MuiInputBase-root *': {
             borderColor: theme.palette.primary.main,
             color: theme.palette.primary.contrastText,
           },
+        }}
+        required
+        onInvalid={(e) => {
+          e.target.setCustomValidity('Please add a quantity');
         }}
       />
 
@@ -69,11 +74,15 @@ export default function Ingredient({
         value={ingredient.unit}
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
-          width: 'max(10%, 125px)',
+          minWidth: '83px',
           '& .MuiInputBase-root *': {
             borderColor: theme.palette.primary.main,
             color: theme.palette.primary.contrastText,
           },
+        }}
+        required
+        onInvalid={(e) => {
+          e.target.setCustomValidity('Please select a measurement');
         }}
       >
         {measurements.map((option) => (
@@ -106,7 +115,7 @@ export default function Ingredient({
           },
         }}
       >
-        <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
+        <InputLabel htmlFor="ingredient">Ingredient *</InputLabel>
         <OutlinedInput
           id="ingredient"
           label="Ingredient"
@@ -116,6 +125,10 @@ export default function Ingredient({
           onChange={(e) => handleIngredientInputChange(e, index)}
           sx={{
             width: '98%',
+          }}
+          required
+          onInvalid={(e) => {
+            e.target.setCustomValidity('Please add an ingredient');
           }}
         />
       </FormControl>

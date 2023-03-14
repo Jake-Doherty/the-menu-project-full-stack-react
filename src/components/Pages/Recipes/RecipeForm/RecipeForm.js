@@ -80,6 +80,7 @@ export default function RecipeForm() {
         alignItems: 'center',
         justifyContent: 'flex-start',
         border: 2,
+        mb: 2,
         borderColor: theme.palette.primary.main,
         borderRadius: '10px',
         transition: 'all 0.5s ease',
@@ -113,9 +114,17 @@ export default function RecipeForm() {
         Add A Recipe
       </Typography>
 
-      <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
+      <Typography
+        variant="body2"
+        color={theme.palette.primary.contrastText}
+        sx={{
+          opacity: '0.7',
+        }}
+      >
+        * Indicates a required field
+      </Typography>
 
-      <DishAttributes />
+      <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
 
       <IngredientGroup
         {...{
@@ -141,8 +150,10 @@ export default function RecipeForm() {
 
       <Notes {...{ theme, notes, handleNoteInputChange }} />
 
+      <DishAttributes {...{ theme }} />
+
       {loading ? null : (
-        <Button type="submit" variant="contained" sx={{ mb: 2 }}>
+        <Button type="submit" variant="contained" sx={{ m: 2 }}>
           Save Recipe
         </Button>
       )}

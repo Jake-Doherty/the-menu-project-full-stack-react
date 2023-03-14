@@ -48,7 +48,7 @@ export default function Instruction({
           },
         }}
       >
-        <InputLabel htmlFor="instruction">{`Step ${instruction.step}`}</InputLabel>
+        <InputLabel htmlFor="instruction">{`Step ${instruction.step} *`}</InputLabel>
 
         <OutlinedInput
           sx={{
@@ -59,6 +59,10 @@ export default function Instruction({
           label={`Step ${index + 1}`}
           value={instruction.instruction}
           onChange={(e) => handleInstructionInputChange(e, index)}
+          required
+          onInvalid={(e) => {
+            e.target.setCustomValidity('Please add a step');
+          }}
         />
       </FormControl>
     </div>
