@@ -6,6 +6,7 @@ import { useTheme as useMuiTheme } from '@emotion/react';
 import { Box, FormControl, InputLabel, OutlinedInput, Typography } from '@mui/material/';
 
 import { useRecipe } from '../../../../context/RecipeContext.js';
+
 import RecipeModal from '../RecipeModal/RecipeModal.js';
 
 export default function ExploreRecipes() {

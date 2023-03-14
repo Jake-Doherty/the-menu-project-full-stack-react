@@ -13,6 +13,7 @@ import InstructionGroup from './FormComponents/InstructionsGroup/InstructionGrou
 import IngredientGroup from './FormComponents/IngredientsGroup/IngredientGroup.js';
 import Notes from './FormComponents/NotesGroup/Notes.js';
 import { useRecipe } from '../../../../context/RecipeContext.js';
+import DishAttributes from './FormComponents/DishAttributes/DishAttributes.js';
 
 export default function RecipeForm() {
   const { user, loading } = useUser();
@@ -106,11 +107,14 @@ export default function RecipeForm() {
             : 'Error Saving Recipe, Please Try Again.'}
         </Alert>
       </Snackbar>
+
       <Typography mt={1} variant="h6" color={theme.palette.primary.contrastText}>
         Add A Recipe
       </Typography>
 
       <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
+
+      <DishAttributes />
 
       <IngredientGroup
         {...{
