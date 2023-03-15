@@ -14,7 +14,7 @@ import React from 'react';
 export default function DishAttributes({
   theme,
   tags,
-  // servings,
+  servings,
   // totalTime,
   // isSecret,
   handleAddAttribute,
@@ -62,7 +62,17 @@ export default function DishAttributes({
       >
         <FormControl>
           <InputLabel htmlFor="outlined-adornment-servings">Servings</InputLabel>
-          <OutlinedInput label="Servings" sx={{ width: '100px' }} />
+          <OutlinedInput
+            name="servings"
+            label="Servings"
+            inputProps={{
+              inputMode: 'numeric',
+              pattern: '[0-99]*',
+            }}
+            value={servings}
+            onChange={(e) => handleAddAttribute(e)}
+            sx={{ width: '100px' }}
+          />
         </FormControl>
 
         <FormControl>

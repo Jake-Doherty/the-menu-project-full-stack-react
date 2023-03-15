@@ -96,6 +96,7 @@ const RecipeProvider = ({ children }) => {
         instructions: instructionList,
         notes: notes,
         tags: tags,
+        servings: servings,
       });
 
       if (data) {
