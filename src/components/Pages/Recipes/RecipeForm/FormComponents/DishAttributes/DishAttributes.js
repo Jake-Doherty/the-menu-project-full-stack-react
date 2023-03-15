@@ -16,8 +16,10 @@ export default function DishAttributes({
   tags,
   servings,
   // totalTime,
-  // isSecret,
-  handleAddAttribute,
+  minutesInput,
+  hoursInput,
+  isSecret,
+  handleAddAttribute: handleAddAttribute,
 }) {
   return (
     <Box
@@ -79,7 +81,9 @@ export default function DishAttributes({
           <InputLabel htmlFor="outlined-adornment-hrs">Hrs</InputLabel>
           <Select
             label="Hrs"
-            value=""
+            name="hours"
+            value={hoursInput}
+            onChange={(e) => handleAddAttribute(e)}
             sx={{ width: '80px' }}
             MenuProps={{
               sx: { height: '300px' },
@@ -94,10 +98,12 @@ export default function DishAttributes({
         </FormControl>
 
         <FormControl>
-          <InputLabel htmlFor="outlined-adornment-hrs">Mins</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-mins">Mins</InputLabel>
           <Select
             label="Min"
-            value=""
+            name="minutes"
+            value={minutesInput}
+            onChange={(e) => handleAddAttribute(e)}
             sx={{ width: '90px' }}
             MenuProps={{
               sx: { height: '300px' },
@@ -114,18 +120,18 @@ export default function DishAttributes({
 
       <FormControl sx={{ display: 'flex', flexDirection: 'row' }}>
         <FormControlLabel
-          control={<Switch id="secret-recipe" />}
+          control={
+            <Switch
+              name="isSecret"
+              value={isSecret}
+              onChange={(e) => handleAddAttribute(e)}
+              id="secret-recipe"
+            />
+          }
           label="Secret Recipe"
           sx={{ color: theme.palette.primary.contrastText }}
         />
       </FormControl>
     </Box>
   );
-}
-
-{
-  /* <FormControl>
-  <InputLabel htmlFor="outlined-adornment-tags">Tags</InputLabel>
-  <OutlinedInput label="Tags" />
-</FormControl> */
 }
