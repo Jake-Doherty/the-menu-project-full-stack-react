@@ -21,39 +21,56 @@ export default function RecipeForm() {
   const theme = useMuiTheme();
 
   const {
+    snackbarSeverity,
+    handleSaveRecipe,
     open,
     setOpen,
-    setDishName,
-    setIngredientList,
-    setInstructionList,
-    ingredientList,
-    instructionList,
-    setNotes,
     dishName,
+    setDishName,
+    ingredientList,
+    setIngredientList,
+    instructionList,
+    setInstructionList,
     notes,
-    handleSaveRecipe,
-    snackbarSeverity,
+    setNotes,
+    tags,
+    setTags,
+    servings,
+    setServings,
+    totalTime,
+    setTotalTime,
+    isSecret,
+    setIsSecret,
   } = useRecipe();
 
   const {
     ingredientRef,
     instructionRef,
     handleDishNameChange,
-    handleAddIngredient,
     handleIngredientInputChange,
-    handleAddInstruction,
+    handleAddIngredient,
     handleInstructionInputChange,
-    handleRemoveClick,
+    handleAddInstruction,
     handleNoteInputChange,
+    handleAddAttribute,
+    handleRemoveClick,
   } = useRecipeFormFunctions({
-    setDishName,
-    setIngredientList,
-    setInstructionList,
-    ingredientList,
-    instructionList,
-    setNotes,
     dishName,
+    setDishName,
+    ingredientList,
+    setIngredientList,
+    instructionList,
+    setInstructionList,
     notes,
+    setNotes,
+    tags,
+    setTags,
+    servings,
+    setServings,
+    totalTime,
+    setTotalTime,
+    isSecret,
+    setIsSecret,
   });
 
   if (!user) {
@@ -150,7 +167,20 @@ export default function RecipeForm() {
 
       <Notes {...{ theme, notes, handleNoteInputChange }} />
 
-      <DishAttributes {...{ theme }} />
+      <DishAttributes
+        {...{
+          theme,
+          tags,
+          setTags,
+          servings,
+          setServings,
+          totalTime,
+          setTotalTime,
+          isSecret,
+          setIsSecret,
+          handleAddAttribute,
+        }}
+      />
 
       {loading ? null : (
         <Button type="submit" variant="contained" sx={{ m: 2 }}>

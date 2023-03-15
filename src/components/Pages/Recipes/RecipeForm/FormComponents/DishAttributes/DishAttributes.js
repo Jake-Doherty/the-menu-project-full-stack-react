@@ -11,7 +11,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-export default function DishAttributes({ theme }) {
+export default function DishAttributes({
+  theme,
+  tags,
+  // servings,
+  // totalTime,
+  // isSecret,
+  handleAddAttribute,
+}) {
   return (
     <Box
       sx={{
@@ -33,8 +40,15 @@ export default function DishAttributes({ theme }) {
       }}
     >
       <TextField
+        name="tags"
         label="Tags"
+        value={tags}
+        onChange={(e) => handleAddAttribute(e)}
         helperText={`tags are separated by a comma and  one space`}
+        inputProps={{
+          inputMode: 'text',
+          pattern: '^[a-zA-Z]+(, [a-zA-Z]+)*$',
+        }}
         sx={{ width: '100%' }}
       ></TextField>
       <Box

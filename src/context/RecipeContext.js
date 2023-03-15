@@ -8,6 +8,8 @@ const RecipeContext = createContext();
 const RecipeProvider = ({ children }) => {
   const location = useLocation();
   const { user, setLoading } = useUser();
+
+  // recipe form state
   const [dishName, setDishName] = useState('');
   const initialIngredientList = [
     {
@@ -25,19 +27,31 @@ const RecipeProvider = ({ children }) => {
   ];
   const [instructionList, setInstructionList] = useState(initialInstructionList);
   const [notes, setNotes] = useState('');
+  const [tags, setTags] = useState([]);
+  const [servings, setServings] = useState('');
+  const [totalTime, setTotalTime] = useState('');
+  const [isSecret, setIsSecret] = useState(false);
 
+  // snackbar state
   const [open, setOpen] = useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  // recipe list state
   const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
+
+  // explore recipes query state
   const [query, setQuery] = useState('');
 
+  // recipe modal state
   const [expanded, setExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDishName, setModalDishName] = useState('');
   const [modalIngredientList, setModalIngredientList] = useState([]);
   const [modalInstructionList, setModalInstructionList] = useState([]);
   const [modalNotes, setModalNotes] = useState('');
+
+  // my recipes search state
   const [searchInput, setSearchInput] = useState('');
 
   useEffect(() => {
@@ -81,6 +95,7 @@ const RecipeProvider = ({ children }) => {
         ingredients: ingredientList,
         instructions: instructionList,
         notes: notes,
+        tags: tags,
       });
 
       if (data) {
@@ -88,6 +103,7 @@ const RecipeProvider = ({ children }) => {
         setIngredientList(initialIngredientList);
         setInstructionList(initialInstructionList);
         setNotes('');
+        setTags([]);
       }
 
       error ? setSnackbarSeverity('error') : setSnackbarSeverity('success');
@@ -103,18 +119,26 @@ const RecipeProvider = ({ children }) => {
       value={{
         userRecipes,
         nonSecretRecipes,
+        snackbarSeverity,
+        handleSaveRecipe,
         open,
         setOpen,
-        snackbarSeverity,
-        setDishName,
-        setIngredientList,
-        setInstructionList,
-        ingredientList,
-        instructionList,
-        setNotes,
         dishName,
+        setDishName,
+        ingredientList,
+        setIngredientList,
+        instructionList,
+        setInstructionList,
         notes,
-        handleSaveRecipe,
+        setNotes,
+        tags,
+        setTags,
+        servings,
+        setServings,
+        totalTime,
+        setTotalTime,
+        isSecret,
+        setIsSecret,
         query,
         setQuery,
         expanded,

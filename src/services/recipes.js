@@ -12,7 +12,7 @@ export async function getUserRecipes(userId) {
   return checkError(response);
 }
 
-export async function insertRecipe(userId, { dishName, ingredients, instructions, notes }) {
+export async function insertRecipe(userId, { dishName, ingredients, instructions, notes, tags }) {
   const response = await client
     .from('recipes')
     .insert({
@@ -20,6 +20,7 @@ export async function insertRecipe(userId, { dishName, ingredients, instructions
       ingredients: ingredients,
       instructions: instructions,
       notes: notes,
+      tags: tags,
     })
     .match({ user_id: userId })
     .maybeSingle();
