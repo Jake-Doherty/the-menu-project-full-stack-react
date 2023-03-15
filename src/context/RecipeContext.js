@@ -29,7 +29,9 @@ const RecipeProvider = ({ children }) => {
   const [notes, setNotes] = useState('');
   const [tags, setTags] = useState([]);
   const [servings, setServings] = useState('');
-  const [totalTime, setTotalTime] = useState('');
+  const [totalTime, setTotalTime] = useState(0);
+  const [hoursInput, setHoursInput] = useState('');
+  const [minutesInput, setMinutesInput] = useState('');
   const [isSecret, setIsSecret] = useState(false);
 
   // snackbar state
@@ -97,6 +99,7 @@ const RecipeProvider = ({ children }) => {
         notes: notes,
         tags: tags,
         servings: servings,
+        totalTime: totalTime,
       });
 
       if (data) {
@@ -105,6 +108,8 @@ const RecipeProvider = ({ children }) => {
         setInstructionList(initialInstructionList);
         setNotes('');
         setTags([]);
+        setServings('');
+        setTotalTime(0);
       }
 
       error ? setSnackbarSeverity('error') : setSnackbarSeverity('success');
@@ -138,6 +143,10 @@ const RecipeProvider = ({ children }) => {
         setServings,
         totalTime,
         setTotalTime,
+        hoursInput,
+        setHoursInput,
+        minutesInput,
+        setMinutesInput,
         isSecret,
         setIsSecret,
         query,
