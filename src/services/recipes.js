@@ -14,7 +14,7 @@ export async function getUserRecipes(userId) {
 
 export async function insertRecipe(
   userId,
-  { dishName, ingredients, instructions, notes, tags, servings }
+  { dishName, ingredients, instructions, notes, tags, servings, totalTime }
 ) {
   const response = await client
     .from('recipes')
@@ -25,6 +25,7 @@ export async function insertRecipe(
       notes: notes,
       tags: tags,
       servings: servings,
+      total_time: totalTime,
     })
     .match({ user_id: userId })
     .maybeSingle();
