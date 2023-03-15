@@ -21,8 +21,22 @@ export default function DishAttributes({ theme }) {
         alignItems: 'center',
         justifyContent: 'space-evenly',
         gap: '10px',
+        '& .MuiInputBase-root *': {
+          borderColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        '& .MuiOutlinedInput-root': {
+          '&.Mui-focused fieldset': {
+            borderColor: theme.palette.primary.main,
+          },
+        },
       }}
     >
+      <TextField
+        label="Tags"
+        helperText={`tags are separated by a comma and  one space`}
+        sx={{ width: '100%' }}
+      ></TextField>
       <Box
         sx={{
           display: 'flex',
@@ -81,11 +95,6 @@ export default function DishAttributes({ theme }) {
           sx={{ color: theme.palette.primary.contrastText }}
         />
       </FormControl>
-
-      <TextField
-        label="Tags"
-        helperText={`tags are separated by a comma and  one space`}
-      ></TextField>
     </Box>
   );
 }

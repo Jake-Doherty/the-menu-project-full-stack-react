@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -21,14 +22,23 @@ export default function Ingredient({
   handleIngredientInputChange,
 }) {
   return (
-    <div
+    <Box
       className="ingredient"
       ref={ingredientList.length - 1 === index ? ingredientRef : null}
-      style={{
+      sx={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
+        '& .MuiInputBase-root *': {
+          borderColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        '& .MuiOutlinedInput-root': {
+          '&.Mui-focused fieldset': {
+            borderColor: theme.palette.primary.main,
+          },
+        },
       }}
     >
       <RemoveButton {...{ theme, handleRemoveClick, ingredient, index }} />
@@ -55,10 +65,6 @@ export default function Ingredient({
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
           minWidth: '63px',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
         }}
         required
         onInvalid={(e) => {
@@ -75,10 +81,6 @@ export default function Ingredient({
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
           minWidth: '83px',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
         }}
         required
         onInvalid={(e) => {
@@ -104,15 +106,6 @@ export default function Ingredient({
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
-          '& .MuiOutlinedInput-root': {
-            '&.Mui-focused fieldset': {
-              borderColor: theme.palette.primary.main,
-            },
-          },
         }}
       >
         <InputLabel htmlFor="ingredient">Ingredient *</InputLabel>
@@ -132,6 +125,6 @@ export default function Ingredient({
           }}
         />
       </FormControl>
-    </div>
+    </Box>
   );
 }
