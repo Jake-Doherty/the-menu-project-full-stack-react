@@ -128,7 +128,6 @@ export default function useRecipeFormFunctions({
     setTotalTime(summedTime);
 
     if (name === 'isSecret') {
-      console.log(totalTime);
       setIsSecret(value);
     }
   };
