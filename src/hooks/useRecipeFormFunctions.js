@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { useUser } from '../context/UserContext.js';
-import { insertRecipe } from '../services/recipes.js';
+// import { useUser } from '../context/UserContext.js';
+// import { insertRecipe } from '../services/recipes.js';
 
 export default function useRecipeFormFunctions({
   dishName,
@@ -17,13 +17,17 @@ export default function useRecipeFormFunctions({
   setServings,
   totalTime,
   setTotalTime,
+  hoursInput,
+  setHoursInput,
+  minutesInput,
+  setMinutesInput,
   isSecret,
   setIsSecret,
 }) {
   const ingredientRef = useRef(null);
   const instructionRef = useRef(null);
 
-  const { user } = useUser();
+  // const { user } = useUser();
 
   const handleDishNameChange = (e) => {
     setDishName(e.target.value);
@@ -111,11 +115,20 @@ export default function useRecipeFormFunctions({
       setServings(value);
     }
 
-    if (name === 'totalTime') {
-      setTotalTime(value);
+    if (name === 'hours') {
+      setHoursInput(value);
     }
 
+    if (name === 'minutes') {
+      setMinutesInput(value);
+    }
+
+    const summedTime = hoursInput * 60 + minutesInput;
+
+    setTotalTime(summedTime);
+
     if (name === 'isSecret') {
+      console.log(totalTime);
       setIsSecret(value);
     }
   };
@@ -135,19 +148,19 @@ export default function useRecipeFormFunctions({
     }
   };
 
-  const handleSaveRecipe = async () => {
-    try {
-      await insertRecipe(user.id, {
-        dishName: dishName,
-        ingredients: ingredientList,
-        instructions: instructionList,
-        notes: notes,
-        tags: tags,
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const handleSaveRecipe = async () => {
+  //   try {
+  //     await insertRecipe(user.id, {
+  //       dishName: dishName,
+  //       ingredients: ingredientList,
+  //       instructions: instructionList,
+  //       notes: notes,
+  //       tags: tags,
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   return {
     dishName,
@@ -168,6 +181,6 @@ export default function useRecipeFormFunctions({
     handleNoteInputChange,
     handleAddAttribute,
     handleRemoveClick,
-    handleSaveRecipe,
+    // handleSaveRecipe,
   };
 }
