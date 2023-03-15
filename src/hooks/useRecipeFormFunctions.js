@@ -3,14 +3,22 @@ import { useUser } from '../context/UserContext.js';
 import { insertRecipe } from '../services/recipes.js';
 
 export default function useRecipeFormFunctions({
-  setDishName,
-  setIngredientList,
-  setInstructionList,
-  ingredientList,
-  instructionList,
-  setNotes,
   dishName,
+  setDishName,
+  ingredientList,
+  setIngredientList,
+  instructionList,
+  setInstructionList,
   notes,
+  setNotes,
+  tags,
+  setTags,
+  servings,
+  setServings,
+  totalTime,
+  setTotalTime,
+  isSecret,
+  setIsSecret,
 }) {
   const ingredientRef = useRef(null);
   const instructionRef = useRef(null);
@@ -88,6 +96,30 @@ export default function useRecipeFormFunctions({
     }, 50);
   };
 
+  const handleNoteInputChange = (e) => {
+    setNotes(e.target.value);
+  };
+
+  const handleAddAttribute = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'tags') {
+      setTags(value);
+    }
+
+    if (name === 'servings') {
+      setServings(value);
+    }
+
+    if (name === 'totalTime') {
+      setTotalTime(value);
+    }
+
+    if (name === 'isSecret') {
+      setIsSecret(value);
+    }
+  };
+
   const handleRemoveClick = (obj, index) => {
     if (Object.keys(obj)[0] === 'unit') {
       const list = [...ingredientList];
@@ -103,10 +135,6 @@ export default function useRecipeFormFunctions({
     }
   };
 
-  const handleNoteInputChange = (e) => {
-    setNotes(e.target.value);
-  };
-
   const handleSaveRecipe = async () => {
     try {
       await insertRecipe(user.id, {
@@ -114,6 +142,7 @@ export default function useRecipeFormFunctions({
         ingredients: ingredientList,
         instructions: instructionList,
         notes: notes,
+        tags: tags,
       });
     } catch (e) {
       console.error(e);
@@ -125,14 +154,19 @@ export default function useRecipeFormFunctions({
     ingredientList,
     instructionList,
     notes,
+    tags,
+    servings,
+    totalTime,
+    isSecret,
     ingredientRef,
     instructionRef,
     handleDishNameChange,
     handleIngredientInputChange,
-    handleInstructionInputChange,
-    handleNoteInputChange,
     handleAddIngredient,
+    handleInstructionInputChange,
     handleAddInstruction,
+    handleNoteInputChange,
+    handleAddAttribute,
     handleRemoveClick,
     handleSaveRecipe,
   };
