@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -21,13 +22,23 @@ export default function Ingredient({
   handleIngredientInputChange,
 }) {
   return (
-    <div
+    <Box
       className="ingredient"
       ref={ingredientList.length - 1 === index ? ingredientRef : null}
-      style={{
+      sx={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        width: '100%',
+        '& .MuiInputBase-root *': {
+          borderColor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+        },
+        '& .MuiOutlinedInput-root': {
+          '&.Mui-focused fieldset': {
+            borderColor: theme.palette.primary.main,
+          },
+        },
       }}
     >
       <RemoveButton {...{ theme, handleRemoveClick, ingredient, index }} />
@@ -36,6 +47,7 @@ export default function Ingredient({
         variant="h6"
         component="h6"
         sx={{
+          fontSize: '1rem',
           color: theme.palette.primary.contrastText,
         }}
       >
@@ -52,11 +64,11 @@ export default function Ingredient({
         value={ingredient.quantity}
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
-          width: 'max(10%, 100px)',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
+          minWidth: '63px',
+        }}
+        required
+        onInvalid={(e) => {
+          e.target.setCustomValidity('Please add a quantity');
         }}
       />
 
@@ -68,11 +80,11 @@ export default function Ingredient({
         value={ingredient.unit}
         onChange={(e) => handleIngredientInputChange(e, index)}
         sx={{
-          width: 'max(10%, 125px)',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
+          minWidth: '83px',
+        }}
+        required
+        onInvalid={(e) => {
+          e.target.setCustomValidity('Please select a measurement');
         }}
       >
         {measurements.map((option) => (
@@ -94,18 +106,9 @@ export default function Ingredient({
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          '& .MuiInputBase-root *': {
-            borderColor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-          },
-          '& .MuiOutlinedInput-root': {
-            '&.Mui-focused fieldset': {
-              borderColor: theme.palette.primary.main,
-            },
-          },
         }}
       >
-        <InputLabel htmlFor="ingredient">Ingredient</InputLabel>
+        <InputLabel htmlFor="ingredient">Ingredient *</InputLabel>
         <OutlinedInput
           id="ingredient"
           label="Ingredient"
@@ -116,8 +119,12 @@ export default function Ingredient({
           sx={{
             width: '98%',
           }}
+          required
+          onInvalid={(e) => {
+            e.target.setCustomValidity('Please add an ingredient');
+          }}
         />
       </FormControl>
-    </div>
+    </Box>
   );
 }

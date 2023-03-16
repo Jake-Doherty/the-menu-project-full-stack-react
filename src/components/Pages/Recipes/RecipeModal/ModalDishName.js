@@ -31,6 +31,8 @@ export default function ModalDishName({ modalDishName, theme, handleModalClose }
         aria-label="close"
         size="small"
         sx={{
+          height: 'fit-content',
+          width: 'fit-content',
           position: 'relative',
           right: '0',
           cursor: 'pointer',

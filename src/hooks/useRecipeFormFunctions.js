@@ -1,21 +1,33 @@
 import { useRef } from 'react';
-import { useUser } from '../context/UserContext.js';
-import { insertRecipe } from '../services/recipes.js';
+// import { useUser } from '../context/UserContext.js';
+// import { insertRecipe } from '../services/recipes.js';
 
 export default function useRecipeFormFunctions({
-  setDishName,
-  setIngredientList,
-  setInstructionList,
-  ingredientList,
-  instructionList,
-  setNotes,
   dishName,
+  setDishName,
+  ingredientList,
+  setIngredientList,
+  instructionList,
+  setInstructionList,
   notes,
+  setNotes,
+  tags,
+  setTags,
+  servings,
+  setServings,
+  totalTime,
+  setTotalTime,
+  hoursInput,
+  setHoursInput,
+  minutesInput,
+  setMinutesInput,
+  isSecret,
+  setIsSecret,
 }) {
   const ingredientRef = useRef(null);
   const instructionRef = useRef(null);
 
-  const { user } = useUser();
+  // const { user } = useUser();
 
   const handleDishNameChange = (e) => {
     setDishName(e.target.value);
@@ -88,6 +100,40 @@ export default function useRecipeFormFunctions({
     }, 50);
   };
 
+  const handleNoteInputChange = (e) => {
+    setNotes(e.target.value);
+  };
+
+  const handleAddAttribute = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'tags') {
+      setTags(value);
+    }
+
+    if (name === 'servings') {
+      setServings(value);
+    }
+
+    if (name === 'hours') {
+      setHoursInput(value);
+    }
+
+    if (name === 'minutes') {
+      setMinutesInput(value);
+    }
+
+    let hoursToMinutes = hoursInput * 60;
+
+    const summedTime = (hoursToMinutes += minutesInput);
+
+    setTotalTime(summedTime);
+
+    if (name === 'secret') {
+      setIsSecret(!isSecret);
+    }
+  };
+
   const handleRemoveClick = (obj, index) => {
     if (Object.keys(obj)[0] === 'unit') {
       const list = [...ingredientList];
@@ -103,37 +149,39 @@ export default function useRecipeFormFunctions({
     }
   };
 
-  const handleNoteInputChange = (e) => {
-    setNotes(e.target.value);
-  };
-
-  const handleSaveRecipe = async () => {
-    try {
-      await insertRecipe(user.id, {
-        dishName: dishName,
-        ingredients: ingredientList,
-        instructions: instructionList,
-        notes: notes,
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const handleSaveRecipe = async () => {
+  //   try {
+  //     await insertRecipe(user.id, {
+  //       dishName: dishName,
+  //       ingredients: ingredientList,
+  //       instructions: instructionList,
+  //       notes: notes,
+  //       tags: tags,
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   return {
     dishName,
     ingredientList,
     instructionList,
     notes,
+    tags,
+    servings,
+    totalTime,
+    isSecret,
     ingredientRef,
     instructionRef,
     handleDishNameChange,
     handleIngredientInputChange,
-    handleInstructionInputChange,
-    handleNoteInputChange,
     handleAddIngredient,
+    handleInstructionInputChange,
     handleAddInstruction,
+    handleNoteInputChange,
+    handleAddAttribute,
     handleRemoveClick,
-    handleSaveRecipe,
+    // handleSaveRecipe,
   };
 }

@@ -21,39 +21,64 @@ export default function RecipeForm() {
   const theme = useMuiTheme();
 
   const {
+    snackbarSeverity,
+    handleSaveRecipe,
     open,
     setOpen,
-    setDishName,
-    setIngredientList,
-    setInstructionList,
-    ingredientList,
-    instructionList,
-    setNotes,
     dishName,
+    setDishName,
+    ingredientList,
+    setIngredientList,
+    instructionList,
+    setInstructionList,
     notes,
-    handleSaveRecipe,
-    snackbarSeverity,
+    setNotes,
+    tags,
+    setTags,
+    servings,
+    setServings,
+    totalTime,
+    setTotalTime,
+    hoursInput,
+    setHoursInput,
+    minutesInput,
+    setMinutesInput,
+    isSecret,
+    setIsSecret,
   } = useRecipe();
 
   const {
     ingredientRef,
     instructionRef,
     handleDishNameChange,
-    handleAddIngredient,
     handleIngredientInputChange,
-    handleAddInstruction,
+    handleAddIngredient,
     handleInstructionInputChange,
-    handleRemoveClick,
+    handleAddInstruction,
     handleNoteInputChange,
+    handleAddAttribute,
+    handleRemoveClick,
   } = useRecipeFormFunctions({
-    setDishName,
-    setIngredientList,
-    setInstructionList,
-    ingredientList,
-    instructionList,
-    setNotes,
     dishName,
+    setDishName,
+    ingredientList,
+    setIngredientList,
+    instructionList,
+    setInstructionList,
     notes,
+    setNotes,
+    tags,
+    setTags,
+    servings,
+    setServings,
+    totalTime,
+    setTotalTime,
+    hoursInput,
+    setHoursInput,
+    minutesInput,
+    setMinutesInput,
+    isSecret,
+    setIsSecret,
   });
 
   if (!user) {
@@ -76,12 +101,11 @@ export default function RecipeForm() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        // minHeight: 'max(calc(100vh - 80px), 400px)',
         height: '100%',
-        width: 'max(calc(100vw / 2), 350px)',
         alignItems: 'center',
         justifyContent: 'flex-start',
         border: 2,
+        mb: 2,
         borderColor: theme.palette.primary.main,
         borderRadius: '10px',
         transition: 'all 0.5s ease',
@@ -115,9 +139,17 @@ export default function RecipeForm() {
         Add A Recipe
       </Typography>
 
-      <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
+      <Typography
+        variant="body2"
+        color={theme.palette.primary.contrastText}
+        sx={{
+          opacity: '0.7',
+        }}
+      >
+        * Indicates a required field
+      </Typography>
 
-      <DishAttributes />
+      <DishNameInput {...{ theme, dishName, handleDishNameChange }} />
 
       <IngredientGroup
         {...{
@@ -143,8 +175,25 @@ export default function RecipeForm() {
 
       <Notes {...{ theme, notes, handleNoteInputChange }} />
 
+      <DishAttributes
+        {...{
+          theme,
+          tags,
+          servings,
+          totalTime,
+          setTotalTime,
+          hoursInput,
+          setHoursInput,
+          minutesInput,
+          setMinutesInput,
+          isSecret,
+          setIsSecret,
+          handleAddAttribute,
+        }}
+      />
+
       {loading ? null : (
-        <Button type="submit" variant="contained" sx={{ mb: 2 }}>
+        <Button type="submit" variant="contained" sx={{ m: 2 }}>
           Save Recipe
         </Button>
       )}
