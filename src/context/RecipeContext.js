@@ -109,8 +109,11 @@ const RecipeProvider = ({ children }) => {
         setInstructionList(initialInstructionList);
         setNotes('');
         setTags([]);
-        setServings('');
+        setServings(0);
         setTotalTime(0);
+        setHoursInput('');
+        setMinutesInput('');
+        setIsSecret(false);
       }
 
       error ? setSnackbarSeverity('error') : setSnackbarSeverity('success');
