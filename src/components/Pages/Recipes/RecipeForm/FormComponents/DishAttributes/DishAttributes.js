@@ -15,7 +15,6 @@ export default function DishAttributes({
   theme,
   tags,
   servings,
-  // totalTime,
   minutesInput,
   hoursInput,
   isSecret,
@@ -122,9 +121,10 @@ export default function DishAttributes({
         <FormControlLabel
           control={
             <Switch
-              name="isSecret"
-              value={isSecret}
+              name="secret"
+              checked={!isSecret}
               onChange={(e) => handleAddAttribute(e)}
+              inputProps={{ 'aria-label': 'controlled' }}
               id="secret-recipe"
             />
           }

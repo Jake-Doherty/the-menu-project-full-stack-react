@@ -127,9 +127,10 @@ export default function useRecipeFormFunctions({
 
     setTotalTime(summedTime);
 
-    if (name === 'isSecret') {
-      setIsSecret(value);
+    if (name === 'secret') {
+      setIsSecret(!isSecret);
     }
+    console.log('isSecret', isSecret);
   };
 
   const handleRemoveClick = (obj, index) => {

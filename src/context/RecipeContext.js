@@ -28,7 +28,7 @@ const RecipeProvider = ({ children }) => {
   const [instructionList, setInstructionList] = useState(initialInstructionList);
   const [notes, setNotes] = useState('');
   const [tags, setTags] = useState([]);
-  const [servings, setServings] = useState('');
+  const [servings, setServings] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [hoursInput, setHoursInput] = useState('');
   const [minutesInput, setMinutesInput] = useState('');
@@ -100,6 +100,7 @@ const RecipeProvider = ({ children }) => {
         tags: tags,
         servings: servings,
         totalTime: totalTime,
+        isSecret: isSecret,
       });
 
       if (data) {
