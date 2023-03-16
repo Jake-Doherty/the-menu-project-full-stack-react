@@ -123,14 +123,15 @@ export default function useRecipeFormFunctions({
       setMinutesInput(value);
     }
 
-    const summedTime = hoursInput * 60 + minutesInput;
+    let hoursToMinutes = hoursInput * 60;
+
+    const summedTime = (hoursToMinutes += minutesInput);
 
     setTotalTime(summedTime);
 
     if (name === 'secret') {
       setIsSecret(!isSecret);
     }
-    console.log('isSecret', isSecret);
   };
 
   const handleRemoveClick = (obj, index) => {
