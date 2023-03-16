@@ -1,6 +1,7 @@
 import { Box, Divider, Modal } from '@mui/material';
 
 import React from 'react';
+import ModalDishAttributes from './ModalDishAttributes.js';
 import ModalDishName from './ModalDishName.js';
 import ModalIngredients from './ModalIngredients.js';
 import ModalInstructions from './ModalInstructions.js';
@@ -13,6 +14,8 @@ export default function RecipeModal({
   modalIngredientList,
   modalInstructionList,
   modalNotes,
+  modalServings,
+  modalTotalTime,
   expanded,
   setExpanded,
   theme,
@@ -46,7 +49,9 @@ export default function RecipeModal({
           },
         }}
       >
-        <ModalDishName {...{ modalDishName, theme, handleModalClose }} />
+        <ModalDishName {...{ theme, modalDishName, handleModalClose }} />
+
+        <ModalDishAttributes {...{ theme, modalServings, modalTotalTime }} />
 
         <Divider variant="middle" sx={{ m: 2 }} />
 

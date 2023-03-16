@@ -32,7 +32,7 @@ const RecipeProvider = ({ children }) => {
   const [totalTime, setTotalTime] = useState(0);
   const [hoursInput, setHoursInput] = useState('');
   const [minutesInput, setMinutesInput] = useState('');
-  const [isSecret, setIsSecret] = useState(false);
+  const [isSecret, setIsSecret] = useState(true);
 
   // snackbar state
   const [open, setOpen] = useState(false);
@@ -52,6 +52,8 @@ const RecipeProvider = ({ children }) => {
   const [modalIngredientList, setModalIngredientList] = useState([]);
   const [modalInstructionList, setModalInstructionList] = useState([]);
   const [modalNotes, setModalNotes] = useState('');
+  const [modalServings, setModalServings] = useState('');
+  const [modalTotalTime, setModalTotalTime] = useState('');
 
   // my recipes search state
   const [searchInput, setSearchInput] = useState('');
@@ -167,6 +169,10 @@ const RecipeProvider = ({ children }) => {
         setModalInstructionList,
         modalNotes,
         setModalNotes,
+        modalServings,
+        setModalServings,
+        modalTotalTime,
+        setModalTotalTime,
         searchInput,
         setSearchInput,
       }}
