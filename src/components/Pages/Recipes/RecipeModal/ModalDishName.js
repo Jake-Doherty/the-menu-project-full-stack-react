@@ -26,6 +26,7 @@ export default function ModalDishName({ modalDishName, theme, handleModalClose }
       >
         {modalDishName}
       </Typography>
+
       <IconButton
         id="close-button"
         aria-label="close"

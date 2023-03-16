@@ -28,6 +28,10 @@ export default function ExploreRecipes() {
     setModalInstructionList,
     modalNotes,
     setModalNotes,
+    modalServings,
+    setModalServings,
+    modalTotalTime,
+    setModalTotalTime,
     searchInput,
     setSearchInput,
   } = useRecipe();
@@ -44,6 +48,8 @@ export default function ExploreRecipes() {
     setModalIngredientList(recipe.ingredients);
     setModalInstructionList(recipe.instructions);
     setModalNotes(recipe.notes);
+    setModalServings(recipe.servings);
+    setModalTotalTime(recipe.total_time);
 
     setModalOpen(true);
   };
@@ -205,6 +211,8 @@ export default function ExploreRecipes() {
               modalIngredientList,
               modalInstructionList,
               modalNotes,
+              modalServings,
+              modalTotalTime,
               expanded,
               setExpanded,
               theme,
