@@ -21,6 +21,10 @@ export default function Home() {
     setModalInstructionList,
     modalNotes,
     setModalNotes,
+    modalServings,
+    setModalServings,
+    modalTotalTime,
+    setModalTotalTime,
     expanded,
     setExpanded,
   } = useRecipe();
@@ -38,6 +42,8 @@ export default function Home() {
       setModalIngredientList(value.ingredients);
       setModalInstructionList(value.instructions);
       setModalNotes(value.notes);
+      setModalServings(value.servings);
+      setModalTotalTime(value.total_time);
 
       setModalOpen(true);
     }
@@ -47,6 +53,8 @@ export default function Home() {
       setModalIngredientList(value.ingredients);
       setModalInstructionList(value.instructions);
       setModalNotes(value.notes);
+      setModalServings(value.servings);
+      setModalTotalTime(value.total_time);
 
       setModalOpen(true);
     }
@@ -124,6 +132,8 @@ export default function Home() {
           modalIngredientList,
           modalInstructionList,
           modalNotes,
+          modalServings,
+          modalTotalTime,
           expanded,
           setExpanded,
           theme,
