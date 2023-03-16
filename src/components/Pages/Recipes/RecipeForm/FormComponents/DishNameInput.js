@@ -34,6 +34,9 @@ export default function DishNameInput({ theme, dishName, handleDishNameChange })
         onInvalid={(e) => {
           e.target.setCustomValidity('Please enter a dish name');
         }}
+        onInput={(e) => {
+          e.target.setCustomValidity('');
+        }}
       />
     </FormControl>
   );

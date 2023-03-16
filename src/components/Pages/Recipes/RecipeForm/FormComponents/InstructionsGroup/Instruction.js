@@ -63,6 +63,9 @@ export default function Instruction({
           onInvalid={(e) => {
             e.target.setCustomValidity('Please add a step');
           }}
+          onInput={(e) => {
+            e.target.setCustomValidity('');
+          }}
         />
       </FormControl>
     </div>

@@ -70,6 +70,9 @@ export default function Ingredient({
         onInvalid={(e) => {
           e.target.setCustomValidity('Please add a quantity');
         }}
+        onInput={(e) => {
+          e.target.setCustomValidity('');
+        }}
       />
 
       <TextField
@@ -85,6 +88,9 @@ export default function Ingredient({
         required
         onInvalid={(e) => {
           e.target.setCustomValidity('Please select a measurement');
+        }}
+        onSelect={(e) => {
+          e.target.setCustomValidity('');
         }}
       >
         {measurements.map((option) => (
@@ -122,6 +128,9 @@ export default function Ingredient({
           required
           onInvalid={(e) => {
             e.target.setCustomValidity('Please add an ingredient');
+          }}
+          onInput={(e) => {
+            e.target.setCustomValidity('');
           }}
         />
       </FormControl>
