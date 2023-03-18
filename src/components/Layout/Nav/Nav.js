@@ -77,7 +77,7 @@ export default function Nav() {
         >
           {profile && profile.display_name
             ? `Welcome back, ${profile.display_name}!`
-            : `Welcome back, ${user.email}!`}
+            : `Welcome back, ${user}!`}
         </Typography>
 
         <Tooltip title="Site Menu">
@@ -93,7 +93,8 @@ export default function Nav() {
               sx={{ width: 32, height: 32 }}
               src={profile && profile.avatar_image_url ? profile.avatar_image_url : null}
             >
-              {profile && profile.display_name ? profile.display_name[0] : user.email[0]}
+              {/* {profile && profile.display_name ? profile.display_name[0] : user.email[0]} */}
+              {profile && profile.display_name ? profile.display_name[0] : user[0]}
             </Avatar>
           </IconButton>
         </Tooltip>

@@ -19,18 +19,21 @@ export async function authUser(email, password, type) {
   let response;
 
   if (type === 'sign-up') {
-    response = await fetch(`${baseURL}/api/v2/users/`, {
+    response = await fetch(`${baseURL}/api/v2/users`, {
       method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
       credentials: 'include',
     });
-  } else {
-    response = await fetch(`${baseURL}/api/v2/users/sessions/`, {
+  }
+  if (type === 'sign-in') {
+    response = await fetch(`${baseURL}/api/v2/users/sessions`, {
       method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
@@ -41,8 +44,10 @@ export async function authUser(email, password, type) {
   if (response.error) {
     throw response.error;
   }
-  const data = await getUser();
-  return data;
+
+  // console.log(await response.json());
+
+  return await response.json();
 }
 
 export async function signOut() {

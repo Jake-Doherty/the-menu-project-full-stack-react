@@ -28,7 +28,7 @@ export default function Auth() {
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   const { type } = useParams();
-  const { user, setUser } = useUser();
+  const { user, setUser, setToken } = useUser();
   const theme = useMuiTheme();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,14 +44,16 @@ export default function Auth() {
   const submitAuth = async () => {
     try {
       const newUser = await authUser(email, password, type);
-      // console.log(newUser);
-      setUser(newUser);
+      console.log(newUser.user);
+      setUser(newUser.user);
+      setToken(newUser.token);
     } catch (e) {
       console.error(e);
       setError(e.message);
       setSnackbarSeverity('error');
       setOpen(true);
     }
+    console.log('user', user);
   };
 
   const handleClose = (event, reason) => {

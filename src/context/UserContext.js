@@ -8,6 +8,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const currentUser = getUser();
   const [user, setUser] = useState(currentUser);
+  const [token, setToken] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
   const [profileAvatarInput, setProfileAvatarInput] = useState('');
   const [profileAvatarUrl, setProfileAvatarUrl] = useState('');
@@ -104,6 +105,8 @@ const UserProvider = ({ children }) => {
         setLoading,
         user,
         setUser,
+        token,
+        setToken,
         profile,
         setProfile,
         handleProfileChange,
