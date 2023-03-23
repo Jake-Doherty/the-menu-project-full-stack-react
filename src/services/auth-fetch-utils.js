@@ -53,7 +53,9 @@ export async function authUser(email, password, type) {
 export async function signOut() {
   await fetch(`${baseURL}/api/v2/users/sessions/`, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
   });
