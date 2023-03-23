@@ -44,7 +44,7 @@ export default function Auth() {
   const submitAuth = async () => {
     try {
       const newUser = await authUser(email, password, type);
-      console.log(newUser);
+      // console.log(newUser);
       setUser({ email: newUser.user });
     } catch (e) {
       console.error(e);
@@ -54,7 +54,7 @@ export default function Auth() {
     }
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === '') {
       return;
     }
