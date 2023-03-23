@@ -1,4 +1,9 @@
-import { getProfile, insertProfile, updateProfile, uploadImage } from '../services/profile.js';
+import {
+  // getProfile,
+  insertProfile,
+  updateProfile,
+  // uploadImage,
+} from '../services/profile.js';
 
 const { createContext, useState, useContext, useEffect } = require('react');
 const { getUser } = require('../services/auth-fetch-utils.js');
@@ -22,7 +27,10 @@ const UserProvider = ({ children }) => {
 
   const [profile, setProfile] = useState(undefined);
   const [profileAvatarInput, setProfileAvatarInput] = useState('');
-  const [profileAvatarUrl, setProfileAvatarUrl] = useState('');
+  const [
+    profileAvatarUrl,
+    // setProfileAvatarUrl
+  ] = useState('');
   const [themeInput, setThemeInput] = useState(
     profile && profile.dark_mode ? profile.dark_mode : true
   );

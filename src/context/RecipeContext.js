@@ -1,13 +1,18 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getNonSecretRecipes, getUserRecipes, insertRecipe } from '../services/recipes.js';
-import { useUser } from './UserContext.js';
+import {
+  createContext,
+  useContext,
+  // useEffect,
+  useState,
+} from 'react';
+// import { useLocation } from 'react-router-dom';
+// import { getNonSecretRecipes, getUserRecipes, insertRecipe } from '../services/recipes.js';
+// import { useUser } from './UserContext.js';
 
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
-  const location = useLocation();
-  const { user, setLoading } = useUser();
+  // const location = useLocation();
+  // const { user, setLoading } = useUser();
 
   // recipe form state
   const [dishName, setDishName] = useState('');
@@ -36,11 +41,20 @@ const RecipeProvider = ({ children }) => {
 
   // snackbar state
   const [open, setOpen] = useState(false);
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [
+    snackbarSeverity,
+    // setSnackbarSeverity
+  ] = useState('success');
 
   // recipe list state
-  const [nonSecretRecipes, setNonSecretRecipes] = useState([]);
-  const [userRecipes, setUserRecipes] = useState([]);
+  const [
+    nonSecretRecipes,
+    // setNonSecretRecipes
+  ] = useState([]);
+  const [
+    userRecipes,
+    // setUserRecipes
+  ] = useState([]);
 
   // explore recipes query state
   const [query, setQuery] = useState('');
