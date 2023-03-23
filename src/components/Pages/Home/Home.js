@@ -7,7 +7,7 @@ import { useRecipe } from '../../../context/RecipeContext.js';
 import RecipeModal from '../Recipes/RecipeModal/RecipeModal.js';
 
 export default function Home() {
-  const { user, token } = useUser();
+  const { user } = useUser();
   const theme = useMuiTheme();
   const {
     userRecipes,
@@ -37,7 +37,6 @@ export default function Home() {
   }
 
   const handleModalOpen = (e) => {
-    console.log(token);
     if (e.key === 'Enter') {
       setModalDishName(value.dish_name);
       setModalIngredientList(value.ingredients);
