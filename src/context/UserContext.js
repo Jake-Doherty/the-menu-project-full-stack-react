@@ -22,7 +22,7 @@ const UserProvider = ({ children }) => {
     fetchUser();
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1000);
   }, []);
 
   const [profile, setProfile] = useState(undefined);

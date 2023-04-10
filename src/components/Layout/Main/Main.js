@@ -22,7 +22,17 @@ export default function Main() {
       }}
     >
       {loading ? (
-        <img src={loadingIcon} alt="loading icon" />
+        <img
+          style={{
+            width: '300px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+          src={loadingIcon}
+          alt="loading icon"
+        />
       ) : (
         <Routes>
           <Route path="/auth/:type" element={<Auth />} />
