@@ -92,6 +92,7 @@ export default function Nav() {
             <Avatar
               sx={{ width: 32, height: 32 }}
               src={profile && profile.avatar_image_url ? profile.avatar_image_url : null}
+              alt={'profile avatar image'}
             >
               {profile && profile.display_name ? profile.display_name[0] : user.email[0]}
             </Avatar>
