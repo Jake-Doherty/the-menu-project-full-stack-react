@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 // import Settings from "@mui/icons-material/Settings";
 import Logout from '@mui/icons-material/Logout.js';
 import HomeIcon from '@mui/icons-material/Home';
-import { signOut } from '../../../services/auth.js';
+import { signOut } from '../../../services/auth-fetch-utils.js';
 import { useUser } from '../../../context/UserContext.js';
 import { useNavigate } from 'react-router-dom';
 import { useTheme as useMuiTheme } from '@emotion/react';
@@ -94,6 +94,7 @@ export default function Nav() {
               src={profile && profile.avatar_image_url ? profile.avatar_image_url : null}
               alt={'profile avatar image'}
             >
+              {/* {profile && profile.display_name ? profile.display_name[0] : user.email[0]} */}
               {profile && profile.display_name ? profile.display_name[0] : user.email[0]}
             </Avatar>
           </IconButton>

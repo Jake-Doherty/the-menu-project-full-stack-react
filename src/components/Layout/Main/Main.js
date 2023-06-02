@@ -6,9 +6,10 @@ import Home from '../../Pages/Home/Home.js';
 import Profile from '../../Pages/Profile/Profile.js';
 import ExploreRecipes from '../../Pages/Recipes/ExploreRecipes/ExploreRecipes.js';
 import RecipeForm from '../../Pages/Recipes/RecipeForm/RecipeForm.js';
+const loadingIcon = require('../../../assets/images/ezgif-menu.gif');
 
 export default function Main() {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   return (
     <main
       style={{
@@ -20,14 +21,28 @@ export default function Main() {
         alignItems: 'center',
       }}
     >
-      <Routes>
-        <Route path="/auth/:type" element={<Auth />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/recipe-editor" element={<RecipeForm />} />
-        <Route path="/user-profile" element={<Profile />} />
-        <Route path="/explore-recipes" element={<ExploreRecipes />} />
-        <Route path="/" element={user ? <Home /> : <Navigate to="/auth/sign-in" />} />
-      </Routes>
+      {loading ? (
+        <img
+          style={{
+            width: '300px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+          src={loadingIcon}
+          alt="loading icon"
+        />
+      ) : (
+        <Routes>
+          <Route path="/auth/:type" element={<Auth />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/recipe-editor" element={<RecipeForm />} />
+          <Route path="/user-profile" element={<Profile />} />
+          <Route path="/explore-recipes" element={<ExploreRecipes />} />
+          <Route path="/" element={user ? <Home /> : <Navigate to="/auth/sign-in" />} />
+        </Routes>
+      )}
     </main>
   );
 }

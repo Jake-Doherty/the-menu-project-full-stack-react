@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Navigate, useParams } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext.js';
-import { authUser } from '../../../services/auth.js';
+import { authUser } from '../../../services/auth-fetch-utils.js';
 
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -44,7 +44,8 @@ export default function Auth() {
   const submitAuth = async () => {
     try {
       const newUser = await authUser(email, password, type);
-      setUser(newUser);
+      // console.log(newUser);
+      setUser({ email: newUser.user });
     } catch (e) {
       console.error(e);
       setError(e.message);
@@ -53,7 +54,7 @@ export default function Auth() {
     }
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === '') {
       return;
     }
